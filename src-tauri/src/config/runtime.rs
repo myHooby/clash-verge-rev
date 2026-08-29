@@ -138,14 +138,16 @@ mod speed_test_listeners_tests {
     #[test]
     fn build_listeners_binds_each_node_on_loopback() {
         let listeners = build_speed_test_listeners(&[("节点 A", 40001), ("proxy-b", 40002)]);
+        assert!(matches!(listeners, Value::Sequence(_)));
         let Value::Sequence(items) = listeners else {
-            panic!("listeners 应为序列");
+            return;
         };
 
         assert_eq!(items.len(), 2);
         for (i, item) in items.iter().enumerate() {
+            assert!(matches!(item, Value::Mapping(_)));
             let Value::Mapping(map) = item else {
-                panic!("listener 项应为 Mapping");
+                continue;
             };
             assert_eq!(map.get("name"), Some(&Value::from(format!("verge-speed-{i}"))));
             assert_eq!(map.get("type"), Some(&Value::from("mixed")));

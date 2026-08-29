@@ -208,6 +208,9 @@ mod app_init {
             cmd::get_unlock_items,
             cmd::check_media_unlock,
             cmd::check_media_unlock_item,
+            cmd::start_speed_test,
+            cmd::stop_speed_test,
+            cmd::get_speed_test_status,
         ]
     }
 }
