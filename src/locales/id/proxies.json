@@ -37,7 +37,8 @@
       "delayCheckUrl": "URL Periksa Keterlambatan",
       "showBasic": "Dasar Proksi",
       "showDetail": "Detail Proksi",
-      "filter": "Filter"
+      "filter": "Filter",
+      "speedCheck": "Speed test"
     },
     "placeholders": {
       "delayCheckUrl": "URL Periksa Keterlambatan"
@@ -86,6 +87,29 @@
     "title": {
       "default": "Grup Proksi",
       "chainMode": "Proxy Chain Mode"
+    },
+    "speedTest": {
+      "title": "Speed Test",
+      "fields": {
+        "group": "Group",
+        "concurrency": "Concurrency",
+        "url": "Test URL"
+      },
+      "actions": {
+        "start": "Start",
+        "stop": "Stop"
+      },
+      "status": {
+        "progress": "{{completed}}/{{total}} completed"
+      },
+      "hints": {
+        "traffic": "Downloads up to 25 MB per node during the test.",
+        "background": "Closing this dialog keeps the test running in the background."
+      },
+      "messages": {
+        "busy": "A speed test is already running",
+        "startFailed": "Failed to start the speed test"
+      }
     }
   },
   "feedback": {

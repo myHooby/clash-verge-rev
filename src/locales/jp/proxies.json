@@ -37,7 +37,8 @@
       "delayCheckUrl": "遅延テストURL",
       "showBasic": "ノードの詳細を隠す",
       "showDetail": "ノードの詳細を表示する",
-      "filter": "ノードをフィルタリング"
+      "filter": "ノードをフィルタリング",
+      "speedCheck": "Speed test"
     },
     "placeholders": {
       "delayCheckUrl": "遅延テストURL"
@@ -86,6 +87,29 @@
     "title": {
       "default": "プロキシグループ",
       "chainMode": "Proxy Chain Mode"
+    },
+    "speedTest": {
+      "title": "Speed Test",
+      "fields": {
+        "group": "Group",
+        "concurrency": "Concurrency",
+        "url": "Test URL"
+      },
+      "actions": {
+        "start": "Start",
+        "stop": "Stop"
+      },
+      "status": {
+        "progress": "{{completed}}/{{total}} completed"
+      },
+      "hints": {
+        "traffic": "Downloads up to 25 MB per node during the test.",
+        "background": "Closing this dialog keeps the test running in the background."
+      },
+      "messages": {
+        "busy": "A speed test is already running",
+        "startFailed": "Failed to start the speed test"
+      }
     }
   },
   "feedback": {

@@ -37,7 +37,8 @@
       "delayCheckUrl": "지연 확인 URL",
       "showBasic": "프록시 기본",
       "showDetail": "프록시 상세",
-      "filter": "필터"
+      "filter": "필터",
+      "speedCheck": "Speed test"
     },
     "placeholders": {
       "delayCheckUrl": "지연 확인 URL"
@@ -86,6 +87,29 @@
     "title": {
       "default": "프록시 그룹",
       "chainMode": "프록시 체인 모드"
+    },
+    "speedTest": {
+      "title": "Speed Test",
+      "fields": {
+        "group": "Group",
+        "concurrency": "Concurrency",
+        "url": "Test URL"
+      },
+      "actions": {
+        "start": "Start",
+        "stop": "Stop"
+      },
+      "status": {
+        "progress": "{{completed}}/{{total}} completed"
+      },
+      "hints": {
+        "traffic": "Downloads up to 25 MB per node during the test.",
+        "background": "Closing this dialog keeps the test running in the background."
+      },
+      "messages": {
+        "busy": "A speed test is already running",
+        "startFailed": "Failed to start the speed test"
+      }
     }
   },
   "feedback": {

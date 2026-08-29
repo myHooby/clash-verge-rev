@@ -5,6 +5,7 @@ import SearchOffRounded from '@mui/icons-material/SearchOffRounded'
 import SearchRounded from '@mui/icons-material/SearchRounded'
 import SortByAlphaRounded from '@mui/icons-material/SortByAlphaRounded'
 import SortRounded from '@mui/icons-material/SortRounded'
+import SpeedRounded from '@mui/icons-material/SpeedRounded'
 import VisibilityOffRounded from '@mui/icons-material/VisibilityOffRounded'
 import VisibilityRounded from '@mui/icons-material/VisibilityRounded'
 import WifiTetheringOffRounded from '@mui/icons-material/WifiTetheringOffRounded'
@@ -30,6 +31,7 @@ interface Props {
   headState: HeadState
   onLocation: () => void
   onCheckDelay: () => void
+  onSpeedCheck?: () => void
   onHeadState: (val: Partial<HeadState>) => void
 }
 
@@ -40,6 +42,7 @@ export const ProxyGroupTools = memo(function ProxyGroupTools(props: Props) {
     groupName,
     headState,
     onCheckDelay,
+    onSpeedCheck,
     onHeadState,
     onLocation,
   } = props
@@ -171,6 +174,24 @@ export const ProxyGroupTools = memo(function ProxyGroupTools(props: Props) {
       >
         <NetworkCheckRounded fontSize="inherit" />
       </IconButton>
+
+      {onSpeedCheck && (
+        <IconButton
+          size="small"
+          color="inherit"
+          title={t('proxies.page.tooltips.speedCheck')}
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            if (!headState.open)
+              // eslint-disable-next-line @eslint-react/dom-no-flush-sync
+              flushSync(() => onHeadState({ open: true }))
+            onSpeedCheck()
+          }}
+        >
+          <SpeedRounded fontSize="inherit" />
+        </IconButton>
+      )}
 
       <IconButton
         size="small"

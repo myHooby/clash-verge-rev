@@ -37,7 +37,8 @@
       "delayCheckUrl": "延迟测试链接",
       "showBasic": "隐藏节点细节",
       "showDetail": "展示节点细节",
-      "filter": "过滤节点"
+      "filter": "过滤节点",
+      "speedCheck": "网速测试"
     },
     "placeholders": {
       "delayCheckUrl": "延迟测试链接"
@@ -86,6 +87,29 @@
     "title": {
       "default": "代理组",
       "chainMode": "链式代理模式"
+    },
+    "speedTest": {
+      "title": "网速测试",
+      "fields": {
+        "group": "分组",
+        "concurrency": "并发数",
+        "url": "测速 URL"
+      },
+      "actions": {
+        "start": "开始测速",
+        "stop": "停止"
+      },
+      "status": {
+        "progress": "已完成 {{completed}}/{{total}}"
+      },
+      "hints": {
+        "traffic": "测速期间每个节点最多下载约 25 MB 流量。",
+        "background": "关闭对话框后测速将继续在后台运行。"
+      },
+      "messages": {
+        "busy": "已有测速正在进行",
+        "startFailed": "测速启动失败"
+      }
     }
   },
   "feedback": {

@@ -574,6 +574,29 @@ export interface TranslationResources {
           select: string
           title: string
         }
+        speedTest: {
+          actions: {
+            start: string
+            stop: string
+          }
+          fields: {
+            concurrency: string
+            group: string
+            url: string
+          }
+          hints: {
+            background: string
+            traffic: string
+          }
+          messages: {
+            busy: string
+            startFailed: string
+          }
+          status: {
+            progress: string
+          }
+          title: string
+        }
         title: {
           chainMode: string
           default: string
@@ -588,6 +611,7 @@ export interface TranslationResources {
           sortDefault: string
           sortDelay: string
           sortName: string
+          speedCheck: string
         }
       }
     }

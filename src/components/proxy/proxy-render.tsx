@@ -34,6 +34,7 @@ interface RenderProps {
   isChainMode?: boolean
   onLocation: (group: IRenderItem['group']) => void
   onCheckAll: (groupName: string) => void
+  onSpeedCheck?: (groupName: string) => void
   onHeadState: (groupName: string, patch: Partial<HeadState>) => void
   onChangeProxy: (
     group: IRenderItem['group'],
@@ -49,6 +50,7 @@ export const ProxyRender = memo(function ProxyRender(props: RenderProps) {
     stickyed = false,
     onLocation,
     onCheckAll,
+    onSpeedCheck,
     onHeadState,
     onChangeProxy,
     onGroupToggle,
@@ -186,6 +188,9 @@ export const ProxyRender = memo(function ProxyRender(props: RenderProps) {
                   headState={headState!}
                   onLocation={() => onLocation(group)}
                   onCheckDelay={() => onCheckAll(group.name)}
+                  onSpeedCheck={
+                    onSpeedCheck ? () => onSpeedCheck(group.name) : undefined
+                  }
                   onHeadState={(p) => onHeadState(group.name, p)}
                 />
                 <Tooltip title={t('proxies.page.labels.proxyCount')} arrow>
@@ -231,6 +236,7 @@ export const ProxyRender = memo(function ProxyRender(props: RenderProps) {
         headState={headState!}
         onLocation={() => onLocation(group)}
         onCheckDelay={() => onCheckAll(group.name)}
+        onSpeedCheck={onSpeedCheck ? () => onSpeedCheck(group.name) : undefined}
         onHeadState={(p) => onHeadState(group.name, p)}
       />
     )

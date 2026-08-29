@@ -26,6 +26,7 @@ import delayManager from '@/services/delay'
 import {
   isInteractableMember,
   resolveMember,
+  type InteractableProxyMember,
   type ProxyGroupView,
   type ResolvedProxyMember,
 } from '@/types/proxy-view'
@@ -41,6 +42,7 @@ import {
   ProxyGroupNavigator,
 } from './proxy-group-navigator'
 import { ProxyRender } from './proxy-render'
+import { SpeedTestViewer, type SpeedTestTarget } from './speed-test-viewer'
 import {
   hasRenderableItems,
   type IRenderItem,
@@ -98,23 +100,26 @@ function useProxyRenderState(
 
   const timeout = verge?.default_latency_timeout || 10000
 
+  /** 按组名解析可交互节点（延迟批量与测速共用） */
+  const resolveInteractableMembers = useCallback(
+    (groupName: string): InteractableProxyMember[] => {
+      const group =
+        proxyView?.groups.find(({ name }) => name === groupName) ??
+        (proxyView?.global?.name === groupName ? proxyView.global : undefined)
+      if (!proxyView || !group) return []
+
+      return group.members
+        .map((member) => resolveMember(proxyView, member))
+        .filter(isInteractableMember)
+    },
+    [proxyView],
+  )
+
   const handleCheckAll = useStableCallback(
     useLockFn(async (groupName: string) => {
       debugLog(`[ProxyGroups] 开始测试所有延迟，组: ${groupName}`)
 
-      const group =
-        proxyView?.groups.find(({ name }) => name === groupName) ??
-        (proxyView?.global?.name === groupName ? proxyView.global : undefined)
-      const occurrences =
-        proxyView && group
-          ? group.members.map((member, memberIndex) => ({
-              memberIndex,
-              member: resolveMember(proxyView, member),
-            }))
-          : []
-      const interactable = occurrences
-        .map(({ member }) => member)
-        .filter(isInteractableMember)
+      const interactable = resolveInteractableMembers(groupName)
 
       debugLog(`[ProxyGroups] 找到代理数量: ${interactable.length}`)
 
@@ -131,6 +136,15 @@ function useProxyRenderState(
       }
     }),
   )
+
+  // 测速目标（null = 对话框关闭）；对话框关闭后测速继续后台运行
+  const [speedTarget, setSpeedTarget] = useState<SpeedTestTarget | null>(null)
+  const handleSpeedCheck = useStableCallback((groupName: string) => {
+    const names = resolveInteractableMembers(groupName).map(
+      (member) => member.ref.name,
+    )
+    setSpeedTarget({ group: groupName, names })
+  })
 
   const saveScrollPosition = useCallback(
     (scrollTop: number) => {
@@ -169,6 +183,9 @@ function useProxyRenderState(
     onProxies,
     onHeadState,
     handleCheckAll,
+    handleSpeedCheck,
+    speedTarget,
+    setSpeedTarget,
     saveScrollPosition,
     getScrollPosition,
   }
@@ -202,6 +219,9 @@ function ChainProxyGroups(props: {
     renderList,
     onHeadState,
     handleCheckAll,
+    handleSpeedCheck,
+    speedTarget,
+    setSpeedTarget,
     getScrollPosition,
     saveScrollPosition,
   } = useProxyRenderState(mode, true, activeSelectedGroup)
@@ -343,10 +363,15 @@ function ChainProxyGroups(props: {
         activeStickyIndex={activeStickyIndex}
         measureElement={virtualizer.measureElement}
         onCheckAll={handleCheckAll}
+        onSpeedCheck={handleSpeedCheck}
         onHeadState={onHeadState}
         onLocation={handleLocation}
         onGroupSelect={setSelectedGroup}
         onScrollToTop={scrollToTop}
+      />
+      <SpeedTestViewer
+        target={speedTarget}
+        onClose={() => setSpeedTarget(null)}
       />
     </Suspense>
   )
@@ -361,6 +386,9 @@ function NormalProxyGroups(props: { mode: string }) {
     onProxies,
     onHeadState,
     handleCheckAll,
+    handleSpeedCheck,
+    speedTarget,
+    setSpeedTarget,
     getScrollPosition,
     saveScrollPosition,
   } = useProxyRenderState(mode, false, null)
@@ -535,6 +563,7 @@ function NormalProxyGroups(props: { mode: string }) {
         stickyed={stickyed}
         onLocation={handleLocation}
         onCheckAll={handleCheckAll}
+        onSpeedCheck={handleSpeedCheck}
         onHeadState={async (groupName, patch) => {
           if (stickyed && patch.filterText !== undefined) {
             handleGroupLocationByName(groupName)
@@ -549,6 +578,7 @@ function NormalProxyGroups(props: { mode: string }) {
     [
       handleChangeProxy,
       handleCheckAll,
+      handleSpeedCheck,
       onHeadState,
       handleLocation,
       handleGroupToggle,
@@ -563,11 +593,18 @@ function NormalProxyGroups(props: { mode: string }) {
         item={item}
         onLocation={handleLocation}
         onCheckAll={handleCheckAll}
+        onSpeedCheck={handleSpeedCheck}
         onHeadState={onHeadState}
         onChangeProxy={handleChangeProxy}
       />
     ),
-    [handleChangeProxy, handleCheckAll, onHeadState, handleLocation],
+    [
+      handleChangeProxy,
+      handleCheckAll,
+      handleSpeedCheck,
+      onHeadState,
+      handleLocation,
+    ],
   )
 
   if (!hasRenderableItems(renderList)) return emptyList
@@ -593,6 +630,11 @@ function NormalProxyGroups(props: { mode: string }) {
           hoverDelay={verge?.hover_jump_navigator_delay ?? DEFAULT_HOVER_DELAY}
         />
       )}
+
+      <SpeedTestViewer
+        target={speedTarget}
+        onClose={() => setSpeedTarget(null)}
+      />
     </div>
   )
 }

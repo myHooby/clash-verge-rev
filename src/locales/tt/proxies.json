@@ -37,7 +37,8 @@
       "delayCheckUrl": "Задержканы тикшерү URL-ы",
       "showBasic": "Прокси турында кыскача мәгълүмат",
       "showDetail": "Прокси турында тулы мәгълүмат",
-      "filter": "Фильтр"
+      "filter": "Фильтр",
+      "speedCheck": "Speed test"
     },
     "placeholders": {
       "delayCheckUrl": "Задержканы тикшерү URL-ы"
@@ -86,6 +87,29 @@
     "title": {
       "default": "Прокси төркемнәре",
       "chainMode": "Proxy Chain Mode"
+    },
+    "speedTest": {
+      "title": "Speed Test",
+      "fields": {
+        "group": "Group",
+        "concurrency": "Concurrency",
+        "url": "Test URL"
+      },
+      "actions": {
+        "start": "Start",
+        "stop": "Stop"
+      },
+      "status": {
+        "progress": "{{completed}}/{{total}} completed"
+      },
+      "hints": {
+        "traffic": "Downloads up to 25 MB per node during the test.",
+        "background": "Closing this dialog keeps the test running in the background."
+      },
+      "messages": {
+        "busy": "A speed test is already running",
+        "startFailed": "Failed to start the speed test"
+      }
     }
   },
   "feedback": {
