@@ -49,6 +49,24 @@ impl IRuntime {
         }
     }
 
+    /// 写入或移除测速专用 listeners。`Some(value)` 覆盖写入，`None` 移除恢复。
+    /// 调用方需在注入前自行保存原始 `listeners` 值，以便测速结束后还原。
+    #[inline]
+    pub fn set_speed_test_listeners(&mut self, listeners: Option<Value>) {
+        let Some(config) = self.config.as_mut() else {
+            return;
+        };
+
+        match listeners {
+            Some(value) => {
+                config.insert("listeners".into(), value);
+            }
+            None => {
+                config.remove("listeners");
+            }
+        }
+    }
+
     /// Rebuilds `dialer-proxy` links from an ordered proxy chain, or removes them for `None`.
     #[inline]
     pub fn update_proxy_chain_config(&mut self, proxy_chain_config: Option<Value>) {
@@ -81,5 +99,92 @@ impl IRuntime {
                 }
             }
         }
+    }
+}
+
+/// 为测速构造 listeners 序列：每个节点一个仅监听 127.0.0.1 的 mixed 入站，
+/// 通过 `proxy` 字段把该入站的流量绑定到对应节点直接出站（mihomo listeners 能力）。
+/// `entries` 为 (节点名, 本地端口) 列表，监听器名按序号生成保证唯一。
+pub fn build_speed_test_listeners(entries: &[(&str, u16)]) -> Value {
+    let items: Vec<Value> = entries
+        .iter()
+        .enumerate()
+        .map(|(i, (proxy_name, port))| {
+            let mut listener = Mapping::new();
+            listener.insert("name".into(), Value::from(format!("verge-speed-{i}")));
+            listener.insert("type".into(), Value::from("mixed"));
+            listener.insert("port".into(), Value::from(u64::from(*port)));
+            listener.insert("listen".into(), Value::from("127.0.0.1"));
+            listener.insert("udp".into(), Value::from(false));
+            listener.insert("proxy".into(), Value::from(*proxy_name));
+            Value::Mapping(listener)
+        })
+        .collect();
+    Value::Sequence(items)
+}
+
+#[cfg(test)]
+mod speed_test_listeners_tests {
+    use super::{IRuntime, build_speed_test_listeners};
+    use serde_yaml_ng::{Mapping, Value};
+
+    fn sample_runtime_config() -> Mapping {
+        let mut config = Mapping::new();
+        config.insert("mixed-port".into(), Value::from(7897_u64));
+        config.insert("mode".into(), Value::from("rule"));
+        config
+    }
+
+    #[test]
+    fn build_listeners_binds_each_node_on_loopback() {
+        let listeners = build_speed_test_listeners(&[("节点 A", 40001), ("proxy-b", 40002)]);
+        let Value::Sequence(items) = listeners else {
+            panic!("listeners 应为序列");
+        };
+
+        assert_eq!(items.len(), 2);
+        for (i, item) in items.iter().enumerate() {
+            let Value::Mapping(map) = item else {
+                panic!("listener 项应为 Mapping");
+            };
+            assert_eq!(map.get("name"), Some(&Value::from(format!("verge-speed-{i}"))));
+            assert_eq!(map.get("type"), Some(&Value::from("mixed")));
+            assert_eq!(map.get("listen"), Some(&Value::from("127.0.0.1")));
+            assert_eq!(map.get("udp"), Some(&Value::from(false)));
+            assert_eq!(map.get("port").and_then(Value::as_u64), Some(40001 + i as u64));
+        }
+        assert_eq!(items[0].get("proxy"), Some(&Value::from("节点 A")));
+        assert_eq!(items[1].get("proxy"), Some(&Value::from("proxy-b")));
+    }
+
+    #[test]
+    fn set_then_remove_restores_original_state() {
+        let mut runtime = IRuntime {
+            config: Some(sample_runtime_config()),
+            ..IRuntime::default()
+        };
+
+        let listeners = build_speed_test_listeners(&[("节点 A", 40001)]);
+        runtime.set_speed_test_listeners(Some(listeners.clone()));
+        assert_eq!(
+            runtime.config.as_ref().and_then(|c| c.get("listeners")),
+            Some(&listeners)
+        );
+
+        runtime.set_speed_test_listeners(None);
+        assert_eq!(runtime.config.as_ref().and_then(|c| c.get("listeners")), None);
+        // 其余配置键不受影响
+        assert_eq!(
+            runtime.config.as_ref().and_then(|c| c.get("mode")),
+            Some(&Value::from("rule"))
+        );
+    }
+
+    #[test]
+    fn set_on_missing_config_is_safe() {
+        let mut runtime = IRuntime::default();
+        runtime.set_speed_test_listeners(Some(build_speed_test_listeners(&[("n", 1)])));
+        runtime.set_speed_test_listeners(None);
+        assert!(runtime.config.is_none());
     }
 }
