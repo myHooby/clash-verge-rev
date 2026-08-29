@@ -1,4 +1,5 @@
 import AccessTimeRounded from '@mui/icons-material/AccessTimeRounded'
+import DownloadingRounded from '@mui/icons-material/DownloadingRounded'
 import MyLocationRounded from '@mui/icons-material/MyLocationRounded'
 import NetworkCheckRounded from '@mui/icons-material/NetworkCheckRounded'
 import SearchOffRounded from '@mui/icons-material/SearchOffRounded'
@@ -189,7 +190,7 @@ export const ProxyGroupTools = memo(function ProxyGroupTools(props: Props) {
             onSpeedCheck()
           }}
         >
-          <SpeedRounded fontSize="inherit" />
+          <DownloadingRounded fontSize="inherit" />
         </IconButton>
       )}
 

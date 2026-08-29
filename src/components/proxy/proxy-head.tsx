@@ -1,5 +1,6 @@
 import {
   AccessTimeRounded,
+  DownloadingRounded,
   MyLocationRounded,
   NetworkCheckRounded,
   SearchOffRounded,
@@ -111,7 +112,7 @@ export const ProxyHead = ({
           title={t('proxies.page.tooltips.speedCheck')}
           onClick={onSpeedCheck}
         >
-          <SpeedRounded />
+          <DownloadingRounded />
         </IconButton>
       )}
 
