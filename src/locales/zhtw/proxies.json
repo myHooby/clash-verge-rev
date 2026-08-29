@@ -38,8 +38,8 @@
       "showBasic": "隱藏節點細節",
       "showDetail": "展示節點細節",
       "filter": "篩選節點",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "網速測試",
+      "sortSpeed": "按網速排序"
     },
     "placeholders": {
       "delayCheckUrl": "延遲測試網址"
@@ -90,26 +90,26 @@
       "chainMode": "鏈式代理模式"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "網速測試",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "分組",
+        "concurrency": "並發數",
+        "url": "測速 URL"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "開始測速",
+        "stop": "停止"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "已完成 {{completed}}/{{total}}"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "測速期間每個節點最多下載約 25 MB 流量。",
+        "background": "關閉對話框後測速將繼續在背景執行。"
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "已有測速正在進行",
+        "startFailed": "測速啟動失敗"
       }
     }
   },

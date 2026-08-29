@@ -38,8 +38,8 @@
       "showBasic": "ノードの詳細を隠す",
       "showDetail": "ノードの詳細を表示する",
       "filter": "ノードをフィルタリング",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "回線速度テスト",
+      "sortSpeed": "速度順に並べ替え"
     },
     "placeholders": {
       "delayCheckUrl": "遅延テストURL"
@@ -90,26 +90,26 @@
       "chainMode": "Proxy Chain Mode"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "回線速度テスト",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "グループ",
+        "concurrency": "同時実行数",
+        "url": "テスト URL"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "開始",
+        "stop": "停止"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "{{completed}}/{{total}} 完了"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "テスト中、ノードごとに最大 25 MB 通信します。",
+        "background": "ダイアログを閉じてもテストはバックグラウンドで続行されます。"
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "すでに速度テストが実行中です",
+        "startFailed": "速度テストを開始できませんでした"
       }
     }
   },

@@ -38,8 +38,8 @@
       "showBasic": "프록시 기본",
       "showDetail": "프록시 상세",
       "filter": "필터",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "속도 테스트",
+      "sortSpeed": "속도순 정렬"
     },
     "placeholders": {
       "delayCheckUrl": "지연 확인 URL"
@@ -90,26 +90,26 @@
       "chainMode": "프록시 체인 모드"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "속도 테스트",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "그룹",
+        "concurrency": "동시 실행",
+        "url": "테스트 URL"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "시작",
+        "stop": "중지"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "{{completed}}/{{total}} 완료"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "테스트 중 노드당 최대 25MB가 다운로드됩니다.",
+        "background": "대화상자를 닫아도 테스트는 백그라운드에서 계속됩니다."
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "이미 속도 테스트가 진행 중입니다",
+        "startFailed": "속도 테스트를 시작하지 못했습니다"
       }
     }
   },

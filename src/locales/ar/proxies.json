@@ -38,8 +38,8 @@
       "showBasic": "إعدادات الوكيل الأساسية",
       "showDetail": "تفاصيل الوكيل",
       "filter": "تصفية",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "اختبار السرعة",
+      "sortSpeed": "الفرز حسب السرعة"
     },
     "placeholders": {
       "delayCheckUrl": "رابط فحص التأخير"
@@ -90,26 +90,26 @@
       "chainMode": "Proxy Chain Mode"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "اختبار السرعة",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "المجموعة",
+        "concurrency": "التزامن",
+        "url": "رابط الاختبار"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "ابدأ",
+        "stop": "إيقاف"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "اكتمل {{completed}}/{{total}}"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "يقوم كل وكيل بتنزيل ما يصل إلى 25 ميغابايت أثناء الاختبار.",
+        "background": "إغلاق نافذة الحوار يُبقي الاختبار يعمل في الخلفية."
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "هناك اختبار سرعة قيد التشغيل بالفعل",
+        "startFailed": "فشل بدء اختبار السرعة"
       }
     }
   },

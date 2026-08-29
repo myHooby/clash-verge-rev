@@ -38,8 +38,8 @@
       "showBasic": "پراکسی پایه",
       "showDetail": "جزئیات پراکسی",
       "filter": "فیلتر",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "تست سرعت",
+      "sortSpeed": "مرتب‌سازی بر اساس سرعت"
     },
     "placeholders": {
       "delayCheckUrl": "آدرس بررسی تأخیر"
@@ -90,26 +90,26 @@
       "chainMode": "Proxy Chain Mode"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "تست سرعت",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "گروه",
+        "concurrency": "همزمانی",
+        "url": "URL تست"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "شروع",
+        "stop": "توقف"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "{{completed}}/{{total}} تکمیل شد"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "در طول آزمون هر گره حداکثر ۲۵ مگابایت دانلود می‌کند.",
+        "background": "با بستن این پنجره، آزمون در پس‌زمینه ادامه می‌یابد."
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "یک تست سرعت در حال اجراست",
+        "startFailed": "شروع تست سرعت ناموفق بود"
       }
     }
   },

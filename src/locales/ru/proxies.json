@@ -38,8 +38,8 @@
       "showBasic": "Показывать меньше информации о прокси",
       "showDetail": "Показывать больше информации о прокси",
       "filter": "Фильтр",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "Тест скорости",
+      "sortSpeed": "Сортировать по скорости"
     },
     "placeholders": {
       "delayCheckUrl": "URL для проверки задержки"
@@ -90,26 +90,26 @@
       "chainMode": "Режим цепочки прокси"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "Тест скорости",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "Группа",
+        "concurrency": "Параллелизм",
+        "url": "URL теста"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "Начать",
+        "stop": "Остановить"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "Завершено {{completed}}/{{total}}"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "Во время теста каждый узел загружает до 25 МБ трафика.",
+        "background": "После закрытия диалога тест продолжается в фоновом режиме."
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "Тест скорости уже запущен",
+        "startFailed": "Не удалось запустить тест скорости"
       }
     }
   },

@@ -38,8 +38,8 @@
       "showBasic": "Knotendetails ausblenden",
       "showDetail": "Knotendetails anzeigen",
       "filter": "Knoten filtern",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "Geschwindigkeitstest",
+      "sortSpeed": "Nach Geschwindigkeit sortieren"
     },
     "placeholders": {
       "delayCheckUrl": "Latenztest-URL"
@@ -90,26 +90,26 @@
       "chainMode": "Proxy Chain Mode"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "Geschwindigkeitstest",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "Gruppe",
+        "concurrency": "Parallelität",
+        "url": "Test-URL"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "Starten",
+        "stop": "Stoppen"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "{{completed}}/{{total}} abgeschlossen"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "Während des Tests lädt jeder Knoten bis zu 25 MB herunter.",
+        "background": "Nach dem Schließen des Dialogs läuft der Test im Hintergrund weiter."
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "Ein Geschwindigkeitstest läuft bereits",
+        "startFailed": "Geschwindigkeitstest konnte nicht gestartet werden"
       }
     }
   },

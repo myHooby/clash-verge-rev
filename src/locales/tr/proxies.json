@@ -38,8 +38,8 @@
       "showBasic": "Temel Vekil",
       "showDetail": "Vekil detayı",
       "filter": "Filtre",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "Hız testi",
+      "sortSpeed": "Hıza göre sırala"
     },
     "placeholders": {
       "delayCheckUrl": "Gecikme kontrol URL'si"
@@ -90,26 +90,26 @@
       "chainMode": "Proxy Chain Mode"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "Hız Testi",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "Grup",
+        "concurrency": "Eşzamanlılık",
+        "url": "Test URL'si"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "Başlat",
+        "stop": "Durdur"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "{{completed}}/{{total}} tamamlandı"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "Test sırasında her düğüm en fazla 25 MB indirir.",
+        "background": "İletişim kutusu kapatılsa da test arka planda sürer."
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "Bir hız testi zaten çalışıyor",
+        "startFailed": "Hız testi başlatılamadı"
       }
     }
   },

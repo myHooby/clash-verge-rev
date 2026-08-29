@@ -38,8 +38,8 @@
       "showBasic": "Dasar Proksi",
       "showDetail": "Detail Proksi",
       "filter": "Filter",
-      "speedCheck": "Speed test",
-      "sortSpeed": "Sort by speed"
+      "speedCheck": "Uji kecepatan",
+      "sortSpeed": "Urutkan berdasarkan kecepatan"
     },
     "placeholders": {
       "delayCheckUrl": "URL Periksa Keterlambatan"
@@ -90,26 +90,26 @@
       "chainMode": "Proxy Chain Mode"
     },
     "speedTest": {
-      "title": "Speed Test",
+      "title": "Uji Kecepatan",
       "fields": {
-        "group": "Group",
-        "concurrency": "Concurrency",
-        "url": "Test URL"
+        "group": "Grup",
+        "concurrency": "Konkurensi",
+        "url": "URL uji"
       },
       "actions": {
-        "start": "Start",
-        "stop": "Stop"
+        "start": "Mulai",
+        "stop": "Hentikan"
       },
       "status": {
-        "progress": "{{completed}}/{{total}} completed"
+        "progress": "{{completed}}/{{total}} selesai"
       },
       "hints": {
-        "traffic": "Downloads up to 25 MB per node during the test.",
-        "background": "Closing this dialog keeps the test running in the background."
+        "traffic": "Setiap node mengunduh hingga 25 MB selama pengujian.",
+        "background": "Menutup dialog membuat pengujian tetap berjalan di latar belakang."
       },
       "messages": {
-        "busy": "A speed test is already running",
-        "startFailed": "Failed to start the speed test"
+        "busy": "Uji kecepatan sedang berjalan",
+        "startFailed": "Gagal memulai uji kecepatan"
       }
     }
   },
