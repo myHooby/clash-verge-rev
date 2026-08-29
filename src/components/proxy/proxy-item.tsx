@@ -14,12 +14,15 @@ import { useTranslation } from 'react-i18next'
 
 import { BaseLoading } from '@/components/base'
 import { useProxyDelayState } from '@/hooks/use-proxy-delay-state'
+import { useSpeedState } from '@/hooks/use-speed-state'
 import delayManager from '@/services/delay'
+import speedManager, { getStoredSpeedTestOptions } from '@/services/speed'
 import {
   memberDetails,
   type ProxyGroupView,
   type ResolvedProxyMember,
 } from '@/types/proxy-view'
+import { classifySpeed, formatSpeed, speedColor } from '@/utils/speed'
 
 interface Props {
   group: ProxyGroupView
@@ -62,6 +65,18 @@ export const ProxyItem = (props: Props) => {
     member,
     group.name,
   )
+
+  // 节点速度徽章：点击可单节点重测（测速运行中不重复发起）
+  const speedUpdate = useSpeedState(name)
+  const onSpeedRetest = async () => {
+    if (speedManager.getRunStatus().running) return
+    const { concurrency, url } = getStoredSpeedTestOptions()
+    try {
+      await speedManager.startTest(group.name, [name], concurrency, url)
+    } catch {
+      // 忙等异常通过徽章状态自可见，无需弹窗
+    }
+  }
 
   return (
     <ListItem sx={sx}>
@@ -177,6 +192,34 @@ export const ProxyItem = (props: Props) => {
               })}
             >
               {delayManager.formatDelay(delayValue, timeout)}
+            </Widget>
+          )}
+
+          {!unresolved && speedUpdate?.state === 'testing' && (
+            <Widget sx={{ fontSize: 12, ml: 0.5 }}>
+              <BaseLoading />
+            </Widget>
+          )}
+
+          {!unresolved && speedUpdate && speedUpdate.state !== 'testing' && (
+            <Widget
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                void onSpeedRetest()
+              }}
+              title={speedUpdate.error ?? name}
+              sx={({ palette }) => ({
+                ml: 0.5,
+                fontSize: 12,
+                cursor: 'pointer',
+                color: speedColor(classifySpeed(speedUpdate)),
+                ':hover': { bgcolor: alpha(palette.primary.main, 0.15) },
+              })}
+            >
+              {speedUpdate.state === 'ok'
+                ? formatSpeed(speedUpdate.speedBps)
+                : 'Error'}
             </Widget>
           )}
 

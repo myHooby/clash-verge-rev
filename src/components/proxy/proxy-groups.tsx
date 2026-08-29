@@ -23,6 +23,7 @@ import { useProxySelection } from '@/hooks/use-proxy-selection'
 import { useVerge } from '@/hooks/use-verge'
 import { useProxiesData, useSystemData } from '@/providers/app-data-context'
 import delayManager from '@/services/delay'
+import speedManager from '@/services/speed'
 import {
   isInteractableMember,
   resolveMember,
@@ -145,6 +146,15 @@ function useProxyRenderState(
     )
     setSpeedTarget({ group: groupName, names })
   })
+
+  // 该组测速结束（完成/取消/失败）后自动切换为按网速排序
+  useEffect(() => {
+    if (!speedTarget) return
+    const { group } = speedTarget
+    return speedManager.addGroupListener(group, () => {
+      onHeadState(group, { sortType: 3 })
+    })
+  }, [speedTarget, onHeadState])
 
   const saveScrollPosition = useCallback(
     (scrollTop: number) => {

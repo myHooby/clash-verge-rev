@@ -15,16 +15,12 @@ import { useTranslation } from 'react-i18next'
 import { BaseDialog } from '@/components/base'
 import { useSpeedRunStatus } from '@/hooks/use-speed-state'
 import { showNotice } from '@/services/notice-service'
-import speedManager, { SpeedTestBusyError } from '@/services/speed'
-
-/** 并发档位（需求：4/8/16 可选） */
-const CONCURRENCY_OPTIONS = [4, 8, 16]
-
-/** 默认测速文件：Cloudflare 25MB 下发端点，与后端单节点采样上限对齐 */
-const DEFAULT_SPEED_URL = 'https://speed.cloudflare.com/__down?bytes=25000000'
-
-const CONCURRENCY_STORAGE_KEY = 'speed-test-concurrency'
-const URL_STORAGE_KEY = 'speed-test-url'
+import speedManager, {
+  SpeedTestBusyError,
+  SPEED_CONCURRENCY_OPTIONS,
+  getStoredSpeedTestOptions,
+  storeSpeedTestOptions,
+} from '@/services/speed'
 
 export interface SpeedTestTarget {
   group: string
@@ -40,14 +36,10 @@ interface Props {
 export function SpeedTestViewer({ target, onClose }: Props) {
   const { t } = useTranslation()
   const runStatus = useSpeedRunStatus()
-
-  const [concurrency, setConcurrency] = useState(() => {
-    const saved = Number(localStorage.getItem(CONCURRENCY_STORAGE_KEY))
-    return CONCURRENCY_OPTIONS.includes(saved) ? saved : CONCURRENCY_OPTIONS[0]
-  })
-  const [url, setUrl] = useState(
-    () => localStorage.getItem(URL_STORAGE_KEY) || DEFAULT_SPEED_URL,
+  const [concurrency, setConcurrency] = useState(
+    () => getStoredSpeedTestOptions().concurrency,
   )
+  const [url, setUrl] = useState(() => getStoredSpeedTestOptions().url)
 
   // 每次打开时同步后端真实状态（支持刷新后重开恢复进度）
   useEffect(() => {
@@ -62,8 +54,7 @@ export function SpeedTestViewer({ target, onClose }: Props) {
 
   const onStart = useLockFn(async () => {
     if (!target) return
-    localStorage.setItem(CONCURRENCY_STORAGE_KEY, String(concurrency))
-    localStorage.setItem(URL_STORAGE_KEY, url.trim())
+    storeSpeedTestOptions({ concurrency, url: url.trim() })
 
     try {
       await speedManager.startTest(target.group, target.names, concurrency, url)
@@ -127,7 +118,7 @@ export function SpeedTestViewer({ target, onClose }: Props) {
               if (value) setConcurrency(value)
             }}
           >
-            {CONCURRENCY_OPTIONS.map((option) => (
+            {SPEED_CONCURRENCY_OPTIONS.map((option) => (
               <ToggleButton key={option} value={option} sx={{ px: 1.5 }}>
                 {option}
               </ToggleButton>

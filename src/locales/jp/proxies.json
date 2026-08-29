@@ -38,7 +38,8 @@
       "showBasic": "ノードの詳細を隠す",
       "showDetail": "ノードの詳細を表示する",
       "filter": "ノードをフィルタリング",
-      "speedCheck": "Speed test"
+      "speedCheck": "Speed test",
+      "sortSpeed": "Sort by speed"
     },
     "placeholders": {
       "delayCheckUrl": "遅延テストURL"

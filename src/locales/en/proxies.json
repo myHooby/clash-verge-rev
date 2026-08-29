@@ -38,7 +38,8 @@
       "showBasic": "Proxy basic",
       "showDetail": "Proxy detail",
       "filter": "Filter",
-      "speedCheck": "Speed test"
+      "speedCheck": "Speed test",
+      "sortSpeed": "Sort by speed"
     },
     "placeholders": {
       "delayCheckUrl": "Delay check URL"

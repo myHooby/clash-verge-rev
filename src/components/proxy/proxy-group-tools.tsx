@@ -201,6 +201,7 @@ export const ProxyGroupTools = memo(function ProxyGroupTools(props: Props) {
             t('proxies.page.tooltips.sortDefault'),
             t('proxies.page.tooltips.sortDelay'),
             t('proxies.page.tooltips.sortName'),
+            t('proxies.page.tooltips.sortSpeed'),
           ][sortType]
         }
         onClick={(e) => {
@@ -210,13 +211,16 @@ export const ProxyGroupTools = memo(function ProxyGroupTools(props: Props) {
             // eslint-disable-next-line @eslint-react/dom-no-flush-sync
             flushSync(() => onHeadState({ open: true }))
           onHeadState({
-            sortType: ((sortType + 1) % 3) as ProxySortType,
+            sortType: ((sortType + 1) % 4) as ProxySortType,
           })
         }}
       >
-        {sortType !== 1 && sortType !== 2 && <SortRounded fontSize="inherit" />}
         {sortType === 1 && <AccessTimeRounded fontSize="inherit" />}
         {sortType === 2 && <SortByAlphaRounded fontSize="inherit" />}
+        {sortType === 3 && <SpeedRounded fontSize="inherit" />}
+        {sortType !== 1 && sortType !== 2 && sortType !== 3 && (
+          <SortRounded fontSize="inherit" />
+        )}
       </IconButton>
 
       <IconButton

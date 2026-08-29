@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react'
 
 import { useRuntimeConfig } from '@/hooks/use-clash'
 import { useGroupsDelays } from '@/hooks/use-group-delays'
+import { useGroupSpeedVersions } from '@/hooks/use-group-speeds'
 import { useVerge } from '@/hooks/use-verge'
 import { useAppRefreshers, useProxiesData } from '@/providers/app-data-context'
 import delayManager, { type DelaySnapshot } from '@/services/delay'
@@ -67,6 +68,9 @@ type GroupCache = {
   /// This group's own delays. Compared by identity so that a test settling in one group
   /// does not throw away every other group's sorted order.
   delays: DelaySnapshot | undefined
+  /// Speed-test settle version for this group; invalidates the cache so a
+  /// speed-sorted group re-sorts when its run finishes.
+  speeds: number | undefined
   items: IRenderItem[]
 }
 
@@ -219,6 +223,7 @@ export const useRenderList = (
         : []
   }, [isChainMode, mode, proxyView, selectedGroup])
   const groupDelays = useGroupsDelays(renderedGroupNames)
+  const groupSpeeds = useGroupSpeedVersions(renderedGroupNames)
 
   const groupCacheRef = useRef<Map<string, GroupCache>>(new Map())
   const prevListRef = useRef<IRenderItem[]>([])
@@ -277,7 +282,8 @@ export const useRenderList = (
         cached.headState === headState &&
         cached.col === col &&
         cached.latencyTimeout === latencyTimeout &&
-        cached.delays === groupDelays.get(group.name)
+        cached.delays === groupDelays.get(group.name) &&
+        cached.speeds === groupSpeeds.get(group.name)
       ) {
         return cached.items
       }
@@ -343,6 +349,7 @@ export const useRenderList = (
         col,
         latencyTimeout,
         delays: groupDelays.get(group.name),
+        speeds: groupSpeeds.get(group.name),
         items: ret,
       })
       return ret
@@ -360,6 +367,7 @@ export const useRenderList = (
     chainOccurrences,
     col,
     groupDelays,
+    groupSpeeds,
     headStates,
     isChainMode,
     latencyTimeout,

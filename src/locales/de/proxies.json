@@ -38,7 +38,8 @@
       "showBasic": "Knotendetails ausblenden",
       "showDetail": "Knotendetails anzeigen",
       "filter": "Knoten filtern",
-      "speedCheck": "Speed test"
+      "speedCheck": "Speed test",
+      "sortSpeed": "Sort by speed"
     },
     "placeholders": {
       "delayCheckUrl": "Latenztest-URL"

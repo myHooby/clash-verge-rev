@@ -38,7 +38,8 @@
       "showBasic": "پراکسی پایه",
       "showDetail": "جزئیات پراکسی",
       "filter": "فیلتر",
-      "speedCheck": "Speed test"
+      "speedCheck": "Speed test",
+      "sortSpeed": "Sort by speed"
     },
     "placeholders": {
       "delayCheckUrl": "آدرس بررسی تأخیر"

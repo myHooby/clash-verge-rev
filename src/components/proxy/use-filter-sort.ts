@@ -1,11 +1,14 @@
 import delayManager from '@/services/delay'
+import speedManager from '@/services/speed'
 import { memberDetails } from '@/types/proxy-view'
 import { compareByDelay, DEFAULT_DELAY_TIMEOUT } from '@/utils/delay'
 import { compileStringMatcher } from '@/utils/search-matcher'
+import { compareBySpeed } from '@/utils/speed'
 
 import type { ResolvedMemberOccurrence } from './use-render-list'
 
-export type ProxySortType = 0 | 1 | 2
+/** 0 默认 / 1 按延迟 / 2 按名称 / 3 按网速 */
+export type ProxySortType = 0 | 1 | 2 | 3
 
 export type ProxySearchState = {
   matchCase?: boolean
@@ -103,6 +106,14 @@ function sortProxies(
         delayManager.getDelayFix(a.member, groupName),
         delayManager.getDelayFix(b.member, groupName),
         effectiveTimeout,
+      ),
+    )
+  } else if (sortType === 3) {
+    // 按网速：实测降序，失败/测试中/未测依次靠后
+    list.sort((a, b) =>
+      compareBySpeed(
+        speedManager.getSpeedUpdate(a.member.ref.name),
+        speedManager.getSpeedUpdate(b.member.ref.name),
       ),
     )
   } else {

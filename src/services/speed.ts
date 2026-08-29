@@ -40,6 +40,38 @@ type SpeedTestEvent =
 
 const CACHE_TTL = 30 * 60 * 1000
 
+/** 并发档位（需求：4/8/16 可选） */
+export const SPEED_CONCURRENCY_OPTIONS = [4, 8, 16] as const
+/** 默认测速文件：Cloudflare 25MB 下发端点，与后端单节点采样上限对齐 */
+export const DEFAULT_SPEED_TEST_URL =
+  'https://speed.cloudflare.com/__down?bytes=25000000'
+
+const CONCURRENCY_STORAGE_KEY = 'speed-test-concurrency'
+const URL_STORAGE_KEY = 'speed-test-url'
+
+export interface SpeedTestOptions {
+  concurrency: number
+  url: string
+}
+
+/** 读取持久化的测速参数（对话框与单节点重测共用） */
+export function getStoredSpeedTestOptions(): SpeedTestOptions {
+  const saved = Number(localStorage.getItem(CONCURRENCY_STORAGE_KEY))
+  const concurrency = (SPEED_CONCURRENCY_OPTIONS as readonly number[]).includes(
+    saved,
+  )
+    ? saved
+    : SPEED_CONCURRENCY_OPTIONS[0]
+  const url =
+    localStorage.getItem(URL_STORAGE_KEY)?.trim() || DEFAULT_SPEED_TEST_URL
+  return { concurrency, url }
+}
+
+export function storeSpeedTestOptions(options: SpeedTestOptions): void {
+  localStorage.setItem(CONCURRENCY_STORAGE_KEY, String(options.concurrency))
+  localStorage.setItem(URL_STORAGE_KEY, options.url)
+}
+
 const IDLE_STATUS: SpeedRunStatus = Object.freeze({
   running: false,
   total: 0,

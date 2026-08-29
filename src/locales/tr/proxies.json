@@ -38,7 +38,8 @@
       "showBasic": "Temel Vekil",
       "showDetail": "Vekil detayı",
       "filter": "Filtre",
-      "speedCheck": "Speed test"
+      "speedCheck": "Speed test",
+      "sortSpeed": "Sort by speed"
     },
     "placeholders": {
       "delayCheckUrl": "Gecikme kontrol URL'si"
