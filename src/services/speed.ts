@@ -10,7 +10,7 @@ import { listen } from '@tauri-apps/api/event'
 
 import { debugLog } from '@/utils/debug'
 
-export type SpeedState = 'testing' | 'ok' | 'fail'
+type SpeedState = 'testing' | 'ok' | 'fail'
 
 export interface SpeedUpdate {
   state: SpeedState
@@ -19,7 +19,7 @@ export interface SpeedUpdate {
   updatedAt: number
 }
 
-export interface SpeedRunStatus {
+interface SpeedRunStatus {
   running: boolean
   group?: string
   total: number
@@ -43,7 +43,7 @@ const CACHE_TTL = 30 * 60 * 1000
 /** 并发档位（需求：4/8/16 可选） */
 export const SPEED_CONCURRENCY_OPTIONS = [4, 8, 16] as const
 /** 默认测速文件：Cloudflare 25MB 下发端点，与后端单节点采样上限对齐 */
-export const DEFAULT_SPEED_TEST_URL =
+const DEFAULT_SPEED_TEST_URL =
   'https://speed.cloudflare.com/__down?bytes=25000000'
 
 const CONCURRENCY_STORAGE_KEY = 'speed-test-concurrency'
