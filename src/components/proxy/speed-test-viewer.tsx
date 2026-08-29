@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next'
 
 import { BaseDialog } from '@/components/base'
 import { useSpeedRunStatus } from '@/hooks/use-speed-state'
+import { useVerge } from '@/hooks/use-verge'
+import delayManager from '@/services/delay'
 import { showNotice } from '@/services/notice-service'
 import speedManager, {
   SpeedTestBusyError,
@@ -21,10 +23,13 @@ import speedManager, {
   getStoredSpeedTestOptions,
   storeSpeedTestOptions,
 } from '@/services/speed'
+import type { InteractableProxyMember } from '@/types/proxy-view'
 
 export interface SpeedTestTarget {
   group: string
   names: string[]
+  /** 组内可交互成员：测速启动时一并触发延迟测试 */
+  members: InteractableProxyMember[]
 }
 
 interface Props {
@@ -36,6 +41,7 @@ interface Props {
 export function SpeedTestViewer({ target, onClose }: Props) {
   const { t } = useTranslation()
   const runStatus = useSpeedRunStatus()
+  const { verge } = useVerge()
   const [concurrency, setConcurrency] = useState(
     () => getStoredSpeedTestOptions().concurrency,
   )
@@ -55,6 +61,12 @@ export function SpeedTestViewer({ target, onClose }: Props) {
   const onStart = useLockFn(async () => {
     if (!target) return
     storeSpeedTestOptions({ concurrency, url: url.trim() })
+
+    // 顺带并发测一轮组内延迟（复用延迟测试管线，独立更新延迟徽章）
+    if (target.members.length > 0) {
+      const timeout = verge?.default_latency_timeout || 10000
+      void delayManager.checkListDelay(target.members, target.group, timeout)
+    }
 
     try {
       await speedManager.startTest(target.group, target.names, concurrency, url)

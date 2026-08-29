@@ -141,10 +141,12 @@ function useProxyRenderState(
   // 测速目标（null = 对话框关闭）；对话框关闭后测速继续后台运行
   const [speedTarget, setSpeedTarget] = useState<SpeedTestTarget | null>(null)
   const handleSpeedCheck = useStableCallback((groupName: string) => {
-    const names = resolveInteractableMembers(groupName).map(
-      (member) => member.ref.name,
-    )
-    setSpeedTarget({ group: groupName, names })
+    const members = resolveInteractableMembers(groupName)
+    setSpeedTarget({
+      group: groupName,
+      names: members.map((member) => member.ref.name),
+      members,
+    })
   })
 
   // 该组测速结束（完成/取消/失败）后自动切换为按网速排序

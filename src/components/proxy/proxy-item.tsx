@@ -66,10 +66,11 @@ export const ProxyItem = (props: Props) => {
     group.name,
   )
 
-  // 节点速度徽章：点击可单节点重测（测速运行中不重复发起）
+  // 节点速度徽章：点击可单节点重测（测速运行中不重复发起），顺带重测延迟
   const speedUpdate = useSpeedState(name)
   const onSpeedRetest = async () => {
     if (speedManager.getRunStatus().running) return
+    void onDelay()
     const { concurrency, url } = getStoredSpeedTestOptions()
     try {
       await speedManager.startTest(group.name, [name], concurrency, url)
