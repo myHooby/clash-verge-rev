@@ -170,7 +170,10 @@ impl SpeedTestManager {
             });
         }
 
-        match self.prepare_and_spawn(names, concurrency, url, on_event, cancel_rx).await {
+        match self
+            .prepare_and_spawn(names, concurrency, url, on_event, cancel_rx)
+            .await
+        {
             Ok(()) => Ok(()),
             Err(err) => {
                 *self.active.lock() = None;
@@ -252,7 +255,10 @@ impl SpeedTestManager {
         completed_counter.fetch_add(missing, Ordering::Relaxed);
 
         if entries.is_empty() {
-            let _ = on_event.send(SpeedTestEvent::Done { total, cancelled: false });
+            let _ = on_event.send(SpeedTestEvent::Done {
+                total,
+                cancelled: false,
+            });
             *self.active.lock() = None;
             return Ok(());
         }
@@ -348,7 +354,11 @@ async fn supervise(
     // 移交所有权：恢复后仅剩 total（Copy）还需使用
     let total = ctx.total;
     if let Err(err) = restore_listeners(ctx.injected, ctx.original_listeners).await {
-        logging!(error, Type::Core, "failed to restore listeners after speed test: {err:#}");
+        logging!(
+            error,
+            Type::Core,
+            "failed to restore listeners after speed test: {err:#}"
+        );
     }
     let _ = on_event.send(SpeedTestEvent::Done {
         total,
@@ -503,8 +513,8 @@ fn compute_speed_bps(bytes: u64, elapsed: Duration) -> u64 {
 }
 
 fn build_client(port: u16, connect_timeout: Duration) -> Result<Client, StdString> {
-    let proxy = Proxy::all(format!("http://127.0.0.1:{port}"))
-        .map_err(|err| format!("failed to create proxy: {err}"))?;
+    let proxy =
+        Proxy::all(format!("http://127.0.0.1:{port}")).map_err(|err| format!("failed to create proxy: {err}"))?;
     Client::builder()
         .proxy(proxy)
         .connect_timeout(connect_timeout)
@@ -529,11 +539,10 @@ async fn wait_listeners_ready(ports: &[u16], cancel_rx: &watch::Receiver<bool>) 
 
 async fn futures_all_ready(ports: &[u16]) -> bool {
     for port in ports {
-        let connected =
-            tokio::time::timeout(Duration::from_millis(300), TcpStream::connect(("127.0.0.1", *port)))
-                .await
-                .map(|result| result.is_ok())
-                .unwrap_or(false);
+        let connected = tokio::time::timeout(Duration::from_millis(300), TcpStream::connect(("127.0.0.1", *port)))
+            .await
+            .map(|result| result.is_ok())
+            .unwrap_or(false);
         if !connected {
             return false;
         }
