@@ -215,6 +215,12 @@ pub async fn update_profile(uid: &String, option: Option<&PrfOption>, is_mannual
             Ok(outcome) if outcome.is_valid() => {
                 logging!(info, Type::Config, "[订阅更新] 更新成功");
                 handle::Handle::refresh_clash();
+                // 当前订阅内容已刷新，节点列表可能已变化，按节点缓存的
+                // 测速/延迟结果不再可信；与切换订阅同语义，通知前端作废。
+                // 仅在实际重新拉取并保存了内容时清除（空更新/非当前订阅不动结果）。
+                if profile_persisted && is_current {
+                    handle::Handle::notify_profile_changed(uid);
+                }
             }
             Ok(outcome @ (ValidationOutcome::Skipped { .. } | ValidationOutcome::Busy)) if !is_mannual_trigger => {
                 logging!(info, Type::Config, "[订阅更新] 本次配置刷新已跳过: {}", outcome);
