@@ -3,8 +3,9 @@
  *
  * 结果原本只存在前端内存单例里，WebView 重载（macOS 内存压力回收渲染进程、
  * Vite 整页刷新等）后全部丢失。这里提供统一的 读/写/清 原语：
- * - 读取时按 TTL 剪枝并允许调用方过滤瞬时态（如 testing）
- * - 写入前同样剪枝，容错序列化失败（localStorage 不可用时静默跳过）
+ * - 结果不按时间过期：保留到被新一轮测试覆盖，或 profile-changed 时整体清除
+ *   （与 mihomo 自身延迟 history 的生命周期一致），仅过滤瞬时态（如 testing）
+ * - 容错序列化失败（localStorage 不可用时静默跳过）
  */
 
 export interface StoredResult<V> {
@@ -15,10 +16,9 @@ export interface StoredResult<V> {
 const hasLocalStorage = () =>
   typeof localStorage !== 'undefined' && localStorage !== null
 
-/** 读取持久化结果：过期与不合法条目剔除，任何异常回退为空表 */
+/** 读取持久化结果：不合法条目剔除，任何异常回退为空表 */
 export function loadResults<V>(
   key: string,
-  ttlMs: number,
   isValid: (value: V) => boolean,
 ): Map<string, StoredResult<V>> {
   const result = new Map<string, StoredResult<V>>()
@@ -31,7 +31,6 @@ export function loadResults<V>(
     const parsed: unknown = JSON.parse(raw)
     if (!parsed || typeof parsed !== 'object') return result
 
-    const now = Date.now()
     for (const [name, entry] of Object.entries(
       parsed as Record<string, unknown>,
     )) {
@@ -41,7 +40,6 @@ export function loadResults<V>(
         updatedAt?: unknown
       }
       if (typeof updatedAt !== 'number' || !Number.isFinite(updatedAt)) continue
-      if (now - updatedAt > ttlMs) continue
       if (value === undefined || value === null) continue
       if (!isValid(value as V)) continue
       result.set(name, { value: value as V, updatedAt })
@@ -52,21 +50,18 @@ export function loadResults<V>(
   return result
 }
 
-/** 写入持久化结果：剔除过期与不合法（如 testing 态）条目后整体覆盖，静默容错 */
+/** 写入持久化结果：剔除不合法（如 testing 态）条目后整体覆盖，静默容错 */
 export function saveResults<V extends { updatedAt: number }>(
   key: string,
   entries: Iterable<[string, V]>,
-  ttlMs: number,
   isValid?: (value: V) => boolean,
 ): void {
   if (!hasLocalStorage()) return
 
   try {
-    const now = Date.now()
     const payload: Record<string, { value: V; updatedAt: number }> = {}
     for (const [name, value] of entries) {
       if (!value || typeof value.updatedAt !== 'number') continue
-      if (now - value.updatedAt > ttlMs) continue
       if (isValid && !isValid(value)) continue
       payload[name] = { value, updatedAt: value.updatedAt }
     }

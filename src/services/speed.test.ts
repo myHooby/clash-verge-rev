@@ -196,6 +196,26 @@ describe('SpeedManager', () => {
     expect(fresh.getSnapshot('p-hang')).toBeUndefined()
   })
 
+  test('hydrated results stay visible beyond the old 30-minute TTL', () => {
+    // 回归：此前读路径按 30 分钟 TTL 过期，放置一段时间后速度徽章凭空消失
+    const aged = Date.now() - 45 * 60 * 1000
+    storage.set(
+      'verge-speed-results',
+      JSON.stringify({
+        old: {
+          value: { state: 'ok', speedBps: 321_000, updatedAt: aged },
+          updatedAt: aged,
+        },
+      }),
+    )
+
+    const fresh = new SpeedManager()
+    expect(fresh.getSnapshot('old')).toMatchObject({
+      state: 'ok',
+      speedBps: 321_000,
+    })
+  })
+
   test('clearAll wipes cache, storage and notifies listeners', async () => {
     const started = speedManager.startTest(
       'clear',

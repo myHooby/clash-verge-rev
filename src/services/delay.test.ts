@@ -59,6 +59,18 @@ describe('group delay completion', () => {
     stop()
   })
 
+  test('results stay readable beyond the old 30-minute TTL', () => {
+    // 回归：此前读路径按 30 分钟 TTL 过期删除，放置一段时间后延迟凭空消失
+    vi.useFakeTimers()
+    try {
+      delayManager.setDelay('aged', 'g', 88)
+      vi.setSystemTime(Date.now() + 45 * 60 * 1000)
+      expect(delayManager.getDelayUpdate('aged', 'g')?.delay).toBe(88)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   test('clearAll resets every badge to untested and notifies groups', async () => {
     let groupNotifications = 0
     const stopGroup = delayManager.addGroupListener('g', () => {

@@ -40,8 +40,7 @@ type SpeedTestEvent =
     }
   | { type: 'done'; total: number; cancelled: boolean }
 
-const CACHE_TTL = 30 * 60 * 1000
-/** 结果持久化键：WebView 重载后恢复（30 分钟内） */
+/** 结果持久化键：WebView 重载后恢复；结果不按时间过期，直到新测试覆盖或 profile 变更清除 */
 const STORAGE_KEY = 'verge-speed-results'
 /** 防抖持久化间隔（批量事件时避免逐节点写 localStorage） */
 const PERSIST_DEBOUNCE = 1200
@@ -117,7 +116,6 @@ export class SpeedManager {
     // 从 localStorage 恢复上次会话的测速结果（WebView 重载后徽章与排序依据不丢）
     loadResults<SpeedUpdate>(
       STORAGE_KEY,
-      CACHE_TTL,
       (value) => value.state !== 'testing',
     ).forEach((stored, name) => {
       this.cache.set(name, stored.value)
@@ -138,7 +136,7 @@ export class SpeedManager {
       clearTimeout(this.persistTimer)
       this.persistTimer = null
     }
-    saveResults(STORAGE_KEY, this.cache.entries(), CACHE_TTL, isPersistable)
+    saveResults(STORAGE_KEY, this.cache.entries(), isPersistable)
   }
 
   private scheduleOnNextFrame(run: () => void): void {
@@ -239,17 +237,12 @@ export class SpeedManager {
   }
 
   getSnapshot(name: string): SpeedUpdate | undefined {
-    const entry = this.cache.get(name)
-    if (!entry) return undefined
-
-    if (Date.now() - entry.updatedAt > CACHE_TTL) {
-      this.cache.delete(name)
-      return undefined
-    }
-    return entry
+    // 不按时间过期：结果保留到新一轮测试覆盖或 profile 变更清除，
+    // 避免放置一段时间后速度徽章凭空消失。
+    return this.cache.get(name)
   }
 
-  /** 兼容排序读取：返回缓存更新（含 TTL 清理） */
+  /** 兼容排序读取：返回缓存更新 */
   getSpeedUpdate(name: string): SpeedUpdate | undefined {
     return this.getSnapshot(name)
   }

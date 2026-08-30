@@ -27,8 +27,7 @@ export interface DelayUpdate {
   updatedAt: number
 }
 
-const CACHE_TTL = 30 * 60 * 1000
-/** 结果持久化键：WebView 重载后恢复（30 分钟内） */
+/** 结果持久化键：WebView 重载后恢复；结果不按时间过期，直到新测试覆盖或 profile 变更清除 */
 const STORAGE_KEY = 'verge-delay-results'
 /** 防抖持久化间隔（批量测试时避免逐节点写 localStorage） */
 const PERSIST_DEBOUNCE = 1200
@@ -61,13 +60,11 @@ class DelayManager {
 
   constructor() {
     // 从 localStorage 恢复上次会话的测速结果（WebView 重载后徽章与排序依据不丢）
-    loadResults<DelayUpdate>(
-      STORAGE_KEY,
-      CACHE_TTL,
-      isPersistableDelay,
-    ).forEach((stored, key) => {
-      this.cache.set(key, stored.value)
-    })
+    loadResults<DelayUpdate>(STORAGE_KEY, isPersistableDelay).forEach(
+      (stored, key) => {
+        this.cache.set(key, stored.value)
+      },
+    )
   }
 
   private schedulePersist() {
@@ -84,12 +81,7 @@ class DelayManager {
       clearTimeout(this.persistTimer)
       this.persistTimer = null
     }
-    saveResults(
-      STORAGE_KEY,
-      this.cache.entries(),
-      CACHE_TTL,
-      isPersistableDelay,
-    )
+    saveResults(STORAGE_KEY, this.cache.entries(), isPersistableDelay)
   }
 
   /**
@@ -312,11 +304,8 @@ class DelayManager {
     const entry = this.cache.get(key)
     if (!entry) return undefined
 
-    if (Date.now() - entry.updatedAt > CACHE_TTL) {
-      this.cache.delete(key)
-      return undefined
-    }
-
+    // 不按时间过期：结果保留到新一轮测试覆盖或 profile 变更清除，
+    // 避免放置一段时间后徽章/排序依据凭空消失。
     return { ...entry }
   }
 
