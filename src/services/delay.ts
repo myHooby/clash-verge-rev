@@ -13,6 +13,8 @@ import {
 import { debugLog } from '@/utils/debug'
 import { classifyDelay, DEFAULT_DELAY_TIMEOUT } from '@/utils/delay'
 
+import { clearResults, loadResults, saveResults } from './result-store'
+
 export type DelaySnapshot = {
   of: (member: ResolvedProxyMember) => number
 }
@@ -26,6 +28,12 @@ export interface DelayUpdate {
 }
 
 const CACHE_TTL = 30 * 60 * 1000
+/** 结果持久化键：WebView 重载后恢复（30 分钟内） */
+const STORAGE_KEY = 'verge-delay-results'
+/** 防抖持久化间隔（批量测试时避免逐节点写 localStorage） */
+const PERSIST_DEBOUNCE = 1200
+
+const isPersistableDelay = (value: DelayUpdate) => value.delay !== -2
 
 class DelayManager {
   private cache = new Map<string, DelayUpdate>()
@@ -47,6 +55,83 @@ class DelayManager {
   private pendingGroupUpdates = new Set<string>()
   private itemFlushScheduled = false
   private groupFlushScheduled = false
+
+  private persistTimer: ReturnType<typeof setTimeout> | null = null
+  private eventsBound = false
+
+  constructor() {
+    // 从 localStorage 恢复上次会话的测速结果（WebView 重载后徽章与排序依据不丢）
+    loadResults<DelayUpdate>(
+      STORAGE_KEY,
+      CACHE_TTL,
+      isPersistableDelay,
+    ).forEach((stored, key) => {
+      this.cache.set(key, stored.value)
+    })
+  }
+
+  private schedulePersist() {
+    if (this.persistTimer) return
+    this.persistTimer = setTimeout(() => {
+      this.persistTimer = null
+      this.persistNow()
+    }, PERSIST_DEBOUNCE)
+  }
+
+  /** 立即落盘（批量结束/应用退出前调用，防抖窗口内的结果不丢失） */
+  private persistNow() {
+    if (this.persistTimer) {
+      clearTimeout(this.persistTimer)
+      this.persistTimer = null
+    }
+    saveResults(
+      STORAGE_KEY,
+      this.cache.entries(),
+      CACHE_TTL,
+      isPersistableDelay,
+    )
+  }
+
+  /**
+   * 订阅后端事件：切换/更新订阅（profile-changed）后旧结果作废，
+   * 内存缓存与持久化一并清除并通知 UI 回到未测态。
+   */
+  bindEvents() {
+    if (this.eventsBound) return
+    this.eventsBound = true
+    void import('@tauri-apps/api/event')
+      .then(({ listen }) => listen('profile-changed', () => this.clearAll()))
+      .catch((error) => {
+        console.error('[DelayManager] 绑定 profile-changed 事件失败', error)
+        this.eventsBound = false
+      })
+  }
+
+  /** 清空全部延迟结果（含持久化），并把已挂载的徽章重置为未测态 */
+  clearAll() {
+    this.cache.clear()
+    clearResults(STORAGE_KEY)
+    this.groupSnapshots.clear()
+    this.groupSetSnapshots.clear()
+
+    const untested: DelayUpdate = { delay: -1, updatedAt: Date.now() }
+    for (const listener of this.listenerMap.values()) {
+      try {
+        listener(untested)
+      } catch (error) {
+        console.error('[DelayManager] 重置延迟徽章失败', error)
+      }
+    }
+    for (const listeners of this.groupListenerMap.values()) {
+      for (const listener of [...listeners]) {
+        try {
+          listener()
+        } catch (error) {
+          console.error('[DelayManager] 通知分组重置失败', error)
+        }
+      }
+    }
+  }
 
   private scheduleOnNextFrame(run: () => void): void {
     if (typeof window !== 'undefined') {
@@ -217,6 +302,7 @@ class DelayManager {
       this.pendingItemUpdates.set(key, [update])
     }
     this.scheduleItemFlush()
+    if (isPersistableDelay(update)) this.schedulePersist()
 
     return update
   }
@@ -394,6 +480,8 @@ class DelayManager {
         this.activeBatches.delete(group)
         this.queueGroupNotification(group)
       }
+      // 批量结束立即落盘，避免防抖窗口内退出应用丢失整批结果
+      this.persistNow()
     }
     const totalTime = Date.now() - startTime
     debugLog(

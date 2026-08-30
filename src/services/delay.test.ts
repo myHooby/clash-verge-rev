@@ -58,4 +58,29 @@ describe('group delay completion', () => {
     expect(other).toBe(0)
     stop()
   })
+
+  test('clearAll resets every badge to untested and notifies groups', async () => {
+    let groupNotifications = 0
+    const stopGroup = delayManager.addGroupListener('g', () => {
+      groupNotifications += 1
+    })
+    const received: number[] = []
+    delayManager.setListener('z', 'g', (update) => {
+      received.push(update.delay)
+    })
+
+    delayManager.setDelay('z', 'g', 42)
+    await flush()
+    expect(delayManager.getDelayUpdate('z', 'g')?.delay).toBe(42)
+    const beforeClear = groupNotifications
+
+    delayManager.clearAll()
+    await flush()
+
+    expect(delayManager.getDelayUpdate('z', 'g')).toBeUndefined()
+    // 徽章监听器收到"未测"重置值，分组监听器收到 settle 通知
+    expect(received[received.length - 1]).toBe(-1)
+    expect(groupNotifications).toBe(beforeClear + 1)
+    stopGroup()
+  })
 })

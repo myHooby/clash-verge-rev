@@ -10,6 +10,8 @@ import { listen } from '@tauri-apps/api/event'
 
 import { debugLog } from '@/utils/debug'
 
+import { clearResults, loadResults, saveResults } from './result-store'
+
 type SpeedState = 'testing' | 'ok' | 'fail'
 
 export interface SpeedUpdate {
@@ -39,6 +41,10 @@ type SpeedTestEvent =
   | { type: 'done'; total: number; cancelled: boolean }
 
 const CACHE_TTL = 30 * 60 * 1000
+/** 结果持久化键：WebView 重载后恢复（30 分钟内） */
+const STORAGE_KEY = 'verge-speed-results'
+/** 防抖持久化间隔（批量事件时避免逐节点写 localStorage） */
+const PERSIST_DEBOUNCE = 1200
 
 /** 并发档位（需求：4/8/16 可选） */
 export const SPEED_CONCURRENCY_OPTIONS = [4, 8, 16] as const
@@ -79,6 +85,9 @@ const IDLE_STATUS: SpeedRunStatus = Object.freeze({
   concurrency: 0,
 })
 
+/** 持久化过滤：testing 是瞬时态，不落盘 */
+const isPersistable = (value: SpeedUpdate) => value.state !== 'testing'
+
 export class SpeedTestBusyError extends Error {
   constructor() {
     super('speed test already running')
@@ -86,9 +95,9 @@ export class SpeedTestBusyError extends Error {
   }
 }
 
-class SpeedManager {
+export class SpeedManager {
   private cache = new Map<string, SpeedUpdate>()
-  private listenerMap = new Map<string, (update: SpeedUpdate) => void>()
+  private listenerMap = new Map<string, (update?: SpeedUpdate) => void>()
   private runListeners = new Set<() => void>()
   private groupListenerMap = new Map<string, Set<() => void>>()
 
@@ -101,6 +110,36 @@ class SpeedManager {
   private activeGroup: string | null = null
   /** 本轮待测节点名：done(cancelled) 时把仍处于 testing 的节点收尾 */
   private runNames = new Set<string>()
+
+  private persistTimer: ReturnType<typeof setTimeout> | null = null
+
+  constructor() {
+    // 从 localStorage 恢复上次会话的测速结果（WebView 重载后徽章与排序依据不丢）
+    loadResults<SpeedUpdate>(
+      STORAGE_KEY,
+      CACHE_TTL,
+      (value) => value.state !== 'testing',
+    ).forEach((stored, name) => {
+      this.cache.set(name, stored.value)
+    })
+  }
+
+  private schedulePersist() {
+    if (this.persistTimer) return
+    this.persistTimer = setTimeout(() => {
+      this.persistTimer = null
+      this.persistNow()
+    }, PERSIST_DEBOUNCE)
+  }
+
+  /** 立即落盘（测速结束/失败路径调用，防抖窗口内的结果不丢失） */
+  private persistNow() {
+    if (this.persistTimer) {
+      clearTimeout(this.persistTimer)
+      this.persistTimer = null
+    }
+    saveResults(STORAGE_KEY, this.cache.entries(), CACHE_TTL, isPersistable)
+  }
 
   private scheduleOnNextFrame(run: () => void): void {
     if (typeof window !== 'undefined') {
@@ -183,7 +222,7 @@ class SpeedManager {
   /** 单节点徽章订阅（useSyncExternalStore） */
   subscribeName(
     name: string,
-    listener: (update: SpeedUpdate) => void,
+    listener: (update?: SpeedUpdate) => void,
   ): () => void {
     this.listenerMap.set(name, listener)
     return () => {
@@ -235,6 +274,7 @@ class SpeedManager {
 
     this.pendingItemUpdates.set(name, update)
     this.scheduleItemFlush()
+    if (update.state !== 'testing') this.schedulePersist()
     return update
   }
 
@@ -289,6 +329,8 @@ class SpeedManager {
         concurrency: this.status.concurrency,
       })
       this.notifyGroupSettled(settledGroup)
+      // 整轮结束立即落盘，避免防抖窗口内重载丢失整批结果
+      this.persistNow()
     }
 
     const channel = new Channel<SpeedTestEvent>((event) => {
@@ -348,6 +390,7 @@ class SpeedManager {
         concurrency,
       })
       this.notifyGroupSettled(failedGroup)
+      this.persistNow()
 
       if (busy) throw new SpeedTestBusyError()
     }
@@ -384,8 +427,9 @@ class SpeedManager {
   }
 
   /**
-   * 订阅配置变更事件：订阅切换/配置重载会覆盖注入的测速监听器，
-   * 主动停止测速让后端尽快恢复原配置。
+   * 订阅后端事件：
+   * - 配置重载（refresh-clash-config）会覆盖注入的测速监听器，主动停止测速；
+   * - 切换/更新订阅（profile-changed）后旧结果作废，缓存与持久化一并清除。
    */
   async bindConfigWatch(): Promise<void> {
     const stopIfRunning = () => {
@@ -396,9 +440,33 @@ class SpeedManager {
     }
     try {
       await listen('verge://refresh-clash-config', stopIfRunning)
-      await listen('profile-changed', stopIfRunning)
+      await listen('profile-changed', () => this.clearAll())
     } catch (error) {
       console.error('[SpeedManager] 绑定配置变更事件失败', error)
+    }
+  }
+
+  /** 清空全部测速结果（含持久化），并让已挂载的徽章回到未测态 */
+  clearAll() {
+    this.cache.clear()
+    clearResults(STORAGE_KEY)
+
+    for (const listener of this.listenerMap.values()) {
+      try {
+        listener()
+      } catch (error) {
+        console.error('[SpeedManager] 重置速度徽章失败', error)
+      }
+    }
+    this.setStatus(IDLE_STATUS)
+    for (const listeners of this.groupListenerMap.values()) {
+      for (const listener of [...listeners]) {
+        try {
+          listener()
+        } catch (error) {
+          console.error('[SpeedManager] 通知分组重置失败', error)
+        }
+      }
     }
   }
 }

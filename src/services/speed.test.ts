@@ -20,7 +20,18 @@ vi.mock('@tauri-apps/api/event', () => ({
   listen: vi.fn(async () => () => {}),
 }))
 
-import speedManager, { SpeedTestBusyError } from './speed'
+import speedManager, { SpeedManager, SpeedTestBusyError } from './speed'
+
+const storage = new Map<string, string>()
+const localStorageStub = {
+  getItem: (key: string) => storage.get(key) ?? null,
+  setItem: (key: string, value: string) => {
+    storage.set(key, value)
+  },
+  removeItem: (key: string) => {
+    storage.delete(key)
+  },
+}
 
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0))
 
@@ -38,6 +49,8 @@ const item = (name: string, ok: boolean, speed_bps = 0, error?: string) => ({
 describe('SpeedManager', () => {
   beforeEach(() => {
     channels.length = 0
+    storage.clear()
+    vi.stubGlobal('localStorage', localStorageStub)
     vi.mocked(invoke).mockClear()
     vi.mocked(invoke).mockResolvedValue(undefined)
   })
@@ -154,5 +167,65 @@ describe('SpeedManager', () => {
 
     latestChannel().emit({ type: 'done', total: 1, cancelled: false })
     await first
+  })
+
+  test('finished results persist to localStorage and hydrate a fresh instance', async () => {
+    const started = speedManager.startTest(
+      'persist',
+      ['p-ok', 'p-hang'],
+      4,
+      'https://example.com/down',
+    )
+    await flush()
+    const channel = latestChannel()
+
+    channel.emit(item('p-ok', true, 2_000_000))
+    channel.emit({ type: 'done', total: 2, cancelled: false })
+    await started
+
+    // done 时立即落盘：已出结果的节点写入，仍处 testing 的节点被过滤
+    const raw = JSON.parse(
+      storage.get('verge-speed-results') ?? '{}',
+    ) as Record<string, { value: { state: string } }>
+    expect(raw['p-ok']?.value.state).toBe('ok')
+    expect(raw['p-hang']).toBeUndefined()
+
+    // 模拟 WebView 重载：新实例从 localStorage 恢复
+    const fresh = new SpeedManager()
+    expect(fresh.getSnapshot('p-ok')?.state).toBe('ok')
+    expect(fresh.getSnapshot('p-hang')).toBeUndefined()
+  })
+
+  test('clearAll wipes cache, storage and notifies listeners', async () => {
+    const started = speedManager.startTest(
+      'clear',
+      ['c1'],
+      4,
+      'https://example.com/down',
+    )
+    await flush()
+    latestChannel().emit(item('c1', true, 500_000))
+    latestChannel().emit({ type: 'done', total: 1, cancelled: false })
+    await started
+    expect(speedManager.getSpeedUpdate('c1')?.state).toBe('ok')
+
+    let notified = 0
+    const stop = speedManager.addGroupListener('clear', () => {
+      notified += 1
+    })
+    let badgeNotifications = 0
+    const stopBadge = speedManager.subscribeName('c1', () => {
+      badgeNotifications += 1
+    })
+
+    speedManager.clearAll()
+    await flush()
+
+    expect(speedManager.getSpeedUpdate('c1')).toBeUndefined()
+    expect(storage.has('verge-speed-results')).toBe(false)
+    expect(notified).toBe(1)
+    expect(badgeNotifications).toBe(1)
+    stop()
+    stopBadge()
   })
 })

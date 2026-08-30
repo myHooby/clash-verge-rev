@@ -13,6 +13,7 @@ import { router } from './pages/_routers'
 import { preloadHomePageCards } from './pages/home'
 import { AppDataProvider } from './providers/app-data-provider'
 import { WindowProvider } from './providers/window'
+import delayManager from './services/delay'
 import { FALLBACK_LANGUAGE, initializeLanguage } from './services/i18n'
 import {
   preloadAppData,
@@ -20,6 +21,7 @@ import {
   getPreloadConfig,
 } from './services/preload'
 import { swrConfig } from './services/query-client'
+import speedManager from './services/speed'
 import {
   LoadingCacheProvider,
   ThemeModeProvider,
@@ -68,6 +70,10 @@ const initializeApp = (initialThemeMode: 'light' | 'dark') => {
 const bootstrap = async () => {
   const appDataPromise = preloadAppData()
   void preloadHomePageCards()
+
+  // 延迟/测速结果的持久化生命周期：重载后恢复、订阅切换后作废、配置变更自动停测速
+  delayManager.bindEvents()
+  void speedManager.bindConfigWatch()
 
   const { initialThemeMode } = await appDataPromise
   initializeApp(initialThemeMode)
