@@ -94,29 +94,32 @@ function sortProxies(
   if (!proxies) return []
   if (sortType === 0) return proxies
 
-  const list = proxies.slice()
   const effectiveTimeout =
     typeof latencyTimeout === 'number' && latencyTimeout > 0
       ? latencyTimeout
       : DEFAULT_DELAY_TIMEOUT
 
-  if (sortType === 1) {
-    list.sort((a, b) =>
-      compareByDelay(
-        delayManager.getDelayFix(a.member, groupName),
-        delayManager.getDelayFix(b.member, groupName),
-        effectiveTimeout,
-      ),
-    )
-  } else if (sortType === 3) {
-    // 按网速：实测降序，失败/测试中/未测依次靠后
-    list.sort((a, b) =>
-      compareBySpeed(
-        speedManager.getSpeedUpdate(a.member.ref.name),
-        speedManager.getSpeedUpdate(b.member.ref.name),
-      ),
-    )
-  } else {
+  if (sortType === 1 && proxies.length > 1) {
+    return proxies
+      .map((proxy) => ({
+        proxy,
+        delay: delayManager.getDelayFix(proxy.member, groupName),
+      }))
+      .sort((a, b) => compareByDelay(a.delay, b.delay, effectiveTimeout))
+      .map(({ proxy }) => proxy)
+  }
+  if (sortType === 3) {
+    // 按网速：实测降序，失败/测试中/未测依次靠后；预取测速结果避免比较器内重复查询
+    return proxies
+      .map((proxy) => ({
+        proxy,
+        update: speedManager.getSpeedUpdate(proxy.member.ref.name),
+      }))
+      .sort((a, b) => compareBySpeed(a.update, b.update))
+      .map(({ proxy }) => proxy)
+  }
+  const list = proxies.slice()
+  if (sortType !== 1) {
     list.sort((a, b) => a.member.ref.name.localeCompare(b.member.ref.name))
   }
 
