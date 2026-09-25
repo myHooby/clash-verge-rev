@@ -15,7 +15,9 @@ pub enum ServiceInstallOutcome {
     // Only constructed by finish_service_installation, which is compiled on
     // windows and in tests; keep other builds strict about dead code.
     #[cfg_attr(not(any(windows, test)), allow(dead_code))]
-    Sidecar { reason: String },
+    Sidecar {
+        reason: String,
+    },
 }
 
 async fn execute_service_operation_sync(status: ServiceStatus, error_code: &str) -> CmdResult<ServiceInstallOutcome> {
