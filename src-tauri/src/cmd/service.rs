@@ -12,9 +12,7 @@ use crate::{
 #[serde(tag = "status", rename_all = "camelCase")]
 pub enum ServiceInstallOutcome {
     Installed,
-    // Only constructed by finish_service_installation, which is compiled on
-    // windows and in tests; keep other builds strict about dead code.
-    #[cfg_attr(not(any(windows, test)), allow(dead_code))]
+    #[cfg(any(windows, test))]
     Sidecar {
         reason: String,
     },
