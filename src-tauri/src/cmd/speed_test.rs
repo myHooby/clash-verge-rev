@@ -1,5 +1,5 @@
 use super::{CmdResult, coded_error};
-use crate::module::speed_test::{SpeedTestEvent, SpeedTestManager, SpeedTestStatus, StartFailure};
+use crate::core::speed_test::{SpeedTestEvent, SpeedTestManager, SpeedTestStatus, StartFailure};
 use tauri::{command, ipc::Channel};
 
 /// 启动一轮按节点并发测速；结果经 `on_event` 增量回传

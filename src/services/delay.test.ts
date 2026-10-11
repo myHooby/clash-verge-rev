@@ -63,9 +63,9 @@ describe('group delay completion', () => {
     // 回归：此前读路径按 30 分钟 TTL 过期删除，放置一段时间后延迟凭空消失
     vi.useFakeTimers()
     try {
-      delayManager.setDelay('aged', 'g', 88)
+      delayManager.setDelay(node('aged'), 'g', 88)
       vi.setSystemTime(Date.now() + 45 * 60 * 1000)
-      expect(delayManager.getDelayUpdate('aged', 'g')?.delay).toBe(88)
+      expect(delayManager.getDelayUpdate(node('aged'), 'g')?.delay).toBe(88)
     } finally {
       vi.useRealTimers()
     }
@@ -77,22 +77,159 @@ describe('group delay completion', () => {
       groupNotifications += 1
     })
     const received: number[] = []
-    delayManager.setListener('z', 'g', (update) => {
+    delayManager.setListener(node('z'), 'g', (update) => {
       received.push(update.delay)
     })
 
-    delayManager.setDelay('z', 'g', 42)
+    delayManager.setDelay(node('z'), 'g', 42)
     await flush()
-    expect(delayManager.getDelayUpdate('z', 'g')?.delay).toBe(42)
+    expect(delayManager.getDelayUpdate(node('z'), 'g')?.delay).toBe(42)
     const beforeClear = groupNotifications
 
     delayManager.clearAll()
     await flush()
 
-    expect(delayManager.getDelayUpdate('z', 'g')).toBeUndefined()
+    expect(delayManager.getDelayUpdate(node('z'), 'g')).toBeUndefined()
     // 徽章监听器收到"未测"重置值，分组监听器收到 settle 通知
     expect(received[received.length - 1]).toBe(-1)
     expect(groupNotifications).toBe(beforeClear + 1)
     stopGroup()
   })
+})
+
+test('uses newer core history after a tray test without hiding an active page test', () => {
+  const member = node('tray-refresh')
+  if (member.kind !== 'node') throw new Error('Expected node')
+  const cached = delayManager.setDelay(member, 'tray-group', 50)
+  member.node.extra = {
+    [delayManager.getUrl('tray-group')]: {
+      alive: true,
+      history: [
+        { time: new Date(cached.updatedAt + 1000).toISOString(), delay: 300 },
+      ],
+    },
+  }
+
+  expect(delayManager.getDelayFix(member, 'tray-group')).toBe(300)
+  expect(delayManager.getDelayUpdate(member, 'tray-group')?.delay).toBe(300)
+
+  delayManager.setDelay(member, 'tray-group', -2)
+  expect(delayManager.getDelayFix(member, 'tray-group')).toBe(-2)
+})
+
+test('latency URL validation rejects malformed hosts and ports and trims valid URLs', () => {
+  for (const url of [
+    'http://?',
+    'http://host:invalid',
+    'http://bad host/',
+    'ftp://localhost',
+    'http:localhost',
+  ]) {
+    delayManager.setUrl('url-validation', url)
+    expect(delayManager.getUrl('url-validation')).toBe(
+      'http://cp.cloudflare.com/generate_204',
+    )
+  }
+  delayManager.setUrl('url-validation', ' HTTP://localhost:8080/ ')
+  expect(delayManager.getUrl('url-validation')).toBe('HTTP://localhost:8080/')
+})
+
+test('another URL cannot replace a group measurement, but a newer matching URL can', () => {
+  const member = node('url-isolation')
+  if (member.kind !== 'node') throw new Error('Expected node')
+  delayManager.setUrl('url-a', 'http://localhost/a')
+  const cached = delayManager.setDelay(member, 'url-a', 50)
+  const newer = new Date(cached.updatedAt + 1000).toISOString()
+  Object.assign(member.node, {
+    history: [{ time: newer, delay: 126 }],
+    extra: {
+      'http://localhost/a': {
+        alive: true,
+        history: [
+          { time: new Date(cached.updatedAt - 1000).toISOString(), delay: 49 },
+        ],
+      },
+      'http://localhost/b': {
+        alive: true,
+        history: [{ time: newer, delay: 126 }],
+      },
+    },
+  })
+  expect(delayManager.getDelayFix(member, 'url-a')).toBe(50)
+  Object.assign(member.node, {
+    extra: {
+      'http://localhost/a': {
+        alive: true,
+        history: [{ time: newer, delay: 75 }],
+      },
+    },
+  })
+  expect(delayManager.getDelayFix(member, 'url-a')).toBe(75)
+})
+
+test('same-named provider members keep separate measurements and listeners', async () => {
+  const first = node('same-provider-name')
+  const second = node('same-provider-name')
+  if (first.kind !== 'node' || second.kind !== 'node')
+    throw new Error('Expected nodes')
+  first.node.recordId = 'provider-a:N'
+  first.node.source = { kind: 'provider', providerName: 'a', proxyName: 'N' }
+  second.node.recordId = 'provider-b:N'
+  second.node.source = { kind: 'provider', providerName: 'b', proxyName: 'N' }
+  const { healthcheckNodeInProvider } = await import('tauri-plugin-mihomo-api')
+  vi.mocked(healthcheckNodeInProvider)
+    .mockResolvedValueOnce({ delay: 40 })
+    .mockResolvedValueOnce({ delay: 125 })
+  const firstListener = vi.fn()
+  const secondListener = vi.fn()
+  delayManager.setListener(first, 'provider-collision', firstListener)
+  delayManager.setListener(second, 'provider-collision', secondListener)
+  await delayManager.checkListDelay([first, second], 'provider-collision', 5000)
+  await flush()
+  expect(firstListener).toHaveBeenLastCalledWith(
+    expect.objectContaining({ delay: 40 }),
+  )
+  expect(secondListener).toHaveBeenLastCalledWith(
+    expect.objectContaining({ delay: 125 }),
+  )
+  delayManager.removeListener(first, 'provider-collision')
+  delayManager.removeListener(second, 'provider-collision')
+  expect(delayManager.getDelayFix(first, 'provider-collision')).toBe(40)
+  expect(delayManager.getDelayFix(second, 'provider-collision')).toBe(125)
+})
+
+test.each(['core', 'provider'] as const)(
+  'cached %s delays follow source identity after record IDs move',
+  (kind) => {
+    const original = node(`stable-${kind}`)
+    const replacement = node(`replacement-${kind}`)
+    if (original.kind !== 'node' || replacement.kind !== 'node')
+      throw new Error('Expected nodes')
+    const source = (proxyName: string) =>
+      kind === 'core'
+        ? { kind, proxyName }
+        : { kind, providerName: 'subscription', proxyName }
+    original.node.source = source(original.ref.name)
+    replacement.node.source = source(replacement.ref.name)
+    original.node.recordId = 'position:0'
+    replacement.node.recordId = 'position:0'
+    delayManager.setDelay(original, `reorder-${kind}`, 40)
+    expect(delayManager.getDelayFix(replacement, `reorder-${kind}`)).toBe(-1)
+    original.node.recordId = 'position:1'
+    expect(delayManager.getDelayFix(original, `reorder-${kind}`)).toBe(40)
+  },
+)
+
+test('unmeasured selectors show automatic history without replacing a manual URL result', () => {
+  const member = node('selector-member')
+  if (member.kind !== 'node') throw new Error('Expected node')
+  member.node.history = [
+    { time: new Date(Date.now() + 1000).toISOString(), delay: 126 },
+  ]
+  member.node.extra = {
+    'http://localhost/automatic': { alive: true, history: member.node.history },
+  }
+  expect(delayManager.getDelayFix(member, 'selector')).toBe(126)
+  delayManager.setDelay(member, 'selector', 50)
+  expect(delayManager.getDelayFix(member, 'selector')).toBe(50)
 })
