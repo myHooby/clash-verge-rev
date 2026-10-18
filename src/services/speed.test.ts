@@ -1,24 +1,20 @@
-import { invoke } from '@tauri-apps/api/core'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 
-type Emit = (message: unknown) => void
+/** 捕获传给 cmds.startSpeedTest 的 onEvent 回调，用它在测试里模拟后端事件 */
+const emitters: Array<(event: SpeedTestEvent) => void> = []
 
-const channels: { emit: Emit }[] = []
-
-vi.mock('@tauri-apps/api/core', () => ({
-  Channel: class {
-    private handler?: Emit
-    constructor(handler?: Emit) {
-      this.handler = handler
-      channels.push({ emit: (message) => this.handler?.(message) })
-    }
-  },
-  invoke: vi.fn(async () => undefined),
+vi.mock('@/services/cmds', () => ({
+  startSpeedTest: vi.fn(async () => null),
+  stopSpeedTest: vi.fn(async () => undefined),
+  getSpeedTestStatus: vi.fn(async () => ({
+    running: false,
+    total: 0,
+    completed: 0,
+    concurrency: 0,
+  })),
 }))
 
-vi.mock('@tauri-apps/api/event', () => ({
-  listen: vi.fn(async () => () => {}),
-}))
+import { startSpeedTest, type SpeedTestEvent } from '@/services/cmds'
 
 import speedManager, { SpeedManager, SpeedTestBusyError } from './speed'
 
@@ -35,24 +31,44 @@ const localStorageStub = {
 
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0))
 
-/** 每个用例从干净的 Channel 队列开始 */
-const latestChannel = () => channels[channels.length - 1]
+/** 每个用例从干净的 onEvent 队列开始；保留 .emit 形态以最小化用例改动 */
+const latestChannel = () => {
+  const emit = emitters[emitters.length - 1]
+  return { emit: (message: SpeedTestEvent) => emit(message) }
+}
 
-const item = (name: string, ok: boolean, speed_bps = 0, error?: string) => ({
+const item = (
+  name: string,
+  ok: boolean,
+  speed_bps = 0,
+  error?: string,
+): SpeedTestEvent => ({
   type: 'item',
   name,
   ok,
   speed_bps,
-  error,
+  // 生成的契约里 Option 序列化为 null
+  error: error ?? null,
 })
 
 describe('SpeedManager', () => {
   beforeEach(() => {
-    channels.length = 0
+    emitters.length = 0
     storage.clear()
     vi.stubGlobal('localStorage', localStorageStub)
-    vi.mocked(invoke).mockClear()
-    vi.mocked(invoke).mockResolvedValue(undefined)
+    vi.mocked(startSpeedTest).mockClear()
+    vi.mocked(startSpeedTest).mockImplementation(
+      (
+        _group: string,
+        _names: string[],
+        _concurrency: number,
+        _url: string,
+        onEvent,
+      ) => {
+        emitters.push(onEvent)
+        return Promise.resolve(null)
+      },
+    )
   })
 
   test('batch lifecycle: testing → per-item updates → single settle notification', async () => {
@@ -137,7 +153,7 @@ describe('SpeedManager', () => {
   })
 
   test('backend rejection fails pending nodes and surfaces busy code', async () => {
-    vi.mocked(invoke).mockRejectedValueOnce({
+    vi.mocked(startSpeedTest).mockRejectedValueOnce({
       code: 'speed-test/busy',
       detail: 'speed test already running',
     })

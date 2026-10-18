@@ -4,6 +4,7 @@ use tauri::{command, ipc::Channel};
 
 /// 启动一轮按节点并发测速；结果经 `on_event` 增量回传
 #[command]
+#[specta::specta]
 pub async fn start_speed_test(
     group: String,
     names: Vec<String>,
@@ -20,12 +21,14 @@ pub async fn start_speed_test(
 
 /// 取消进行中的测速（后台完成监听器恢复）
 #[command]
+#[specta::specta]
 pub fn stop_speed_test() {
     SpeedTestManager::global().stop();
 }
 
 /// 查询测速运行状态（对话框重开时恢复进度显示）
 #[command]
+#[specta::specta]
 pub fn get_speed_test_status() -> SpeedTestStatus {
     SpeedTestManager::global().status()
 }

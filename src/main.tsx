@@ -13,7 +13,6 @@ import { router } from './pages/_routers'
 import { preloadHomePageCards } from './pages/home'
 import { AppDataProvider } from './providers/app-data-provider'
 import { WindowProvider } from './providers/window'
-import delayManager from './services/delay'
 import { FALLBACK_LANGUAGE, initializeLanguage } from './services/i18n'
 import {
   preloadAppData,
@@ -21,7 +20,6 @@ import {
   getPreloadConfig,
 } from './services/preload'
 import { swrConfig } from './services/query-client'
-import speedManager from './services/speed'
 import { ThemeModeProvider, UpdateStateProvider } from './services/states'
 import { AppStoreProvider } from './store/app-store'
 import { disableWebViewShortcuts } from './utils/disable-webview-shortcuts'
@@ -68,9 +66,8 @@ const bootstrap = async () => {
   const appDataPromise = preloadAppData()
   void preloadHomePageCards()
 
-  // 延迟/测速结果的持久化生命周期：重载后恢复、订阅切换后作废、配置变更自动停测速
-  delayManager.bindEvents()
-  void speedManager.bindConfigWatch()
+  // 延迟/测速结果的失效事件（订阅切换/配置重载）由事件总线统一分发，
+  // 见 services/bus/create-bus-handlers.ts；此处无需单独订阅。
 
   const { initialThemeMode } = await appDataPromise
   initializeApp(initialThemeMode)

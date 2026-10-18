@@ -77,7 +77,6 @@ class DelayManager {
   private groupFlushScheduled = false
 
   private persistTimer: ReturnType<typeof setTimeout> | null = null
-  private eventsBound = false
 
   constructor() {
     // 从 localStorage 恢复上次会话的测速结果（WebView 重载后徽章与排序依据不丢）。
@@ -107,21 +106,6 @@ class DelayManager {
       this.persistTimer = null
     }
     saveResults(STORAGE_KEY, this.cache.entries(), isPersistableDelay)
-  }
-
-  /**
-   * 订阅后端事件：切换/更新订阅（profile-changed）后旧结果作废，
-   * 内存缓存与持久化一并清除并通知 UI 回到未测态。
-   */
-  bindEvents() {
-    if (this.eventsBound) return
-    this.eventsBound = true
-    void import('@tauri-apps/api/event')
-      .then(({ listen }) => listen('profile-changed', () => this.clearAll()))
-      .catch((error) => {
-        console.error('[DelayManager] 绑定 profile-changed 事件失败', error)
-        this.eventsBound = false
-      })
   }
 
   /** 清空全部延迟结果（含持久化），并把已挂载的徽章重置为未测态 */

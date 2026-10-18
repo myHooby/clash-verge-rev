@@ -1,5 +1,7 @@
 import type { VergeEventPayloads } from '@/services/contract'
+import delayManager from '@/services/delay'
 import { forgetShownStartupError } from '@/services/notice-handlers'
+import speedManager from '@/services/speed'
 import type { AppStoreAction } from '@/store/app-state'
 
 /** Frontend-internal event: home test card → test items. Not in the backend contract. */
@@ -40,6 +42,10 @@ export const createEventBus = (deps: BusHandlerDeps) => {
   const refreshThrottle = 800
 
   const handleProfileChanged = (newProfileId: string) => {
+    // 切换/更新当前订阅后节点列表可能已变，按节点缓存的延迟/测速结果一并作废。
+    // 放在节流之前：任何一次 profile-changed 都必须失效缓存。
+    delayManager.clearAll()
+    speedManager.clearAll()
     const now = Date.now()
     if (
       lastProfileId === newProfileId &&
@@ -60,7 +66,11 @@ export const createEventBus = (deps: BusHandlerDeps) => {
   }
 
   const handlers: BusHandlers = {
-    'verge://refresh-clash-config': () =>
+    'verge://refresh-clash-config': () => {
+      // 配置重载会覆盖注入的测速监听器，进行中的测速必须停止
+      if (speedManager.getRunStatus().running) {
+        void speedManager.stopTest()
+      }
       deps.revalidateKeys([
         'getProxyView',
         'getVersion',
@@ -70,13 +80,10 @@ export const createEventBus = (deps: BusHandlerDeps) => {
         'getRuntimeConfig',
         'getRules',
         'getRuleProviders',
-      ]),
+      ])
+    },
     'verge://refresh-verge-config': () =>
-      deps.revalidateKeys([
-        'getVergeConfig',
-        'getSystemProxy',
-        'getAutotemProxy',
-      ]),
+      deps.revalidateKeys(['getVergeConfig', 'getSystemProxy', 'getAutoProxy']),
     'verge://refresh-profiles': () => deps.revalidateKeys(['getProfiles']),
     'verge://refresh-proxy-config': handleRefreshProxyConfig,
     'verge://notice-message': (payload) => deps.handleNotice(payload),

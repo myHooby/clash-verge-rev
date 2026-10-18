@@ -67,7 +67,7 @@ impl Default for SpeedTestParams {
 }
 
 /// 经 Channel 回传前端的增量事件
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, specta::Type)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum SpeedTestEvent {
     /// 单节点测速完成（成功或失败）
@@ -82,7 +82,7 @@ pub enum SpeedTestEvent {
 }
 
 /// 供前端查询的运行状态快照
-#[derive(Clone, Default, Serialize)]
+#[derive(Clone, Default, Serialize, specta::Type)]
 pub struct SpeedTestStatus {
     pub running: bool,
     pub group: Option<StdString>,

@@ -2,14 +2,17 @@
  * 按节点测速状态管理（仿 DelayManager 模式）：
  * - 节点速度全局按节点名缓存（与延迟不同，速度与分组无关）
  * - 批量测速期间抑制分组排序通知，整轮结束后一次性刷新
- * - 通过 Tauri Channel 接收 Rust 侧增量事件
+ * - 后端命令经 services/cmds 调用，配置失效事件由事件总线分发
  */
-
-import { Channel, invoke } from '@tauri-apps/api/core'
-import { listen } from '@tauri-apps/api/event'
 
 import { debugLog } from '@/utils/debug'
 
+import {
+  getSpeedTestStatus,
+  startSpeedTest,
+  stopSpeedTest,
+  type SpeedTestEvent,
+} from './cmds'
 import { clearResults, loadResults, saveResults } from './result-store'
 
 type SpeedState = 'testing' | 'ok' | 'fail'
@@ -28,17 +31,6 @@ interface SpeedRunStatus {
   completed: number
   concurrency: number
 }
-
-/** Rust SpeedTestEvent 的序列化形态 */
-type SpeedTestEvent =
-  | {
-      type: 'item'
-      name: string
-      ok: boolean
-      speed_bps: number
-      error?: string
-    }
-  | { type: 'done'; total: number; cancelled: boolean }
 
 /** 结果持久化键：WebView 重载后恢复；结果不按时间过期，直到新测试覆盖或 profile 变更清除 */
 const STORAGE_KEY = 'verge-speed-results'
@@ -326,13 +318,14 @@ export class SpeedManager {
       this.persistNow()
     }
 
-    const channel = new Channel<SpeedTestEvent>((event) => {
+    const onEvent = (event: SpeedTestEvent) => {
       if (event.type === 'item') {
         this.setSpeed(
           event.name,
           event.ok ? 'ok' : 'fail',
           event.speed_bps,
-          event.error,
+          // Rust Option 序列化为 null，统一收敛为 undefined
+          event.error ?? undefined,
         )
         const current = this.status
         if (current.running) {
@@ -346,16 +339,10 @@ export class SpeedManager {
         `[SpeedManager] 测速结束，总数: ${event.total}, 取消: ${event.cancelled}`,
       )
       finishRun(event.total, event.cancelled)
-    })
+    }
 
     try {
-      await invoke('start_speed_test', {
-        group,
-        names: uniqueNames,
-        concurrency,
-        url,
-        onEvent: channel,
-      })
+      await startSpeedTest(group, uniqueNames, concurrency, url, onEvent)
     } catch (error) {
       // 后端拒绝（busy/参数/监听器应用失败）：本轮作废，未完成节点标记失败
       const busy =
@@ -390,16 +377,16 @@ export class SpeedManager {
   }
 
   async stopTest(): Promise<void> {
-    await invoke('stop_speed_test')
+    await stopSpeedTest()
   }
 
   /** 对话框重开时同步后端真实状态（应用重启/页面刷新后恢复进度） */
   async refreshStatus(): Promise<void> {
     try {
-      const status = await invoke<SpeedRunStatus>('get_speed_test_status')
+      const status = await getSpeedTestStatus()
       const normalized: SpeedRunStatus = {
         running: status?.running ?? false,
-        group: status?.group,
+        group: status?.group ?? undefined,
         total: status?.total ?? 0,
         completed: status?.completed ?? 0,
         concurrency: status?.concurrency ?? 0,
@@ -416,26 +403,6 @@ export class SpeedManager {
       }
     } catch (error) {
       console.error('[SpeedManager] 查询测速状态失败', error)
-    }
-  }
-
-  /**
-   * 订阅后端事件：
-   * - 配置重载（refresh-clash-config）会覆盖注入的测速监听器，主动停止测速；
-   * - 切换/更新订阅（profile-changed）后旧结果作废，缓存与持久化一并清除。
-   */
-  async bindConfigWatch(): Promise<void> {
-    const stopIfRunning = () => {
-      if (this.status.running) {
-        debugLog('[SpeedManager] 配置变更，自动停止测速')
-        void this.stopTest()
-      }
-    }
-    try {
-      await listen('verge://refresh-clash-config', stopIfRunning)
-      await listen('profile-changed', () => this.clearAll())
-    } catch (error) {
-      console.error('[SpeedManager] 绑定配置变更事件失败', error)
     }
   }
 
