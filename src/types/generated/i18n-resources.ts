@@ -1215,6 +1215,7 @@ export interface TranslationResources {
             autoRoute: string
             device: string
             dnsHijack: string
+            dnsMode: string
             mtu: string
             routeExcludeAddress: string
             stack: string
@@ -1229,6 +1230,7 @@ export interface TranslationResources {
           tooltips: {
             autoRedirect: string
             dnsHijack: string
+            dnsMode: string
           }
         }
         update: {
