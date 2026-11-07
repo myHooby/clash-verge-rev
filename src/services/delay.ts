@@ -336,6 +336,8 @@ class DelayManager {
     group: string,
     timeout: number,
   ): Promise<DelayUpdate> {
+    // Entry points own the pending mark; measureDelay only writes results.
+    this.setDelay(member.ref.name, group, -2)
     const update = await this.measureDelay(member, group, timeout)
     this.queueGroupNotification(group)
     return update
@@ -356,8 +358,6 @@ class DelayManager {
     debugLog(
       `[DelayManager] 开始测试延迟，代理: ${name}, 组: ${group}, 超时: ${timeout}ms`,
     )
-
-    this.setDelay(name, group, -2)
 
     const startTime = Date.now()
 
@@ -418,8 +418,6 @@ class DelayManager {
       const currName = currMember.ref.name
 
       try {
-        this.setDelay(currName, group, -2)
-
         // Stagger requests so a batch does not hit the core at once.
         if (index > 1) {
           await new Promise((resolve) =>
