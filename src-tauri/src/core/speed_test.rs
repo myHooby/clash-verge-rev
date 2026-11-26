@@ -539,10 +539,10 @@ async fn wait_listeners_ready(ports: &[u16], cancel_rx: &watch::Receiver<bool>) 
 
 async fn futures_all_ready(ports: &[u16]) -> bool {
     for port in ports {
+        // 新 clippy 禁止 map().unwrap_or() 与多余 map_or：is_ok_and 即判定成功
         let connected = tokio::time::timeout(Duration::from_millis(300), TcpStream::connect(("127.0.0.1", *port)))
             .await
-            .map(|result| result.is_ok())
-            .unwrap_or(false);
+            .is_ok_and(|result| result.is_ok());
         if !connected {
             return false;
         }
