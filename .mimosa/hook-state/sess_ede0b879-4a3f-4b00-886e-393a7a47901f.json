@@ -1,0 +1,1898 @@
+{
+  "touched": [
+    "/Users/cys/IdeaProjects/clash-verge-rev/src/services/delay.ts",
+    "/Users/cys/IdeaProjects/clash-verge-rev/src/components/proxy/proxy-groups.tsx",
+    "/Users/cys/IdeaProjects/clash-verge-rev/src/components/home/current-proxy-card.tsx",
+    "/Users/cys/IdeaProjects/clash-verge-rev/src/components/proxy/proxy-render.tsx"
+  ],
+  "bashMutation": true,
+  "reportedFindings": [],
+  "findingEvents": [],
+  "baseline": {
+    "storageId": "mwwz6t5p-27489-3cac3f7767",
+    "createdAt": "2026-11-26T03:11:06.781Z",
+    "files": {
+      "AGENTS.md": {
+        "existed": true,
+        "snapshot": "a54ff182c7e8acf56acfd6e4b9c3ff41e2c41a31c9b211b2deb9df75d9a478f9.source"
+      },
+      "CLAUDE.md": {
+        "existed": true,
+        "snapshot": "6ebdb617a8104a7756d0cf36578ab01103dc9f07e4dc6feb751296b9c402faf7.source"
+      },
+      "Cargo.lock": {
+        "existed": true,
+        "snapshot": "13ee4b2252c9e516a0547f2891aa2105c3ca71c6d7a1e682c69be97998dfc87e.source"
+      },
+      "Cargo.toml": {
+        "existed": true,
+        "snapshot": "2e9d962a08321605940b5a657135052fbcef87b5e360662bb527c96d9a615542.source"
+      },
+      "GEMINI.md": {
+        "existed": true,
+        "snapshot": "399080f41ccf73c6004e0f85c0a58fc1767080a0ef19bb3f3a90caa14f94bd79.source"
+      },
+      "eslint.config.ts": {
+        "existed": true,
+        "snapshot": "3202509a51dddde1968b20a04dfcedc90615eb6681cca0cda5f43a418a516857.source"
+      },
+      "package.json": {
+        "existed": true,
+        "snapshot": "7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519.source"
+      },
+      "pnpm-lock.yaml": {
+        "existed": true,
+        "snapshot": "32824c984905bb02bc7ffcef96a77addd1f1602cff71a11fbbfdd7f53ee026bb.source"
+      },
+      "target/release/resources/set_dns.sh": {
+        "existed": true,
+        "snapshot": "d566bcae3a531b3e56d08a5c61fbfad63ca34d16e90248bee39f1be8b4307fa8.source"
+      },
+      "target/release/resources/unset_dns.sh": {
+        "existed": true,
+        "snapshot": "d2388d1207cc058fbb6d4b4076371bf218594722566101f95d7050b0a5002e1b.source"
+      },
+      "target/debug/resources/set_dns.sh": {
+        "existed": true,
+        "snapshot": "d4a92e4a877b2898d594211cb56254b88e7a26d2d752d41550abb4a16b0689c3.source"
+      },
+      "target/debug/resources/unset_dns.sh": {
+        "existed": true,
+        "snapshot": "23004bea2cbd937d8d4af0c03738841e5d70da6238df9bf5d21bd0bf4b6fd313.source"
+      },
+      "src-tauri/AGENTS.md": {
+        "existed": true,
+        "snapshot": "1a5b6466a41363b527589d942b9b663b680a6f5c7287679d0edaad0d4fd98834.source"
+      },
+      "src-tauri/Cargo.toml": {
+        "existed": true,
+        "snapshot": "fe4c6a80a21e81339e2e0faeb9134d0f9636c168987df13c8abf1927a1caee39.source"
+      },
+      "src-tauri/build.rs": {
+        "existed": true,
+        "snapshot": "7d1ef5b0b986fee369d8f5fa4361f21fa3075601e5416738ba4f4d1ea5dfb2ed.source"
+      },
+      "src-tauri/src/constants.rs": {
+        "existed": true,
+        "snapshot": "b90513f6aea5973b1f8f28faf6cee500feb1e6359a1153b6970b3394965c0d3b.source"
+      },
+      "src-tauri/src/ipc.rs": {
+        "existed": true,
+        "snapshot": "1e393ab15669b1c3f13743e1a5026bbfdde803a0a3f9d292a2137c1154d63581.source"
+      },
+      "src-tauri/src/lib.rs": {
+        "existed": true,
+        "snapshot": "eabcebd0ae5c9b77a5247e1bdbdb88b1869fc0c932d0ef0cf2ecf9ee5221be7c.source"
+      },
+      "src-tauri/src/main.rs": {
+        "existed": true,
+        "snapshot": "2f5e0a90d4195e9986f5e24928dce16b59a80a2cf30f7059b38d55bd7d1eff69.source"
+      },
+      "src-tauri/src/utils/connections_stream.rs": {
+        "existed": true,
+        "snapshot": "2392c10bd20f4cb268e4e1623d32b07af5ebe8159c7a5d594b89c15720585abd.source"
+      },
+      "src-tauri/src/utils/dirs.rs": {
+        "existed": true,
+        "snapshot": "462095a2f7b4fd3292fc685a04bf1a9f7ca7edeb96687585243e991c03aae892.source"
+      },
+      "src-tauri/src/utils/help.rs": {
+        "existed": true,
+        "snapshot": "09b1eee10e68e487dbd16adf4b9efe58b48dd414f78af8fb19c80ebd98764361.source"
+      },
+      "src-tauri/src/utils/init.rs": {
+        "existed": true,
+        "snapshot": "78104c6d72ae40c97a555f110729df3397637a5718bf135c55f83bc0cd58902a.source"
+      },
+      "src-tauri/src/utils/macos_launch_guard.rs": {
+        "existed": true,
+        "snapshot": "29490870711212367c2ae22aebdc69b207c8024fbd520b0c4c57d96e0b3520dd.source"
+      },
+      "src-tauri/src/utils/mod.rs": {
+        "existed": true,
+        "snapshot": "d9ca22c88d3fbc7b9ccce8ecbbebe368a12e1c5abe7b63f6fa6e299c04868835.source"
+      },
+      "src-tauri/src/utils/network.rs": {
+        "existed": true,
+        "snapshot": "86ad7d7394e494cba2a31a7e43f918e88a5bff01d7c4c5cb6a3605d1458ae2c8.source"
+      },
+      "src-tauri/src/utils/port.rs": {
+        "existed": true,
+        "snapshot": "7858230a21b803410953fefc2095396ece60c89dd2238d14390d28239223d0c0.source"
+      },
+      "src-tauri/src/utils/retry.rs": {
+        "existed": true,
+        "snapshot": "323846a880ce6b1f749329c7aba3fab5226f4dc608b406fecb2a81351ec045b7.source"
+      },
+      "src-tauri/src/utils/schtasks.rs": {
+        "existed": true,
+        "snapshot": "a587316aa1140f97c6cb7a51f0c50dad799ccf98fbd1cf33c706fe702cd8a587.source"
+      },
+      "src-tauri/src/utils/server.rs": {
+        "existed": true,
+        "snapshot": "a89b00dad2b80d94a281b38962aa3b7614487ab57c99c5189896f6b0b5bcdc57.source"
+      },
+      "src-tauri/src/utils/singleton.rs": {
+        "existed": true,
+        "snapshot": "16a3174326e0d07adaedb55f7a3b01e3f0bc03b64631078b617f4ef6623652b8.source"
+      },
+      "src-tauri/src/utils/speed.rs": {
+        "existed": true,
+        "snapshot": "b3bc399a5a47f28d28b7b0bfc5532986932a26f2513399856547ef9ffad07293.source"
+      },
+      "src-tauri/src/utils/startup.rs": {
+        "existed": true,
+        "snapshot": "a536806b35ecc50c675787f22d4c7b84888bc80f953ff6ef803b82c2b83cbf87.source"
+      },
+      "src-tauri/src/utils/tmpl.rs": {
+        "existed": true,
+        "snapshot": "37fdceaf5074b0c02726fa07ae382fb8ed5688f070c7857f4e451854c58dfb64.source"
+      },
+      "src-tauri/src/utils/tray_speed.rs": {
+        "existed": true,
+        "snapshot": "b05a094fff2d33c79ac3e3c8e7b56f8bd385c97bd8eada9b625dd885bb58be16.source"
+      },
+      "src-tauri/src/utils/window_manager.rs": {
+        "existed": true,
+        "snapshot": "1397052f4adaf6a568d75b5561e414491e7bc22e8ac328f2e1b6f4a0a76632dc.source"
+      },
+      "src-tauri/src/utils/yaml_emitter.rs": {
+        "existed": true,
+        "snapshot": "f9fcbc11e400dc334243533261e6a730e730ecc1ac2dcb18e9f25a7f593f14d5.source"
+      },
+      "src-tauri/src/utils/resolve/dns.rs": {
+        "existed": true,
+        "snapshot": "8bacadc279cfd864f7aec325cfbc821efe39ecf6749190e2aeeb827b20ab52cb.source"
+      },
+      "src-tauri/src/utils/resolve/mod.rs": {
+        "existed": true,
+        "snapshot": "81448c2f805cbf714cf27ea8c69467e26333c9fdf16522679925dcd1ff8c261d.source"
+      },
+      "src-tauri/src/utils/resolve/scheme.rs": {
+        "existed": true,
+        "snapshot": "598b8c90b61f067d6194a9763a1007e3775f5e66ae4ba34215c2597351751c50.source"
+      },
+      "src-tauri/src/utils/resolve/window.rs": {
+        "existed": true,
+        "snapshot": "51540b5407ce60dc2f1252e02c317d5283814741f96cb02cfb76232241bb441d.source"
+      },
+      "src-tauri/src/utils/resolve/window_script.rs": {
+        "existed": true,
+        "snapshot": "d587daec40243015d148859bca5985865fff9a3632c128b351151baf1fbd66e6.source"
+      },
+      "src-tauri/src/utils/linux/mime.rs": {
+        "existed": true,
+        "snapshot": "3f6c8a5c289999579ec54067fbb27401a515ae6e92ac330d6b48866e7ba5f0b0.source"
+      },
+      "src-tauri/src/utils/linux/mod.rs": {
+        "existed": true,
+        "snapshot": "8501a591ec1d77d1bda6368769aa7458ba531341de0d48c6381c83f80e8da74d.source"
+      },
+      "src-tauri/src/utils/linux/workarounds.rs": {
+        "existed": true,
+        "snapshot": "ea34e808d29ff3b00b9d9464b29e97eb2552da0394904085c3c229bce3d0008d.source"
+      },
+      "src-tauri/src/process/async_handler.rs": {
+        "existed": true,
+        "snapshot": "824cb94f6b2699716b405857fa0b6326a36df38861ffce7fbbb8e4972e7dad60.source"
+      },
+      "src-tauri/src/process/mod.rs": {
+        "existed": true,
+        "snapshot": "1ce1dfb961a600ef87b4c2b0d50541630f975aa68635097e8bee05458dfc20e3.source"
+      },
+      "src-tauri/src/feat/backup.rs": {
+        "existed": true,
+        "snapshot": "688683693bba89c3e5350d1498f3fa2d1c25f4fe34cfe6f86147cec88a7a9716.source"
+      },
+      "src-tauri/src/feat/clash.rs": {
+        "existed": true,
+        "snapshot": "811f3635c3811fcaf67588e460a513dd6600b3f33927224330beb8a45512e82a.source"
+      },
+      "src-tauri/src/feat/config.rs": {
+        "existed": true,
+        "snapshot": "e3d22547b3996c9bfd7b522b01e66adf45365b1003d99bcc03f232e61f7ecafa.source"
+      },
+      "src-tauri/src/feat/core_upgrade.rs": {
+        "existed": true,
+        "snapshot": "8d68f92e43b92e709f250eda972e922fb7604ea21e2e596e72d60aa1a3eeb7f9.source"
+      },
+      "src-tauri/src/feat/dns.rs": {
+        "existed": true,
+        "snapshot": "d08337d971f8ed868c196547b6e6d5764d07d01da8231003e10c9d19f3a52bea.source"
+      },
+      "src-tauri/src/feat/effects.rs": {
+        "existed": true,
+        "snapshot": "df8b59db00bd0f430df24c72a83d164692a1496d0372f8f8181972da14ab0b73.source"
+      },
+      "src-tauri/src/feat/executor.rs": {
+        "existed": true,
+        "snapshot": "c8180179bb87f428f08c24fb359f3435751e645ecb616061a15bd0cb628bbd87.source"
+      },
+      "src-tauri/src/feat/icon.rs": {
+        "existed": true,
+        "snapshot": "b5a82162a6a1552e338caf9f6bf2c0ef7e98d76dc82a6e9f6eb2083fd8cfd20c.source"
+      },
+      "src-tauri/src/feat/listener.rs": {
+        "existed": true,
+        "snapshot": "16569dc08e0596cbc9915094d52ebb6f77792a9baed18498d17ceab991a4489c.source"
+      },
+      "src-tauri/src/feat/mod.rs": {
+        "existed": true,
+        "snapshot": "a90bcea9b547270e37d866b8455decdfcd9e179b2270585776b07d3e0e43e76f.source"
+      },
+      "src-tauri/src/feat/profile.rs": {
+        "existed": true,
+        "snapshot": "520eeb6ffe6c8048403d9dea12f93579a0f2fb7a2d95fd9633a729f276476846.source"
+      },
+      "src-tauri/src/feat/proxy.rs": {
+        "existed": true,
+        "snapshot": "7edea620eca51f5c2c1c7307406ab91fabba74321dcb3ff7b04577b8d16d49ad.source"
+      },
+      "src-tauri/src/feat/tun.rs": {
+        "existed": true,
+        "snapshot": "3b901a32377a3d57aff3dd0be0aa1aad9d321ec0415ac85c9305e6e240efe71f.source"
+      },
+      "src-tauri/src/feat/window.rs": {
+        "existed": true,
+        "snapshot": "b507d45ccf350b9e49a42a662cf0db0638d9704e5d2e59eaa36713f11f2a81da.source"
+      },
+      "src-tauri/src/enhance/chain.rs": {
+        "existed": true,
+        "snapshot": "19fbc6b74fbfa3d0dd871018372c29caed3a3949658474c722472c4c404e4957.source"
+      },
+      "src-tauri/src/enhance/field.rs": {
+        "existed": true,
+        "snapshot": "6e4922bb5931407ca7e35923a267d9b1dd4bb95c81041a25e2dac58c68a528c8.source"
+      },
+      "src-tauri/src/enhance/merge.rs": {
+        "existed": true,
+        "snapshot": "058c96e9e8505824d51d39300c53d6d0c7cb5d850cb626a68902009371d46fab.source"
+      },
+      "src-tauri/src/enhance/mod.rs": {
+        "existed": true,
+        "snapshot": "de79cfb3b8864307e6f411410d8abcc9bc86c5a843655bae920e49fb54567099.source"
+      },
+      "src-tauri/src/enhance/script.rs": {
+        "existed": true,
+        "snapshot": "6151c3431cb3d359364587a44745411ab3fe02cb213e7072f243a91535014c06.source"
+      },
+      "src-tauri/src/enhance/seq.rs": {
+        "existed": true,
+        "snapshot": "a5e654d5dca3036fac026aecd71a4963fccb95f71a5b74b71b97fd9556852587.source"
+      },
+      "src-tauri/src/enhance/tun.rs": {
+        "existed": true,
+        "snapshot": "ec4d4f07beb99148b87114fffdf0714f784179e6f6b4410372c86977ea850a2e.source"
+      },
+      "src-tauri/src/core/auto_backup.rs": {
+        "existed": true,
+        "snapshot": "4285efa77f1e85b06042cf880285b90c32a727967248e5ecb84d773d83ac7b43.source"
+      },
+      "src-tauri/src/core/autostart.rs": {
+        "existed": true,
+        "snapshot": "2cc9c28a38c7780247b53170411768f63634929e39e5a6f8b2a3abf2d34315d3.source"
+      },
+      "src-tauri/src/core/backup.rs": {
+        "existed": true,
+        "snapshot": "8141d46bc153654831f02988ce387a1983133368931655aa503c6ad947121692.source"
+      },
+      "src-tauri/src/core/hotkey.rs": {
+        "existed": true,
+        "snapshot": "29eaa4d57651141d019f8890071f7cbaff640599402f6eba3e8da976d2418629.source"
+      },
+      "src-tauri/src/core/lightweight.rs": {
+        "existed": true,
+        "snapshot": "42aec3bbf43dfd5e695a16d3034b07a967f0a0cedb7c382510b9c65038e09722.source"
+      },
+      "src-tauri/src/core/listener.rs": {
+        "existed": true,
+        "snapshot": "2f08a685d087a805dfa67314f36a6f9b22454fa0e856835fdfa1ee4a3971b46e.source"
+      },
+      "src-tauri/src/core/logger.rs": {
+        "existed": true,
+        "snapshot": "b89a8966f8337d4df0bc8e429702391d77790d8ed05fc9b3cccc32d85f7ba509.source"
+      },
+      "src-tauri/src/core/mod.rs": {
+        "existed": true,
+        "snapshot": "2e54fa69a6cc2c4a47431aaa1543f7324a2e84beb82f894757985d0e63b93662.source"
+      },
+      "src-tauri/src/core/network_watch.rs": {
+        "existed": true,
+        "snapshot": "17356b7004a0fce0aebb7da0105ed9a45ed7b7f185e90e584e8f6b8592f3b4ef.source"
+      },
+      "src-tauri/src/core/owner_identity.rs": {
+        "existed": true,
+        "snapshot": "41af3874c4d7d8bd20c220e6a2be933dd0bfc25860526e3f479d454ba886b192.source"
+      },
+      "src-tauri/src/core/proxy_control.rs": {
+        "existed": true,
+        "snapshot": "3c9fea829b1c39a67a1011947932b1113506dbc3d61376f56273298e2bd09faf.source"
+      },
+      "src-tauri/src/core/proxy_view.rs": {
+        "existed": true,
+        "snapshot": "445b619b1616b06161b4207dbe2abecfb2c3a0470c6675405482ed38f678e170.source"
+      },
+      "src-tauri/src/core/runtime_bundle.rs": {
+        "existed": true,
+        "snapshot": "d62aeb6e9f87dc9814d8b302849e7ba661631dedb2805093db9e308d129b65f8.source"
+      },
+      "src-tauri/src/core/service.rs": {
+        "existed": true,
+        "snapshot": "58ab3d94184115c3d02db0057b2bbf3b3e3d15b7c9765925b31e6ca689fb0eef.source"
+      },
+      "src-tauri/src/core/speed_test.rs": {
+        "existed": true,
+        "snapshot": "26854bba9cdfb490a06846d88a2a435d0c95acad6ece19112597572be31b4c2b.source"
+      },
+      "src-tauri/src/core/sysopt.rs": {
+        "existed": true,
+        "snapshot": "2c9b40877b510b65bf006fdf2875663c830693f44d3b258802b3fed60098cd0d.source"
+      },
+      "src-tauri/src/core/timer.rs": {
+        "existed": true,
+        "snapshot": "e929d114af1d0384a73a7889a3491531b21f05cd6ac90b1c90c6a7f98010753f.source"
+      },
+      "src-tauri/src/core/updater.rs": {
+        "existed": true,
+        "snapshot": "9155a5f4b47e0c2c83f444d21253eb0f92a6a8b1a8acd7c40a246e16762f99d3.source"
+      },
+      "src-tauri/src/core/validate.rs": {
+        "existed": true,
+        "snapshot": "4a41f892199aea56f3a792e71abf4e0e3f717e29da7881b9a3e3563c72d8fb6d.source"
+      },
+      "src-tauri/src/core/win_uwp.rs": {
+        "existed": true,
+        "snapshot": "614c88a5cf2c8d4357005a030f8d066fc1adf641c99bfcdbeecaf7eadea53bc4.source"
+      },
+      "src-tauri/src/core/tray/menu_def.rs": {
+        "existed": true,
+        "snapshot": "8b5a9f6295518c2227de95fdeea4d4d0a2eeda18f811a22341fae02b06fd31fd.source"
+      },
+      "src-tauri/src/core/tray/mod.rs": {
+        "existed": true,
+        "snapshot": "f625b5593959388dedf0d0ad0b4dbe58ae59dce462fbf3aefd30794a70632c12.source"
+      },
+      "src-tauri/src/core/tray/speed_task.rs": {
+        "existed": true,
+        "snapshot": "46f6b2dd6eb12badc2a4f3a98220e0ba3191044f7f61b56d1eeeb6223f47845a.source"
+      },
+      "src-tauri/src/core/runstate/env.rs": {
+        "existed": true,
+        "snapshot": "f21649c4014d658e770d130ff055c233f11ed53aca5ef640dc56a00cbe80a094.source"
+      },
+      "src-tauri/src/core/runstate/health.rs": {
+        "existed": true,
+        "snapshot": "df8662320f4cc5001fa11f327d09dd766978db5a8de5f344812d1631e60fda54.source"
+      },
+      "src-tauri/src/core/runstate/mod.rs": {
+        "existed": true,
+        "snapshot": "50a5f94a44c47d46421a1cea13a7e6285217c42887f770a2d78e0429d2ae1a87.source"
+      },
+      "src-tauri/src/core/runstate/owner.rs": {
+        "existed": true,
+        "snapshot": "9962effae53617dbbd15141a6a6e748d8a4170dcde8800e2e0c038eca8b315cf.source"
+      },
+      "src-tauri/src/core/runstate/probe.rs": {
+        "existed": true,
+        "snapshot": "b4390f6ac66072e39dbf73bbba327f079f15a12b0f6d4e123cbd6afe66556a9b.source"
+      },
+      "src-tauri/src/core/notify/announce.rs": {
+        "existed": true,
+        "snapshot": "ca71b2970f2876f447d13066a18db9a709b427c16fe1d51bcf75c4559a0acb33.source"
+      },
+      "src-tauri/src/core/notify/desktop.rs": {
+        "existed": true,
+        "snapshot": "5ec7975d1ab6a26ad9dd96491d89233be801656652c7016212988e96ccee12ed.source"
+      },
+      "src-tauri/src/core/notify/handle.rs": {
+        "existed": true,
+        "snapshot": "aa880a33bf52f405f1173995d4a2862cf2915ed6f87873563bc145e6a7ad8a12.source"
+      },
+      "src-tauri/src/core/notify/mod.rs": {
+        "existed": true,
+        "snapshot": "31b7ce1f4d6e7574cc42836795b5774bb6658ba547fc1925c65d80fb96dbd514.source"
+      },
+      "src-tauri/src/core/notify/notification.rs": {
+        "existed": true,
+        "snapshot": "1a8ed524177260581ba4588e4f86ae7acdbbe212328c7ecddfc1b880eb9c9ab8.source"
+      },
+      "src-tauri/src/core/manager/config.rs": {
+        "existed": true,
+        "snapshot": "9dc89e02a7e846d0354ef40b1b6819075cf7fe6691fa2d6f9ef86345b9635148.source"
+      },
+      "src-tauri/src/core/manager/lifecycle.rs": {
+        "existed": true,
+        "snapshot": "cc108f6759f07515b3dd3a801f83fe610c1ef01739c5e4cd7b097bd938033dcf.source"
+      },
+      "src-tauri/src/core/manager/mod.rs": {
+        "existed": true,
+        "snapshot": "0e50373f57f3c26f0960edb3d8fa902e53bd6863653a225230b4fd8be3853aa7.source"
+      },
+      "src-tauri/src/core/manager/state.rs": {
+        "existed": true,
+        "snapshot": "06654b7bd85df764131c75863dff23e4034d1dda8464adde159633ca071b15e9.source"
+      },
+      "src-tauri/src/config/clash.rs": {
+        "existed": true,
+        "snapshot": "4ae6e97da30a44f9367ff5860478344fd036574ede5dd70dc14c9fddfa0e3afb.source"
+      },
+      "src-tauri/src/config/config.rs": {
+        "existed": true,
+        "snapshot": "330816f366dafd5ba9cababb1d4c4a548b1d3254dc4d78ccbbfe555e2187a1f3.source"
+      },
+      "src-tauri/src/config/dns.rs": {
+        "existed": true,
+        "snapshot": "49d521368350d3e75b92a755a6a948aad6835309de42188e242378393a4d474a.source"
+      },
+      "src-tauri/src/config/encrypt.rs": {
+        "existed": true,
+        "snapshot": "4399b32cbc9b873bae9d3f8470301b2c952b09ec064891ab70ed3431d4ebf655.source"
+      },
+      "src-tauri/src/config/mixed_port.rs": {
+        "existed": true,
+        "snapshot": "831f512138b2fb5fc2a7a83859aebdd5d1dd15fe3882561071b5007165fd72d6.source"
+      },
+      "src-tauri/src/config/mod.rs": {
+        "existed": true,
+        "snapshot": "c785dba68942299887b64748e7b8582bcde4cd2e58e79658b63f9b7cecb0a09b.source"
+      },
+      "src-tauri/src/config/port.rs": {
+        "existed": true,
+        "snapshot": "097425e28348296f940f6bbdab9414ea1cd469a29bee8d83511bce6692d0f50a.source"
+      },
+      "src-tauri/src/config/prfitem.rs": {
+        "existed": true,
+        "snapshot": "458ffc24493c374553f48a9413b2d57ebaaedfd0bb6cef5138a2f13afad90a18.source"
+      },
+      "src-tauri/src/config/profiles.rs": {
+        "existed": true,
+        "snapshot": "4c7821b973e8c9e6c8a4f90cb3a156e55a268dc7776a5eb1f08b32f5929867d1.source"
+      },
+      "src-tauri/src/config/runtime.rs": {
+        "existed": true,
+        "snapshot": "c74a3182c52a3ce30a58db1a8f8d359d33aacc99aa635c67a4c2f638ea28f2cc.source"
+      },
+      "src-tauri/src/config/snapshot.rs": {
+        "existed": true,
+        "snapshot": "875d9ab70e27831f9c1ac0b0dddece2fd06750cf61f2be79005daff2c6ab18a4.source"
+      },
+      "src-tauri/src/config/verge.rs": {
+        "existed": true,
+        "snapshot": "3a1c371e65c9809233eadec0aed9dfc09813f06b4d622ffd5a613ae6020048c8.source"
+      },
+      "src-tauri/src/cmd/app.rs": {
+        "existed": true,
+        "snapshot": "9df8d01bd299ee5d17efc1ef53eaea1cf6b6289ad22438c15a84d1ddaa67f1f3.source"
+      },
+      "src-tauri/src/cmd/backup.rs": {
+        "existed": true,
+        "snapshot": "eacb6fa0f1b454105bce062515f64cf9fc95cb354b25ad37a3838ef50003afb0.source"
+      },
+      "src-tauri/src/cmd/clash.rs": {
+        "existed": true,
+        "snapshot": "b4a7815865b46e8ce0924b67d3bd21165c569be137f44cb506b9627d9062fad1.source"
+      },
+      "src-tauri/src/cmd/lightweight.rs": {
+        "existed": true,
+        "snapshot": "074322a9961944ddaf0646aba593ec8bdc6b3f47427e7383939b60595a16ef6d.source"
+      },
+      "src-tauri/src/cmd/listener.rs": {
+        "existed": true,
+        "snapshot": "6313211d10df465822577ec90a971e924cdd981c7d10341c2d47cf2d6b7d3318.source"
+      },
+      "src-tauri/src/cmd/mod.rs": {
+        "existed": true,
+        "snapshot": "c2ca1a769c8c8a0240bfcef72589c960fa605d5baa25475d5d20f0af1249ebe7.source"
+      },
+      "src-tauri/src/cmd/network.rs": {
+        "existed": true,
+        "snapshot": "7fa938f8ca58e7a23c53b169dfa75421642bef99eddb0085542f3322c47b5d76.source"
+      },
+      "src-tauri/src/cmd/profile.rs": {
+        "existed": true,
+        "snapshot": "fd77230f9d98ab3e250c80e5fedb80712f29d5ee4a85d324d85782eeab926f15.source"
+      },
+      "src-tauri/src/cmd/proxy.rs": {
+        "existed": true,
+        "snapshot": "763f940a8ab633f3c133359946cb1afe16ddac9a93ad2f5f8b7d9c06307cd116.source"
+      },
+      "src-tauri/src/cmd/runtime.rs": {
+        "existed": true,
+        "snapshot": "5ce05dbcd296cfec07c625fb37dc6db2feec2d8f18f3b903b7641cfe93ce0e6d.source"
+      },
+      "src-tauri/src/cmd/save_profile.rs": {
+        "existed": true,
+        "snapshot": "934a2616a83464bfd413aa2cbbbae5e6bbda3d9b1cb61b4163a26fbc169247fe.source"
+      },
+      "src-tauri/src/cmd/service.rs": {
+        "existed": true,
+        "snapshot": "208cbfdc94ac34ca871a013b93317dfc5f36e83023be6efe5ebd736e9807decd.source"
+      },
+      "src-tauri/src/cmd/speed_test.rs": {
+        "existed": true,
+        "snapshot": "1fb4d101f8e7874c39ca3736348f6657def0e676a0d59585e0e4430279579def.source"
+      },
+      "src-tauri/src/cmd/system.rs": {
+        "existed": true,
+        "snapshot": "793b7c3d247aeec087ae00c9f29d1d50eb3a35d4b77ff9c754a6c9eb373a3097.source"
+      },
+      "src-tauri/src/cmd/uwp.rs": {
+        "existed": true,
+        "snapshot": "c47a9cb199630fc7f3e1f3da6363cf8a5201fad1e9267e5007df1b27252ffa76.source"
+      },
+      "src-tauri/src/cmd/validate.rs": {
+        "existed": true,
+        "snapshot": "e6341c6fe59fa09cec2707440318c7cb09e3e18ce38beaae7618042813b2eeb7.source"
+      },
+      "src-tauri/src/cmd/verge.rs": {
+        "existed": true,
+        "snapshot": "ba85a3d70fa12200888722be3ec7253f13761fa5f02d375ee15e0f4458e5dc13.source"
+      },
+      "src-tauri/src/cmd/webdav.rs": {
+        "existed": true,
+        "snapshot": "0235ce2c71e6c3281cd6d61e5098df5489954ab2574c7890999862d5706a620b.source"
+      },
+      "src-tauri/src/cmd/media_unlock_checker/mod.rs": {
+        "existed": true,
+        "snapshot": "1f5bfe2a7344037c172523a183213282fc215438ae535407f330bcd019611ad2.source"
+      },
+      "src-tauri/resources/set_dns.sh": {
+        "existed": true,
+        "snapshot": "6fe794469c3bada765fa85ecba6c02a0f2e0064d8bd4feecc6346aa6384e37c5.source"
+      },
+      "src-tauri/resources/unset_dns.sh": {
+        "existed": true,
+        "snapshot": "916c2b27f43acf478ee45058522f1036a9ac92e06533938d6e3623d31db59e26.source"
+      },
+      "src-tauri/packages/linux/post-install-rpm.sh": {
+        "existed": true,
+        "snapshot": "20ce142e37e7b12f8e745eb0be50d0a4f2c545c6a9f2496d79319b80cfa7a059.source"
+      },
+      "src-tauri/packages/linux/post-install.sh": {
+        "existed": true,
+        "snapshot": "2ce69670192efc81b2656ce783450cbebe00d49125e30c6cf83657651ba3d77e.source"
+      },
+      "src-tauri/packages/linux/pre-remove.sh": {
+        "existed": true,
+        "snapshot": "b2d65f0926518444694fd36d85bc0034a6f8805fafe25cde213d64afc9ccb3f2.source"
+      },
+      "src-tauri/examples/frontend-contract.rs": {
+        "existed": true,
+        "snapshot": "2d34a3414f9762a4151f17681c21e863c188ba3b00d2771219e6b5bd381a22cd.source"
+      },
+      "src/AGENTS.md": {
+        "existed": true,
+        "snapshot": "3362030dfe232705631df76d745905dabbe350cde1c448e0f6ccbaa1eeb1ef9c.source"
+      },
+      "src/main.tsx": {
+        "existed": true,
+        "snapshot": "1cd8b18798a1a103bfe13bef54354c1f3a3bea29a31c8eea1a0c67a3a839b811.source"
+      },
+      "src/utils/debounce.ts": {
+        "existed": true,
+        "snapshot": "27deecf0e921d131498e3d2e9b50d61d0444ce5740cdbdd716ab531e6f36e552.source"
+      },
+      "src/utils/debug.ts": {
+        "existed": true,
+        "snapshot": "c09c1ce27e0d1c3aea94ce6b5fd80f1fe44715eeb404ea4faeb1c83d691bc123.source"
+      },
+      "src/utils/delay.test.ts": {
+        "existed": true,
+        "snapshot": "b7e05288311582b856e9fc63eefcf26ba53aa59655e8d13dd982c477a9849eb3.source"
+      },
+      "src/utils/delay.ts": {
+        "existed": true,
+        "snapshot": "da3fac8c7e1df683a6c77f06966c2ccdb7734f389588183187c49e20a75b8da9.source"
+      },
+      "src/utils/disable-webview-shortcuts.ts": {
+        "existed": true,
+        "snapshot": "32e99459d0516464b55779c41004343d7d24ea606bf15b31892e16f4c2acea87.source"
+      },
+      "src/utils/font-family.ts": {
+        "existed": true,
+        "snapshot": "1ce7bedd5a9ffd3a774a768ba12a906414e81ac2811ca89e4fad21ca6296ddca.source"
+      },
+      "src/utils/get-system.ts": {
+        "existed": true,
+        "snapshot": "589c01ea471e037d1fc3f51a5be141609e9f6ba1678b82bc2c145862a13b757e.source"
+      },
+      "src/utils/is-async-function.ts": {
+        "existed": true,
+        "snapshot": "a29605380c278bee57dd31681895f80a5964b95eb8e27b4456b5346ab3c6631f.source"
+      },
+      "src/utils/mixed-port.ts": {
+        "existed": true,
+        "snapshot": "527c713a4d8f3690937576108d72e9526a996d6484e8bb792a9378401122ac58.source"
+      },
+      "src/utils/network.ts": {
+        "existed": true,
+        "snapshot": "0ae77772ebabcc1f769cf98f4bd2d5b575900e4dfdd29096737131b4ea579096.source"
+      },
+      "src/utils/noop.ts": {
+        "existed": true,
+        "snapshot": "3f213069baa9e9a4defcce348d68704150a65b267b39276dadc3ca9206b5dd4d.source"
+      },
+      "src/utils/open-external-url.ts": {
+        "existed": true,
+        "snapshot": "52442340d5cc3af2c879263f735be0554461655b8f690235ee75c3d58dc002b6.source"
+      },
+      "src/utils/parse-hotkey.ts": {
+        "existed": true,
+        "snapshot": "2c62e12f1e54269a5080b29baf2c329c88c5a46858cfe9959ff5290d92e22ed2.source"
+      },
+      "src/utils/parse-traffic.ts": {
+        "existed": true,
+        "snapshot": "1d8850e33b243e665e5f4c20533589d362c376d1abb39f1600d8bdb1659c8d8c.source"
+      },
+      "src/utils/search-matcher.ts": {
+        "existed": true,
+        "snapshot": "8b5012e8bbd5deb086d23f9365165a08f43063b19c873e910c890804ffbb5bc5.source"
+      },
+      "src/utils/speed.test.ts": {
+        "existed": true,
+        "snapshot": "0fa77ef7732a4dd83781ae8990e779dc9af06c6c5484f56b1a5abae3802cd423.source"
+      },
+      "src/utils/speed.ts": {
+        "existed": true,
+        "snapshot": "9f392159cace4bafe4d40b58a24c2be620d5fffa4a132e16f2a4659b7029b6e2.source"
+      },
+      "src/utils/traffic-sampler.ts": {
+        "existed": true,
+        "snapshot": "730bb3f47d5ea88590c22df00c576b7cf6d34da7bd71e6845a94ac8cfb0ea3dd.source"
+      },
+      "src/utils/yaml.ts": {
+        "existed": true,
+        "snapshot": "52e62f9fcd9da158cbadd4f3b6af08581610658bfbefd8efa65e734ee0aab7a5.source"
+      },
+      "src/utils/yaml.worker.ts": {
+        "existed": true,
+        "snapshot": "499004bb3b7801f514901f74e55dbda683dc573e9dc247176732f5402882d87f.source"
+      },
+      "src/utils/uri-parser/anytls.ts": {
+        "existed": true,
+        "snapshot": "b4e629f2e1ea76fd04699fcfecc6e1164de33849ad57b60a6224727fe8538ad8.source"
+      },
+      "src/utils/uri-parser/helpers.ts": {
+        "existed": true,
+        "snapshot": "86c7e05118da40e492c1289272468ac14e3642fa1972b1cc9e17ba43e71f9cd5.source"
+      },
+      "src/utils/uri-parser/http.ts": {
+        "existed": true,
+        "snapshot": "8cfe414a2255f2bbf15e7b449c33761d011103f50a5efc86fe119871ed6c9628.source"
+      },
+      "src/utils/uri-parser/hysteria.ts": {
+        "existed": true,
+        "snapshot": "78d001364a5a723c19ec8a4900e35f51d11b091d73cdbf267c54d034dd303a85.source"
+      },
+      "src/utils/uri-parser/hysteria2.ts": {
+        "existed": true,
+        "snapshot": "384b277d910c2f1d5ea1e1b6b0bbf7ac80bd11fde55c7f35648585add8e6b254.source"
+      },
+      "src/utils/uri-parser/index.ts": {
+        "existed": true,
+        "snapshot": "f4bede8b10c13fb9bdea6cc08ea73cffcb3c6d9ba755450691e0973fabc04256.source"
+      },
+      "src/utils/uri-parser/socks.ts": {
+        "existed": true,
+        "snapshot": "04c236a0fd172f8bf21306ef3a44b140950329ff9a760c17406253c142be1c6f.source"
+      },
+      "src/utils/uri-parser/ss.ts": {
+        "existed": true,
+        "snapshot": "16e4df62ce83d1531f01fdc7564b58fbb9f535e29945f8c8340cdf6dff83e5a2.source"
+      },
+      "src/utils/uri-parser/ssr.ts": {
+        "existed": true,
+        "snapshot": "abda3cbee6a41630971186621982b3425b69a9bae9ceea2a9bcf641c22d1df4f.source"
+      },
+      "src/utils/uri-parser/trojan.ts": {
+        "existed": true,
+        "snapshot": "5698074e6b3aeeffb253ba05ac7147193bc58a10e76889c7df148f91a769743e.source"
+      },
+      "src/utils/uri-parser/tuic.ts": {
+        "existed": true,
+        "snapshot": "272f75659b4f14a0fdbf6767ad5a07711ce067dd4baa93215d2a5a1eceaee0dd.source"
+      },
+      "src/utils/uri-parser/vless.ts": {
+        "existed": true,
+        "snapshot": "f9147d4d5f39ec31b3e34470ccb6ab5b0ee42185c2df18358c120fba771136c2.source"
+      },
+      "src/utils/uri-parser/vmess.ts": {
+        "existed": true,
+        "snapshot": "2f672a686bcd2c5cfe92ae1a18a8f9a348840196bcfbb0180f1c2d5a5f259a40.source"
+      },
+      "src/utils/uri-parser/wireguard.ts": {
+        "existed": true,
+        "snapshot": "cabdaed9fe74d35333109a0477d9b633064bfad3860537e18386567b10d241af.source"
+      },
+      "src/types/global.d.ts": {
+        "existed": true,
+        "snapshot": "d5211fb4e748c24a83d346816cb5817cffa33331aae9f8d453f25bb43d388c32.source"
+      },
+      "src/types/i18next.d.ts": {
+        "existed": true,
+        "snapshot": "8188119a0e031bfb4fe0a5d573b5b9ac5cf4a927b641393256d29f447b167f7a.source"
+      },
+      "src/types/monaco.ts": {
+        "existed": true,
+        "snapshot": "1ebf565585f991239fd46883219a61640d26349206d37a854eb208c5de8075ad.source"
+      },
+      "src/types/proxy-view.ts": {
+        "existed": true,
+        "snapshot": "63bd1202774836b87f013866de5a629b1569bbbca4b8252fb329172db9367eed.source"
+      },
+      "src/types/react-i18next.d.ts": {
+        "existed": true,
+        "snapshot": "d5b28f7c4b179c97f8c7e227b7eaea4672621a84600408a76f515b23f3302fd7.source"
+      },
+      "src/types/generated/i18n-keys.ts": {
+        "existed": true,
+        "snapshot": "806fa61e37f1da067f68a28619944b47b331d77c7a723f2e60202db05beec859.source"
+      },
+      "src/types/generated/i18n-resources.ts": {
+        "existed": true,
+        "snapshot": "438129b668e21edb43a8f095d3bb2a492af5e07603b2b911245b5ed9f0b1f72e.source"
+      },
+      "src/store/app-state.ts": {
+        "existed": true,
+        "snapshot": "507e7ef04ad96d47c214e7f51a23998c0e18486af9c2644f51722c805863063e.source"
+      },
+      "src/store/app-store-context.ts": {
+        "existed": true,
+        "snapshot": "97e5bad89f4571245bdc9a2fa6d66b368abacbfab54a65df8237f30a202ba82b.source"
+      },
+      "src/store/app-store.tsx": {
+        "existed": true,
+        "snapshot": "f0a9994f2dbe9a1110025d3b1e2048ab42816370b790194ac258cf1decf786e3.source"
+      },
+      "src/store/store-reads.test.ts": {
+        "existed": true,
+        "snapshot": "172197b0f90bfc25b785a0e71654b17f793148555f21eb2a5e9db19e9f50f4f4.source"
+      },
+      "src/store/store-reads.ts": {
+        "existed": true,
+        "snapshot": "01fd74d15e73309cfcf78a77d99e9302170042e54ea122ab172efcd3ef257446.source"
+      },
+      "src/services/api.ts": {
+        "existed": true,
+        "snapshot": "0e184ea1c8a349adddc149579c2624e138ff629253721c460c28db1a33119533.source"
+      },
+      "src/services/bindings.ts": {
+        "existed": true,
+        "snapshot": "ea5569fd079fec917ba233c8ca6740abf5f199ecdbaf1bbd5ab4ecd406dadd79.source"
+      },
+      "src/services/cmds.ts": {
+        "existed": true,
+        "snapshot": "3d14f695b9593724b9ab5e91a36d46f00ce9b21b4f4d8d99a6f63684b1552797.source"
+      },
+      "src/services/contract.ts": {
+        "existed": true,
+        "snapshot": "f07ca392596e8ce24a3f704d0fe5e5a1cb445eb4bd86371e1abf7a54769a3e07.source"
+      },
+      "src/services/delay.test.ts": {
+        "existed": true,
+        "snapshot": "83b0fca2ffa8cb4a2fd4d579f7d4b67d93c2fd5f41d430ec272e0939024f6746.source"
+      },
+      "src/services/delay.ts": {
+        "existed": true,
+        "snapshot": "7e72fe986e151954964a7e6c5b20b2174757b97c2db72d10bc26f4a7d962ced6.source"
+      },
+      "src/services/i18n.ts": {
+        "existed": true,
+        "snapshot": "6049e1bcf7dd025557763952e79eed7148e155601a079915de7e6f5ec697fd60.source"
+      },
+      "src/services/monaco.ts": {
+        "existed": true,
+        "snapshot": "26614de1b4aa9ed097a0670928519f9557bd9f8c629e636af22b6e38a40f8edc.source"
+      },
+      "src/services/mutate.test.ts": {
+        "existed": true,
+        "snapshot": "dff6241ac3f718e79e060c141fe9a49ca9f67b2f0ef3e162daa754db97291c4d.source"
+      },
+      "src/services/mutate.ts": {
+        "existed": true,
+        "snapshot": "ce7cf3fdf60609f82cd28466dffbf063913690bb3e6609301ecfde0def70ab3c.source"
+      },
+      "src/services/notice-handlers.ts": {
+        "existed": true,
+        "snapshot": "65472aaaaa46858108aa4f4c8cb2e8aadee485d3390bd371580c6150d2dd9298.source"
+      },
+      "src/services/notice-service.ts": {
+        "existed": true,
+        "snapshot": "5ccaa18c4eaa3b73c5036853b9f60e8ed18d69cfde3edf18f7f6a74f41a9683f.source"
+      },
+      "src/services/preload.ts": {
+        "existed": true,
+        "snapshot": "49bca75b83512cf724796e300a5f0f28a3e8b074c6c6edcd42bc65973e029e7b.source"
+      },
+      "src/services/query-client.ts": {
+        "existed": true,
+        "snapshot": "d5569f496efd9ee37ccb0806d98064f2ebffa5f30038bb907b638a26aafd0f93.source"
+      },
+      "src/services/result-store.test.ts": {
+        "existed": true,
+        "snapshot": "6d6038e180f21ba88c0d46581f742cd8ae4c14d697816b53bcf41d0a52434a91.source"
+      },
+      "src/services/result-store.ts": {
+        "existed": true,
+        "snapshot": "feaa44322becefd9be297ba9cc852438c80d3193796eaf8d12394d3cd6f70973.source"
+      },
+      "src/services/service-request.ts": {
+        "existed": true,
+        "snapshot": "1ccd44600433103efbdea5c4d007d220bd443e44562e2cd0014005bdd8f6ba53.source"
+      },
+      "src/services/speed.test.ts": {
+        "existed": true,
+        "snapshot": "1a74ef86641b4fb65c86991a79198fbdf315393e21a2bdbafa8ccd6b0109e587.source"
+      },
+      "src/services/speed.ts": {
+        "existed": true,
+        "snapshot": "abb9a04ef388efd5c790fe68cf7a1a39dda060ef9b778c69c4ee85049c40f9c2.source"
+      },
+      "src/services/states.ts": {
+        "existed": true,
+        "snapshot": "7e941054c3f9af0982365bb11baabb7214d14a1e3650509c53bb4b88b7070841.source"
+      },
+      "src/services/traffic-monitor-worker.ts": {
+        "existed": true,
+        "snapshot": "6d52c472d96606ab58170b5e7420088075c1a7a16ab7448d9f75d2ca9a71b38a.source"
+      },
+      "src/services/update.ts": {
+        "existed": true,
+        "snapshot": "362a148bf220b72abfcf42f4280213f34f2d4b3213b1ee6215c52010e31b4e87.source"
+      },
+      "src/services/webdav-status.ts": {
+        "existed": true,
+        "snapshot": "67684df441e12517e498ac694384ddf05837cdfd64e706b679905a13b956469d.source"
+      },
+      "src/services/bus/create-bus-handlers.test.ts": {
+        "existed": true,
+        "snapshot": "4baeb4cb242e810487134c185a9fc42d8a619c70b575a124e101366f10887e02.source"
+      },
+      "src/services/bus/create-bus-handlers.ts": {
+        "existed": true,
+        "snapshot": "f101dd8fd3daa91c1de6a5111cd9929ce7577d5ada71b922b5d1c45f0d8a3a0d.source"
+      },
+      "src/services/bus/index.ts": {
+        "existed": true,
+        "snapshot": "29acbde083d159eb7834890c7df11ffd7f541f1834b84591769ed000c8a9cc98.source"
+      },
+      "src/services/bus/use-event-bus.test.ts": {
+        "existed": true,
+        "snapshot": "cef984dd476bfc5ea18cab39d240a9062676dea5a8b96bd3d9f9cccd126b5751.source"
+      },
+      "src/services/bus/use-event-bus.ts": {
+        "existed": true,
+        "snapshot": "b4d2d9afb3cefba6d1ff778987974205ae9a2024697a0432a86fd50674cecd4f.source"
+      },
+      "src/providers/app-data-context.ts": {
+        "existed": true,
+        "snapshot": "ae6292ee3804ecec296689b690aa1b01d408d206de72492a1a61a722531c3bb5.source"
+      },
+      "src/providers/app-data-provider.tsx": {
+        "existed": true,
+        "snapshot": "8e966270b781a489c18b17da055d283bea2c7cc96339c5ac943dcca3bd624a23.source"
+      },
+      "src/providers/window/index.ts": {
+        "existed": true,
+        "snapshot": "45e142cd3a1ce6a5aaeb93040a26ad3642d6c31e29eb5befdd4d6a71d919991c.source"
+      },
+      "src/providers/window/window-context.ts": {
+        "existed": true,
+        "snapshot": "5f9693d9e0d67f25c08f61813d79e4cf28864238a026df27e394afb52fe0d60d.source"
+      },
+      "src/providers/window/window-provider.tsx": {
+        "existed": true,
+        "snapshot": "5abf5b1f4c0116727b124d46bcb060abe3dadc9f0c74a49f83aba55b4eab36da.source"
+      },
+      "src/polyfills/RegExp.js": {
+        "existed": true,
+        "snapshot": "03d53d62df82a4977acd6b61004f9411f6dbb030479edd9e7c2f50e04a1bd0d4.source"
+      },
+      "src/polyfills/WeakRef.js": {
+        "existed": true,
+        "snapshot": "c4a729061b9a48622b2c1b017594c3b4cde8c845071fe09b9a23f0a4fc8d2322.source"
+      },
+      "src/polyfills/matchMedia.js": {
+        "existed": true,
+        "snapshot": "b56625a45aefcb311008efdc0bc06df67789f5599c698e034f54324e58d5a95f.source"
+      },
+      "src/pages/_layout.tsx": {
+        "existed": true,
+        "snapshot": "78b726323c5ef467cadf0bc6d4237a1faa738911fc62ae56a8321448f531ae2d.source"
+      },
+      "src/pages/_navigation-meta.ts": {
+        "existed": true,
+        "snapshot": "0b7934831dee7daae465a6a91583202b204cafd60b0cfe91c7294abd59fdb5db.source"
+      },
+      "src/pages/_navigation.tsx": {
+        "existed": true,
+        "snapshot": "560483347f787b706b0365f22032f0a4e5dad6eca6cbd6b3bcab0295f3fdd57e.source"
+      },
+      "src/pages/_routers.tsx": {
+        "existed": true,
+        "snapshot": "96e58a241d4d1ae3e411270bc04bd5f89e89c27cbaebbb5a0690c7102742b42d.source"
+      },
+      "src/pages/_theme.tsx": {
+        "existed": true,
+        "snapshot": "455f568a89a1ebb63c56864907ad158731b022a26f0d8b5c315c2e82d6113712.source"
+      },
+      "src/pages/connections.tsx": {
+        "existed": true,
+        "snapshot": "403fd784c7b98424097d605e102bb05fe156e1f6f2d751ebd94555ed3fc16885.source"
+      },
+      "src/pages/home.tsx": {
+        "existed": true,
+        "snapshot": "7c8d28ff1de800f1a1770a7f9bf600faa23af4ef36b2b27e7af3cc0b4b473ff4.source"
+      },
+      "src/pages/logs.tsx": {
+        "existed": true,
+        "snapshot": "bdc1801f0eb8878494f62ec61323a5f296c27a0be46e945baa47c763e57467f3.source"
+      },
+      "src/pages/profiles.tsx": {
+        "existed": true,
+        "snapshot": "a94ebfaecf8bb34c2d12dee1d4a0b28aebb0eb5a7ea12e477bce34296ff7126d.source"
+      },
+      "src/pages/proxies.tsx": {
+        "existed": true,
+        "snapshot": "953bb4fd685c93a471dad7cc5386eccfd3b25352a6768becff2c55088e67189c.source"
+      },
+      "src/pages/rules.tsx": {
+        "existed": true,
+        "snapshot": "5666818037dc5a843a5e894f9e253f4470c9d2b475efa6cc05e80d3c01139941.source"
+      },
+      "src/pages/settings.tsx": {
+        "existed": true,
+        "snapshot": "6d177b9682b0b471f8605604f08a4a9265f82bd4c2d861969727cf1fdb4a9bc7.source"
+      },
+      "src/pages/unlock.tsx": {
+        "existed": true,
+        "snapshot": "f710d885ea5057f6f2a91828a599537db43fcb4000b44c5a57bcddb5409476ce.source"
+      },
+      "src/pages/_layout/utils/index.ts": {
+        "existed": true,
+        "snapshot": "83b8097ebd1ca5e7d29a3196788ce167264d718f29bb9134b6a5dcf7de6f94ea.source"
+      },
+      "src/pages/_layout/utils/initial-loading-overlay.ts": {
+        "existed": true,
+        "snapshot": "0431c27bc495b3a234b31720431dd7de4a68ecc8241bc46e8cf14888f9e809df.source"
+      },
+      "src/pages/_layout/hooks/index.ts": {
+        "existed": true,
+        "snapshot": "98b872796b5c84c3662e7df8bacb57093ceaa46395febd976504af45a0111753.source"
+      },
+      "src/pages/_layout/hooks/use-custom-theme.ts": {
+        "existed": true,
+        "snapshot": "f441492f1883f573778135b7878c4a58b7543b6e16173bfd747082208c706011.source"
+      },
+      "src/pages/_layout/hooks/use-loading-overlay.ts": {
+        "existed": true,
+        "snapshot": "566b498989c5cfbd70f49d52881aa725d2a1c6bff2c5fd6ab026b57dd269e196.source"
+      },
+      "src/pages/_layout/hooks/use-nav-menu-order.ts": {
+        "existed": true,
+        "snapshot": "8205b1ab18493975a777f13d1444686f28038d81ac6f46e1ce2a6f99ff52d8cb.source"
+      },
+      "src/pages/_layout/hooks/use-pending-failures.ts": {
+        "existed": true,
+        "snapshot": "7aa37e4e87bfbba7f4953e2c367d9fe33aa27f79036e9b90baddeaa8328d38ea.source"
+      },
+      "src/hooks/use-clash-log.ts": {
+        "existed": true,
+        "snapshot": "84ee8e104ae987dc9cd68a03ae6fc63cea80f5de4f30a85c56af6364b56807b0.source"
+      },
+      "src/hooks/use-clash.ts": {
+        "existed": true,
+        "snapshot": "a76bfd259468f161516a24cde847c357756e972fe9807fc829737ad966a1643d.source"
+      },
+      "src/hooks/use-connection-data.ts": {
+        "existed": true,
+        "snapshot": "db32fddb447d0812fd13c7ae9ad20ce232f03c294b192c9d5b0b00a24b7e6341.source"
+      },
+      "src/hooks/use-connection-setting.ts": {
+        "existed": true,
+        "snapshot": "7d4d00526545e37e27837fe5bfbd60e0b0622177ca438ac27c2526ff084880ec.source"
+      },
+      "src/hooks/use-displayed-mixed-port.ts": {
+        "existed": true,
+        "snapshot": "e74aa93621b38d533161e972209a3b1226fcb34395fa389a45e21a55f24dcbb1.source"
+      },
+      "src/hooks/use-editor-document.ts": {
+        "existed": true,
+        "snapshot": "c56153f2215f56a98d447c2b0fc33618e47f6368ff2fdb8a357956950e7d1a51.source"
+      },
+      "src/hooks/use-group-delays.ts": {
+        "existed": true,
+        "snapshot": "cf9724f57337f821bd97b361af8960ef0fdc1fcd1ebe8a68ded1e2cb46c276c8.source"
+      },
+      "src/hooks/use-group-speeds.ts": {
+        "existed": true,
+        "snapshot": "9b2c2b4b0f99663ce1cebbe4cb31d997b76f22ed38da784a15097d1e420508b5.source"
+      },
+      "src/hooks/use-i18n.ts": {
+        "existed": true,
+        "snapshot": "9c59a2a3bffdc0bbdb50d935c84a9384710b3bb77e5443981410ac0c2e33237e.source"
+      },
+      "src/hooks/use-icon-cache.ts": {
+        "existed": true,
+        "snapshot": "47dad29168a398294ed6fbd839f428f3eb915d4b146a11bbaacb2407ca01f2b1.source"
+      },
+      "src/hooks/use-log-data.ts": {
+        "existed": true,
+        "snapshot": "d7866401abfc3707933e9056dba1d0030fcec7e46b1e4783034d4316eaee34af.source"
+      },
+      "src/hooks/use-memory-data.ts": {
+        "existed": true,
+        "snapshot": "134255aae92bfa7d5ee6cb97e639a6b568c966cb7d63e430288abea75237ea01.source"
+      },
+      "src/hooks/use-mihomo-ws-subscription.ts": {
+        "existed": true,
+        "snapshot": "f8f7395ddf7a987aac553151119bacf7b0669f68ce9cb476b3948f699d4e690c.source"
+      },
+      "src/hooks/use-network.ts": {
+        "existed": true,
+        "snapshot": "78c6b47ff009be23a0045e3c32b1b2f73d97b10c577797a864af3fc4959a3e53.source"
+      },
+      "src/hooks/use-profiles.ts": {
+        "existed": true,
+        "snapshot": "faf2d1c478f9976fb82363238f903d6e322d39e82cacb5f55221ead58e6d1c10.source"
+      },
+      "src/hooks/use-proxy-delay-state.ts": {
+        "existed": true,
+        "snapshot": "b09e8f3aa23c22ff7b9587aeeef7ddec35fd1861de2e95f8a38c10af8eafd849.source"
+      },
+      "src/hooks/use-proxy-selection.test.ts": {
+        "existed": true,
+        "snapshot": "af0804cd30a99911e90aa8491479951aa4aa0329eb6694bf0b366d58ac3e0f9f.source"
+      },
+      "src/hooks/use-proxy-selection.ts": {
+        "existed": true,
+        "snapshot": "826367cb67681451859b38e139d63baad249bf2e0ca66e8405dd663ca70cd01e.source"
+      },
+      "src/hooks/use-record-selection.ts": {
+        "existed": true,
+        "snapshot": "6a6cdf2c747486d041c79d008eb380ab421c3a05decbb34cfb4b30c4c4ee7c42.source"
+      },
+      "src/hooks/use-service-installer.ts": {
+        "existed": true,
+        "snapshot": "16aa553cb637d93a0b0c8987258a94bc9b1f974fcea04448e597d5ca3d586d3b.source"
+      },
+      "src/hooks/use-service-uninstaller.ts": {
+        "existed": true,
+        "snapshot": "3fcb0eada27f73e634f0f3c8da47810f18ab1cf1130c8bbfe2660aaa25c4d0aa.source"
+      },
+      "src/hooks/use-speed-state.ts": {
+        "existed": true,
+        "snapshot": "babbb7f2086e8b8b1451cdde84d75c38268d1f593ac5435697ff36960c2d098f.source"
+      },
+      "src/hooks/use-system-proxy-state.ts": {
+        "existed": true,
+        "snapshot": "d9a9b5d0ba94096692a49761e6f76470152c70a7a6e41c12a59790870051f01b.source"
+      },
+      "src/hooks/use-system-state.ts": {
+        "existed": true,
+        "snapshot": "1cdbc533e8cc4e3d637e1cd3ac6e2103ae06efbbdb377b4a4519fda6f447fddb.source"
+      },
+      "src/hooks/use-traffic-data.ts": {
+        "existed": true,
+        "snapshot": "d125f67809136e329acb4bfa0d5eb245b5c7ac2442d0c0747c542652213e094e.source"
+      },
+      "src/hooks/use-traffic-monitor.ts": {
+        "existed": true,
+        "snapshot": "297ace30bf78e18a24cdabece09cbedb7f2be63cfb70f39a65ad386b8831079d.source"
+      },
+      "src/hooks/use-update.ts": {
+        "existed": true,
+        "snapshot": "bcae0bda7fb0a54e8e53252c48ca66516a4a091114f200ca72c5875f5bbc98ce.source"
+      },
+      "src/hooks/use-verge.ts": {
+        "existed": true,
+        "snapshot": "0dfbfb7cdbc6eed20c8a8290ae686c554547f1a15ec18e5e23dc6c159000f69a.source"
+      },
+      "src/hooks/use-visibility.ts": {
+        "existed": true,
+        "snapshot": "aa1968c873ce5392c0b3b550fa76b4321ef045d58c0782d5a61107c767fb90bf.source"
+      },
+      "src/hooks/use-window.ts": {
+        "existed": true,
+        "snapshot": "d8706e7ab2cc814efb69b417b7965d5a6358257b90526b717e3a6987c6341780.source"
+      },
+      "src/components/test/test-box.tsx": {
+        "existed": true,
+        "snapshot": "f87d7f23420afef9a2fff8ddea0d5493d1a006fdda8a58ffe7c4a7c9117eb3fa.source"
+      },
+      "src/components/test/test-item.tsx": {
+        "existed": true,
+        "snapshot": "9528d6593eb4fc1696329e4ce35a25d767a2444348a7f4f8fc2f46ee97845f89.source"
+      },
+      "src/components/test/test-viewer.tsx": {
+        "existed": true,
+        "snapshot": "65cd4fd9d86fd73ec214c3c2787bcbac20207bb06e92d70544df40ae9f710627.source"
+      },
+      "src/components/shared/proxy-control-switches.tsx": {
+        "existed": true,
+        "snapshot": "ad35c465a6f6fe06716a0ba7f3bbdb1d69d0c3c8b90a91c0b91b8edfba974e92.source"
+      },
+      "src/components/setting/setting-clash.tsx": {
+        "existed": true,
+        "snapshot": "afc9a322095f6fa4576580820fb805858794f99da49ed5d981fdcb3abde3d186.source"
+      },
+      "src/components/setting/setting-system.tsx": {
+        "existed": true,
+        "snapshot": "4227a5c3731300f6b07fc27bc638a32d20c31220d15c0a6f274a16120ec2cb88.source"
+      },
+      "src/components/setting/setting-verge-advanced.tsx": {
+        "existed": true,
+        "snapshot": "1cf8f8d7e19c36676ee0de0ec228244f24e0d9647b220dcdbfc091545aa996c2.source"
+      },
+      "src/components/setting/setting-verge-basic.tsx": {
+        "existed": true,
+        "snapshot": "2ce89d96d681f818d4e3dd517c4b8cf07e7e6fb71894067ff0d8b19f48b78de2.source"
+      },
+      "src/components/setting/settings-catalog.ts": {
+        "existed": true,
+        "snapshot": "099d919569a9625a5f8886f753af872b6ad7982ba5d6d36c9575a2d76f88e10d.source"
+      },
+      "src/components/setting/settings-search-context.ts": {
+        "existed": true,
+        "snapshot": "2ea0a0c4fc1c17755a5d99b59a523d196839d5107a7e29efaabc76c7026b6556.source"
+      },
+      "src/components/setting/settings-search.tsx": {
+        "existed": true,
+        "snapshot": "a7ea5c1ef647705146cf9a517d112f29debc360f3663a624464c57d5bab3288f.source"
+      },
+      "src/components/setting/mods/auto-backup-settings.tsx": {
+        "existed": true,
+        "snapshot": "86074c34ebfe3993959169e3a9d825e81bb6ccf23a32d156fdcd3c4d8d2afe3e.source"
+      },
+      "src/components/setting/mods/backup-config-viewer.tsx": {
+        "existed": true,
+        "snapshot": "5495c4b74d43ca3bf39909bafeb8c9377256b31ae12532b2ab26e6557652d885.source"
+      },
+      "src/components/setting/mods/backup-history-viewer.tsx": {
+        "existed": true,
+        "snapshot": "4592ade15c251ce2a62e6d026446fc86fe9795279291999bc31f8087a02f7f92.source"
+      },
+      "src/components/setting/mods/backup-viewer.tsx": {
+        "existed": true,
+        "snapshot": "7ea2c6d2d28415be319f7937956ae9a3dd52b785cdde91a66d0ff44845655721.source"
+      },
+      "src/components/setting/mods/backup-webdav-dialog.tsx": {
+        "existed": true,
+        "snapshot": "8e1cebfbd6f5151acfb836a4d0c30f712582c5a83c0f8f5b27c46632140a709e.source"
+      },
+      "src/components/setting/mods/clash-core-viewer.tsx": {
+        "existed": true,
+        "snapshot": "c0e52a8c3d65bcf00adc7bcec75e2a58cb6a18ca3bac376fc72137af88133d14.source"
+      },
+      "src/components/setting/mods/clash-port-viewer.tsx": {
+        "existed": true,
+        "snapshot": "238b62c1873a44138f711fab6276f4a01da288b8ba7eb5ee7733c519fde917d0.source"
+      },
+      "src/components/setting/mods/config-viewer.tsx": {
+        "existed": true,
+        "snapshot": "54e0cd2151870d611b6c029de867f66e0e8db2f79e0bd8df9a14671243a8b5e4.source"
+      },
+      "src/components/setting/mods/controller-viewer.tsx": {
+        "existed": true,
+        "snapshot": "1756cdaa613d7dd3beb7d77dd1faa2bfc8eb21b9acbdde4d401706d2451ffe2e.source"
+      },
+      "src/components/setting/mods/dns-mode-switch.tsx": {
+        "existed": true,
+        "snapshot": "eaa98fc711c86a8b217ca6d8be096fa2b8fea199a92e91722d1c108b3d21fd18.source"
+      },
+      "src/components/setting/mods/dns-viewer.tsx": {
+        "existed": true,
+        "snapshot": "5540aa81d0e3e4aa0e0020c41dccdf531638746bfb26dc92a0cc408d9f010cc9.source"
+      },
+      "src/components/setting/mods/external-controller-cors.tsx": {
+        "existed": true,
+        "snapshot": "d49c436623d157a279286cc78ab70a1b701ac34b61c64335b20b52dc3697240a.source"
+      },
+      "src/components/setting/mods/guard-state.tsx": {
+        "existed": true,
+        "snapshot": "53820fba129d618b8a215ced5428646a0c5e783d37cd15dd310323d2f3108876.source"
+      },
+      "src/components/setting/mods/hotkey-input.tsx": {
+        "existed": true,
+        "snapshot": "cc17f707301673cbac50812fe0aa0b35c1769e5864e2e9a73d6f51acb3d09b16.source"
+      },
+      "src/components/setting/mods/hotkey-viewer.tsx": {
+        "existed": true,
+        "snapshot": "a9dba0f6839587f1915c5ca1daccac496364ed470287d1366b816268eb5513b3.source"
+      },
+      "src/components/setting/mods/layout-viewer.tsx": {
+        "existed": true,
+        "snapshot": "0d3609e064bc535ea8ecabc0ee53d137668aa593026ebd0791cfd6b79b8f1374.source"
+      },
+      "src/components/setting/mods/lite-mode-viewer.tsx": {
+        "existed": true,
+        "snapshot": "812a0ec839a78805ae542ccc491043d7602eefefbbb1760bb45ef4ef5db33932.source"
+      },
+      "src/components/setting/mods/misc-viewer.tsx": {
+        "existed": true,
+        "snapshot": "3be743913e2ec269955a50fa506becbb178a3a1f365fc08001662053ba6a1d04.source"
+      },
+      "src/components/setting/mods/network-interface-viewer.tsx": {
+        "existed": true,
+        "snapshot": "7bf3076eefdf107d8c909ef8c1648cb5317a5c6aed5aa51658411730eb9d60df.source"
+      },
+      "src/components/setting/mods/setting-comp.tsx": {
+        "existed": true,
+        "snapshot": "1e5a7e07913df6ff370c11f336bb5b5c51dcc9dec541f2208472d02de82f915e.source"
+      },
+      "src/components/setting/mods/stack-mode-switch.tsx": {
+        "existed": true,
+        "snapshot": "3b6d1915ff0390b83f3c3bea233ccb24c53aace6c18438e57e999bd1ca00a45a.source"
+      },
+      "src/components/setting/mods/sysproxy-viewer.tsx": {
+        "existed": true,
+        "snapshot": "7ae541b28c44de8506f2466329139ec05f0cac77eb03106a114e89114f33cfb3.source"
+      },
+      "src/components/setting/mods/theme-mode-switch.tsx": {
+        "existed": true,
+        "snapshot": "3393caf3c4013cc4056b4bc22dd80fdfe210f23ec99a6a8393073298a9a25fa7.source"
+      },
+      "src/components/setting/mods/theme-viewer.tsx": {
+        "existed": true,
+        "snapshot": "7e5ebf487ac2964c3099eba7d137622223bc10198eb714e88d97e8bd0288ce42.source"
+      },
+      "src/components/setting/mods/tun-viewer.tsx": {
+        "existed": true,
+        "snapshot": "4e6e48a48d8321b5e9ab1ce64aeed1a8482fd954765712f33b0da02358886c4b.source"
+      },
+      "src/components/setting/mods/tunnels-viewer.tsx": {
+        "existed": true,
+        "snapshot": "33f80efe1cc27a22ab724cb39623680d2da5944af9bc95393b809b2c95e0606a.source"
+      },
+      "src/components/setting/mods/update-viewer.tsx": {
+        "existed": true,
+        "snapshot": "1c1f454e9dae2ecea15a53bf9517f00cd0a24f495510bd84c950e09868dea00f.source"
+      },
+      "src/components/setting/mods/web-ui-item.tsx": {
+        "existed": true,
+        "snapshot": "f8cd6b98077a25a88e2f90883bccd23020a6423d711f4fe02a9a3aa3326418a3.source"
+      },
+      "src/components/setting/mods/web-ui-viewer.tsx": {
+        "existed": true,
+        "snapshot": "f5783b85a3a9f2f8f70450848f6f4ef5ab0718bebaa66719b1a54f675e304c32.source"
+      },
+      "src/components/rule/provider-button.tsx": {
+        "existed": true,
+        "snapshot": "39b582543342706e4e6ebc3725a84f1c5cc485e5953b4a1ca039bb18d72dfdea.source"
+      },
+      "src/components/rule/rule-item.tsx": {
+        "existed": true,
+        "snapshot": "bfa075d458cbfd40c04e91ca03aa8012e5e368f287af7b735caff6b5f5792886.source"
+      },
+      "src/components/proxy/provider-button.tsx": {
+        "existed": true,
+        "snapshot": "f6def2fde569e8e9aa67590bd56984c0fdd9c4d3f95f1c0ac9a0e9adf70e0372.source"
+      },
+      "src/components/proxy/proxy-chain-model.ts": {
+        "existed": true,
+        "snapshot": "6358bb7510bf2a6ca884f40e5634415badfd4ebea53bb3705ae077137849a253.source"
+      },
+      "src/components/proxy/proxy-chain.tsx": {
+        "existed": true,
+        "snapshot": "08cb6a64fabf68fb4cc3474344b306a5fb7d0a6826b4a9d6c52e205cadd433b7.source"
+      },
+      "src/components/proxy/proxy-empty-state-model.ts": {
+        "existed": true,
+        "snapshot": "689f9d3b5ea1ab6cba04b6ea19ed92ac1b7d3f06923fada6d912c7f75ca75443.source"
+      },
+      "src/components/proxy/proxy-empty-state.tsx": {
+        "existed": true,
+        "snapshot": "37f1b6108e1d5c1477086539f4ac11615683d832b4f1810809d424cde0f908cb.source"
+      },
+      "src/components/proxy/proxy-group-header-block.tsx": {
+        "existed": true,
+        "snapshot": "91e88599933f38b06befbc22077a6bda72f0efc0b306de3cb9b5d02618f4eb96.source"
+      },
+      "src/components/proxy/proxy-group-navigator.tsx": {
+        "existed": true,
+        "snapshot": "36c9c27356f527e4e05d92c5c9bf747728c9c6d742d58d044450e09c6364148a.source"
+      },
+      "src/components/proxy/proxy-group-tools.tsx": {
+        "existed": true,
+        "snapshot": "663c1b939fb756e1b2ba96a5e36b8e5d5516b7e58d72229f5809613821213647.source"
+      },
+      "src/components/proxy/proxy-groups-chain.tsx": {
+        "existed": true,
+        "snapshot": "ad633c3e6f9bf4f611b72c33f0c0958d98c2b49f0e8f05b9eceeea8f2f58d3c9.source"
+      },
+      "src/components/proxy/proxy-groups.tsx": {
+        "existed": true,
+        "snapshot": "86039f3519ac76f689e8a888381910773e63633dcb46405080dbfcb399534d36.source"
+      },
+      "src/components/proxy/proxy-head.tsx": {
+        "existed": true,
+        "snapshot": "7253c16a38caeadbc1ca81e8b96f421ae2cd531d5580f6c7fe4be5e5e77bbf1d.source"
+      },
+      "src/components/proxy/proxy-item-mini.tsx": {
+        "existed": true,
+        "snapshot": "393cccee7ea486ff783b59ddfba427160eb81ddee13acd109c967375a22dca9c.source"
+      },
+      "src/components/proxy/proxy-item.tsx": {
+        "existed": true,
+        "snapshot": "5c0a30c5041463be22445e83ba60a93a6ec14f424e2605140c8c7231b7607e26.source"
+      },
+      "src/components/proxy/proxy-render.tsx": {
+        "existed": true,
+        "snapshot": "635391243d8ea645b18e202bf5cfb155ee758b517d912383f07aebea55b6d2b2.source"
+      },
+      "src/components/proxy/speed-test-viewer.tsx": {
+        "existed": true,
+        "snapshot": "89a0a8c4362c211a4566914ea7866c73189bcd588daede86f874ef35f40f2dfe.source"
+      },
+      "src/components/proxy/use-filter-sort.test.ts": {
+        "existed": true,
+        "snapshot": "156113e51aeaa44745f7a9b9196352506e3e9bc849bad01d455064a0f8ac89e8.source"
+      },
+      "src/components/proxy/use-filter-sort.ts": {
+        "existed": true,
+        "snapshot": "86854c343a7aeea5f96d0f7f667add8adfc7f0aeda9f39e3e83f42ea990d8774.source"
+      },
+      "src/components/proxy/use-head-state.ts": {
+        "existed": true,
+        "snapshot": "c1ffaa1046c88319e32a40f806379824776b31a19829a488b90de52613822de7.source"
+      },
+      "src/components/proxy/use-proxy-group-header-layout.ts": {
+        "existed": true,
+        "snapshot": "9dfc9356ee7ab10e2792b21dba56ec3535d82d2c4f85c75c84c889965807d136.source"
+      },
+      "src/components/proxy/use-render-list.ts": {
+        "existed": true,
+        "snapshot": "bbc89e9ef6d41bd5ee8c2616040e93979b9bd35f78cf0ba42548394cabb98042.source"
+      },
+      "src/components/proxy/use-window-width.ts": {
+        "existed": true,
+        "snapshot": "78e0914dc4cd9c2feab21c5b0a01db7f0f41f2a4b85a7150b0c43bbe1edf6660.source"
+      },
+      "src/components/profile/editor-viewer.tsx": {
+        "existed": true,
+        "snapshot": "41089ad53f7896b48c1ed5a163008a790909dd973d7917b958db5ca1498d455f.source"
+      },
+      "src/components/profile/enhance-hint.tsx": {
+        "existed": true,
+        "snapshot": "2dd8fd84221575c230862e3a5e7727e7068f1f86bafb4e66a83fe163893fafbb.source"
+      },
+      "src/components/profile/file-input.tsx": {
+        "existed": true,
+        "snapshot": "37d740d776df00b265e18fbfd49c7008fe5ed443e3ddbbff602e7b616aa62cd8.source"
+      },
+      "src/components/profile/group-item.tsx": {
+        "existed": true,
+        "snapshot": "d1a53814c0374efafe43ab51bba7f06e8b31a799e5a08b001bca5b22ca21496b.source"
+      },
+      "src/components/profile/grouped-virtual-list.tsx": {
+        "existed": true,
+        "snapshot": "1a6656ba45a7f4c0052a30bed99dca5ded37c637ade792ee30e617b58555aa21.source"
+      },
+      "src/components/profile/groups-editor-viewer.tsx": {
+        "existed": true,
+        "snapshot": "a22df75e12e940cc67c4b24b9dc088f8757807760675333aa14946ef113a449b.source"
+      },
+      "src/components/profile/log-viewer.tsx": {
+        "existed": true,
+        "snapshot": "365fc848edc2ffa8bfb3b29b413972ee39ccd3881ba276fd6db0818876a52f1f.source"
+      },
+      "src/components/profile/profile-box.tsx": {
+        "existed": true,
+        "snapshot": "d85e99e59531f0924a8880482381ec33fa5dd741fb2671fdb0659d1d5da6ec75.source"
+      },
+      "src/components/profile/profile-item.tsx": {
+        "existed": true,
+        "snapshot": "5a97d46a1b28931a97b81db2209c52de749ea569d1fcbb35e5d273d23b4a2024.source"
+      },
+      "src/components/profile/profile-more.tsx": {
+        "existed": true,
+        "snapshot": "ae45dc96737cf315e4507d994781541403a33b6565c514635acf169d2c40d537.source"
+      },
+      "src/components/profile/profile-viewer.tsx": {
+        "existed": true,
+        "snapshot": "9ebb9187ab367adf8a5698faec70810cef6e03c858d4cbbcbbe55f8520a9eb1b.source"
+      },
+      "src/components/profile/proxies-editor-viewer.tsx": {
+        "existed": true,
+        "snapshot": "135f42e95ee7b9816ba9c865e260d8d57b3ef00f8843de37dc891667638d71b4.source"
+      },
+      "src/components/profile/proxy-item.tsx": {
+        "existed": true,
+        "snapshot": "1a292010d42fb5aac9eab99ff591079e56c532e932e169c40ac12589a51a8a11.source"
+      },
+      "src/components/profile/qr-viewer.tsx": {
+        "existed": true,
+        "snapshot": "378e36617be32aa8fd8167e2b92e7c827ae84c8676608642be07501ecca81d7d.source"
+      },
+      "src/components/profile/rule-item.tsx": {
+        "existed": true,
+        "snapshot": "48c2ff6e690e43d675da41ac4d14e684d2ad5d088106750227d1bcfff0cf3d13.source"
+      },
+      "src/components/profile/rules-editor-viewer.tsx": {
+        "existed": true,
+        "snapshot": "d6d5c76add624c3963cca8094c5333d463fc640f7543624a77d942fd8f221824.source"
+      },
+      "src/components/log/log-item.tsx": {
+        "existed": true,
+        "snapshot": "5b9efcf6c77d76f67425aa15a72f21e099a1f5dc95d688cdebadbcc8b492aa2a.source"
+      },
+      "src/components/layout/layout-item.tsx": {
+        "existed": true,
+        "snapshot": "6d6f7acef39d859ddf0253b973db1e5f4a92e79dd1ea9d13f457477ee83621e1.source"
+      },
+      "src/components/layout/layout-sidebar.tsx": {
+        "existed": true,
+        "snapshot": "45776092593587232f176d66918a87318f915cc61d5c6756e44bdd443023f3d5.source"
+      },
+      "src/components/layout/layout-traffic.tsx": {
+        "existed": true,
+        "snapshot": "08f3f429632233e286ca0807d23d8a6e158cc20928e748e54187dec66b223e9b.source"
+      },
+      "src/components/layout/notice-manager.test.ts": {
+        "existed": true,
+        "snapshot": "2075e54371f884048d942e079e1dc66ca895d3445063b785a4b9a4f6c5123cac.source"
+      },
+      "src/components/layout/notice-manager.tsx": {
+        "existed": true,
+        "snapshot": "23f2ef115890954b5f3e00a1c9fc028f7fca7401b2456614a6b9b93d4eb9aeab.source"
+      },
+      "src/components/layout/scroll-top-button.tsx": {
+        "existed": true,
+        "snapshot": "7bc0b50f07dcd45ca0b7914f6890de154824c3da97e1ce4c6458b7700167189b.source"
+      },
+      "src/components/layout/service-migration-dialog.test.ts": {
+        "existed": true,
+        "snapshot": "a256d3b4818072d1f24002b2bedc428bd136d6c49f7583c7f34673b53976e980.source"
+      },
+      "src/components/layout/service-migration-dialog.tsx": {
+        "existed": true,
+        "snapshot": "be906bd2d068a46083efb5bdad293e99524c1a74698a6de497db793aef2bac0b.source"
+      },
+      "src/components/layout/sysproxy-privilege-dialog.tsx": {
+        "existed": true,
+        "snapshot": "93b3cc5c537c03c93924a1322ee822cca1c0cfa29d3d5d3d8c47d72511edaa52.source"
+      },
+      "src/components/layout/traffic-graph.tsx": {
+        "existed": true,
+        "snapshot": "0b83986029ace553a84c92cb65488881ad6cfd166ec4635de687c3a48182fb29.source"
+      },
+      "src/components/layout/update-button.tsx": {
+        "existed": true,
+        "snapshot": "391abef8fd7d5db3ff9bace6761c34c806587bdc4d809d7ef2d7e1d0a282e38b.source"
+      },
+      "src/components/layout/window-controller.tsx": {
+        "existed": true,
+        "snapshot": "77e25faf7af26d1a37e1eb7413ba4f6cc9dc8773dcd99af877a9aecd02c8e272.source"
+      },
+      "src/components/home/clash-info-card.tsx": {
+        "existed": true,
+        "snapshot": "cb862b3f6c5a2a0bafc2336e5c6fc6314df64e8fe6241d9f8d5ca1507c8eec77.source"
+      },
+      "src/components/home/clash-mode-card.tsx": {
+        "existed": true,
+        "snapshot": "22e4ab2ba191f9dae475d67a5954a158dc113cc4faf3a7e767f8c1426e4a8586.source"
+      },
+      "src/components/home/current-proxy-card.tsx": {
+        "existed": true,
+        "snapshot": "48e329d71945f9f127853193afa24eab5c837d2685cf08d5ba178431cdf0cce3.source"
+      },
+      "src/components/home/enhanced-canvas-traffic-graph.tsx": {
+        "existed": true,
+        "snapshot": "3f8fbff32082604477536ecb446db03c35ef95059d3f0ddf3f4b98f2125c55cc.source"
+      },
+      "src/components/home/enhanced-card.tsx": {
+        "existed": true,
+        "snapshot": "2adee98cfd12492874d1cb2dde1c5f973364f99fbb0aece967cdfa723695315f.source"
+      },
+      "src/components/home/enhanced-traffic-stats.tsx": {
+        "existed": true,
+        "snapshot": "f571fecfeef08b9d29fef48b85e12bff94070c11bf33450f0fb73c5dec0ca563.source"
+      },
+      "src/components/home/home-profile-card.tsx": {
+        "existed": true,
+        "snapshot": "13b0db3e38d55e3692c95f78e52d4d0711ef76a15364140e88e6fd2f76a9159c.source"
+      },
+      "src/components/home/ip-info-card.tsx": {
+        "existed": true,
+        "snapshot": "09f0900f146d2b79a14df41ed54fa0185ac4344fde74b6fa1b418af5cc225641.source"
+      },
+      "src/components/home/proxy-tun-card.tsx": {
+        "existed": true,
+        "snapshot": "0f854c35e493ab1d8b6963c2e4dbe603aa16972ea22b7b545616ae7d3b09ccea.source"
+      },
+      "src/components/home/system-info-card.tsx": {
+        "existed": true,
+        "snapshot": "45f80dcea7044537edd14fec01c1388dccb57f474b78f0482fdfdfd75ba8c01f.source"
+      },
+      "src/components/home/test-card.tsx": {
+        "existed": true,
+        "snapshot": "c3aa4c0dbbbd82ca5af274f8d0fd0c1939bc05d80335940163b6b5f07930ac0e.source"
+      },
+      "src/components/connection/connection-column-manager.tsx": {
+        "existed": true,
+        "snapshot": "285cd6f5339ac49edc7d9e0c217a5872286e085d1ef0dfb7ae5228ca3be2d768.source"
+      },
+      "src/components/connection/connection-detail.tsx": {
+        "existed": true,
+        "snapshot": "f238de3b8703e007e7441996b95666f4e0ddf4b0ecec5f4dd4b12b5636939129.source"
+      },
+      "src/components/connection/connection-relative-time.tsx": {
+        "existed": true,
+        "snapshot": "b3625d0f0ce1d495d625d905dec6be7aa1b8475cf18ad818201f2f49851922d6.source"
+      },
+      "src/components/connection/connection-row-item.tsx": {
+        "existed": true,
+        "snapshot": "844531c895ece2cb403a5d0ee495dd35f301d27d8ac77f2e5aadc25a13ad461c.source"
+      },
+      "src/components/connection/connection-row-view.ts": {
+        "existed": true,
+        "snapshot": "46c63d3e789e5db2cd51c47bf9d4129f1318e59a0f80877f523ef7db66f08776.source"
+      },
+      "src/components/connection/connection-table.tsx": {
+        "existed": true,
+        "snapshot": "224c94c7a97b64f3f4dd3d7e6c760f19f5377961c0af5761958b0056e524a0f1.source"
+      },
+      "src/components/base/base-dialog.tsx": {
+        "existed": true,
+        "snapshot": "b775ebd5b57ccc8aff63933044d1cb5f1e6614e4cff25c36f77104b5f7fa00e1.source"
+      },
+      "src/components/base/base-empty.tsx": {
+        "existed": true,
+        "snapshot": "9aec7e01d7ff2e732a8cb719d6620f92d458cf9daca7611d2afb9417f288a35c.source"
+      },
+      "src/components/base/base-error-boundary.tsx": {
+        "existed": true,
+        "snapshot": "3d02b5788a1d685ca56b49691e5394e5add89be33059e7e73f21ecc8bd14ad65.source"
+      },
+      "src/components/base/base-fieldset.tsx": {
+        "existed": true,
+        "snapshot": "8f3e5a630587b158110da7590b7ca7a5e7c28bed359197ad45f1f903dadd2118.source"
+      },
+      "src/components/base/base-loading-overlay.tsx": {
+        "existed": true,
+        "snapshot": "89cafc23fb590e54d10931fcb95562cf71bcc755d5e8f3ece346f35dbe554be7.source"
+      },
+      "src/components/base/base-loading.tsx": {
+        "existed": true,
+        "snapshot": "14edb6c72d30678746fad41d0a865faa400d46af587689e52f9277595c5af0e5.source"
+      },
+      "src/components/base/base-page.tsx": {
+        "existed": true,
+        "snapshot": "442bf566a4887bab9ee1b96c716d375d32273fb62756257364e40bce521a9819.source"
+      },
+      "src/components/base/base-search-box.tsx": {
+        "existed": true,
+        "snapshot": "56b709490ba8d433e7bf29f93f4b3453c305d21238cca3b65d56882707ce5f31.source"
+      },
+      "src/components/base/base-split-chip-editor.tsx": {
+        "existed": true,
+        "snapshot": "d8b7081f40cad293b98fefc647f0ea8230b25891dbdf741de283ec9890135a0a.source"
+      },
+      "src/components/base/base-styled-select.tsx": {
+        "existed": true,
+        "snapshot": "be23b9eb9eb8fab8235f0e77b7ba40a24cce05c770eda2b5927ae4127141c40e.source"
+      },
+      "src/components/base/base-styled-text-field.tsx": {
+        "existed": true,
+        "snapshot": "61e16cfe227c2d6881b49fef54950c8fb4463dfbd6d5a42f8832b2cefb52080f.source"
+      },
+      "src/components/base/base-switch.tsx": {
+        "existed": true,
+        "snapshot": "0cc4b2ed4c465efeca05db6370c21059ac68fe407af4e1cc1debca6eccf1d824.source"
+      },
+      "src/components/base/base-tooltip-icon.tsx": {
+        "existed": true,
+        "snapshot": "6a4756b14e0b3269b75a2035ee4bf56a8f3a1df29dbad3857f25f8674803622c.source"
+      },
+      "src/components/base/index.ts": {
+        "existed": true,
+        "snapshot": "53996121d123dc414fd88dd9aef1dfc0d21e07caf4e566ff001efe2bb6ea5712.source"
+      },
+      "src/components/base/monaco-editor.tsx": {
+        "existed": true,
+        "snapshot": "77bc538b3445332070c7ac1a8a9ef2ca750de05a52df0dddad150060a6eafc18.source"
+      },
+      "src/components/base/sortable-item.tsx": {
+        "existed": true,
+        "snapshot": "1065512d8509727e3e54966c5e4a7ec767e147349075deaa2a24a52cb520d6fd.source"
+      },
+      "src/components/base/sticky-virtual-list.tsx": {
+        "existed": true,
+        "snapshot": "73691a6973c4141058e1892b4690410eb179bdee7b1e1eb0bb9b4a279555224e.source"
+      },
+      "src/components/base/virtual-list.tsx": {
+        "existed": true,
+        "snapshot": "38dea8d5a3bf1ce73db47fa33daf55ad5dd421cbcdce2c2879cbdfcd7baed160.source"
+      },
+      "scripts-workflow/bump_changelog.sh": {
+        "existed": true,
+        "snapshot": "da0beb28e97fea54a97bfe23255b6ccbbd518b287e48eca07ed1b8f721d36d00.source"
+      },
+      "scripts-workflow/get_latest_tauri_commit.bash": {
+        "existed": true,
+        "snapshot": "4433c2f18187bce149a69a4cae5c68462a79bdf01d4a20dd7c240f5c1bffb3bf.source"
+      },
+      "scripts-workflow/group_platforms.sh": {
+        "existed": true,
+        "snapshot": "7664b2e30eccec1998cf03ede3d12d6fdf5775e709a8748c9759d7a6cb6a6bfa.source"
+      },
+      "scripts/extract_update_logs.sh": {
+        "existed": true,
+        "snapshot": "6083fab4b5ca10ba55986bfda63d8b4d8c6f06d6b7ede106cccfd741f8021189.source"
+      },
+      "scripts/set_dns.sh": {
+        "existed": true,
+        "snapshot": "06e6b38d2de68eac4120a626b5dc6ad836cfedb04659ffa8406d5dc1a9174f94.source"
+      },
+      "scripts/unset_dns.sh": {
+        "existed": true,
+        "snapshot": "3758042ab35ebce75bd2ff91a446a38ebfe50a508619ae75d51928320d95f2b9.source"
+      },
+      "scripts/perf/app.rs": {
+        "existed": true,
+        "snapshot": "6a2453284f7a33b6e1dca3a20dd45ca7ae903798d50e88243074f3dfedb1f2ea.source"
+      },
+      "scripts/perf/entry.tsx": {
+        "existed": true,
+        "snapshot": "574bea74f861e7a4b44a9f867e3c614066caa0019c6846c791f4a446da0841ad.source"
+      },
+      "scripts/perf/sample.c": {
+        "existed": true,
+        "snapshot": "b5487c58d80631fbfb1dc89694585fbac48b260ab4db044bda3673796f20430f.source"
+      },
+      "crates/tauri-plugin-clash-verge-sysinfo/Cargo.toml": {
+        "existed": true,
+        "snapshot": "98f1a212c10fce37aacf0ee43d2954dca784db6859f74ed39abd873737e4da6e.source"
+      },
+      "crates/tauri-plugin-clash-verge-sysinfo/src/commands.rs": {
+        "existed": true,
+        "snapshot": "d767d0f69fc0235b858b18d33c102b3dd9a4ff22640ec2352e3dc9b9c3873eb2.source"
+      },
+      "crates/tauri-plugin-clash-verge-sysinfo/src/lib.rs": {
+        "existed": true,
+        "snapshot": "2171b57d281daa7598dd804effa4c5e27b7f73ded696f7914aba3015e4407322.source"
+      },
+      "crates/clash-verge-signal/Cargo.toml": {
+        "existed": true,
+        "snapshot": "f29a51316b9431db887875b7a64e4fb5e2539a022622c7d98fe8fe50a65a41c1.source"
+      },
+      "crates/clash-verge-signal/src/lib.rs": {
+        "existed": true,
+        "snapshot": "0bb810bd2b00785e3817f2da88c30c9d2e08ad6914b46cbf5584d55b6e343fcf.source"
+      },
+      "crates/clash-verge-signal/src/unix.rs": {
+        "existed": true,
+        "snapshot": "fecbdb224efc89d83becfa1a3d9f4a7ce64ae120c91b14a7607e66fd6f6449b4.source"
+      },
+      "crates/clash-verge-media-unlock/Cargo.toml": {
+        "existed": true,
+        "snapshot": "2187783e3d65fc6205482042b85c4194e0545075a4eabbac063e99435b2b342c.source"
+      },
+      "crates/clash-verge-media-unlock/src/bahamut.rs": {
+        "existed": true,
+        "snapshot": "191de1431a4e343def2fc4a1169797e6478ff64acb7b539ac2a192e718a1b950.source"
+      },
+      "crates/clash-verge-media-unlock/src/bilibili.rs": {
+        "existed": true,
+        "snapshot": "3bfaaf1b6f82ff955145a8d1fc31ade7cce1af9d71204d6b82f96efc145fa6f7.source"
+      },
+      "crates/clash-verge-media-unlock/src/chatgpt.rs": {
+        "existed": true,
+        "snapshot": "fce03e0133fef4907138502577123ac4aabc3502f0c69c9c81c849b9d9e5d137.source"
+      },
+      "crates/clash-verge-media-unlock/src/claude.rs": {
+        "existed": true,
+        "snapshot": "1369d1a17419782c41f5d238cfc22e12d8afbc03b55c4a8e5ddbe0d55512b19e.source"
+      },
+      "crates/clash-verge-media-unlock/src/disney_plus.rs": {
+        "existed": true,
+        "snapshot": "a078e810c71a976bc7ffa3efed475aea75808092575ef291bc1148ab6524554e.source"
+      },
+      "crates/clash-verge-media-unlock/src/gemini.rs": {
+        "existed": true,
+        "snapshot": "c0ffa2c559a97175a31b756e4471fdcc66cf1e5a2bedd29d1e58fd529b24fa5c.source"
+      },
+      "crates/clash-verge-media-unlock/src/lib.rs": {
+        "existed": true,
+        "snapshot": "a2f2c6c92caef9f434ff4c10c1e4797e12c7895b30f5fa740b40faea2fd42db0.source"
+      },
+      "crates/clash-verge-media-unlock/src/muse.rs": {
+        "existed": true,
+        "snapshot": "f49017d06a00d03ba14e4ec01cd9031295ffd358f330f59d6dd4a18c7e099f0b.source"
+      },
+      "crates/clash-verge-media-unlock/src/netflix.rs": {
+        "existed": true,
+        "snapshot": "62e7cbb803d43565f6707c38a49c2a13eda86ba05dd76e98d9ee75066b3ab5a4.source"
+      },
+      "crates/clash-verge-media-unlock/src/prime_video.rs": {
+        "existed": true,
+        "snapshot": "66b15f99a39617556caf35084aa3f0ac7081332069917a0a81c4e03c73b93eeb.source"
+      },
+      "crates/clash-verge-media-unlock/src/spotify.rs": {
+        "existed": true,
+        "snapshot": "50925d22d36c2d964dbb7fe5a519da06fb7cb01efb6ff73934641cbc0a0edcdf.source"
+      },
+      "crates/clash-verge-media-unlock/src/tiktok.rs": {
+        "existed": true,
+        "snapshot": "203fcae67a685112b71b139429a694a9807d546bd7e9cadf4b7a93d593c0ea74.source"
+      },
+      "crates/clash-verge-media-unlock/src/types.rs": {
+        "existed": true,
+        "snapshot": "03f0eff8cab134ae1b3e319718e317821d912d68302f2adaed67dfd313ca9af2.source"
+      },
+      "crates/clash-verge-media-unlock/src/utils.rs": {
+        "existed": true,
+        "snapshot": "2e6a7d3c8e5d6f88a0ef2ead0e1f78ec48d96140c537d3f20272e0ea0b66dfea.source"
+      },
+      "crates/clash-verge-media-unlock/src/youtube.rs": {
+        "existed": true,
+        "snapshot": "3a9d76c96347ae397e3e714f9d1147c034c9c8922dace56e1ee4abc0b10f3a51.source"
+      },
+      "crates/clash-verge-logging/Cargo.toml": {
+        "existed": true,
+        "snapshot": "b505e77bfe61b73b844daf70bf8cd1c99cc507e8768b5fbb8f86cafb23b594c0.source"
+      },
+      "crates/clash-verge-logging/src/lib.rs": {
+        "existed": true,
+        "snapshot": "9698c19bca2048d52a5972795b7caa71f7ed0b5de3e5724a06088f0bb6cd878b.source"
+      },
+      "crates/clash-verge-limiter/Cargo.toml": {
+        "existed": true,
+        "snapshot": "ef40393926e622001c2ddf0b597b5268cbad42a7800c95ce748a507b774ec8ad.source"
+      },
+      "crates/clash-verge-limiter/src/lib.rs": {
+        "existed": true,
+        "snapshot": "a8c044994b7eb4b70ca852aac78107791855d1de4ae8b246b599e467b09cf5e1.source"
+      },
+      "crates/clash-verge-i18n/Cargo.toml": {
+        "existed": true,
+        "snapshot": "a597a0418c43a8f30ae5cce224f097123f76fe345c7c33350e58b5a5417b73fb.source"
+      },
+      "crates/clash-verge-i18n/src/lib.rs": {
+        "existed": true,
+        "snapshot": "3598d080979f987fab0d1b0957c98e36201da24c54187ac7181fea4f5c08eb85.source"
+      },
+      "crates/clash-verge-draft/Cargo.toml": {
+        "existed": true,
+        "snapshot": "7ab8cd0cbb68126c58b59c5d3c919e73fe878491f3f8fa03dd214446530947c0.source"
+      },
+      "crates/clash-verge-draft/tests/test_me.rs": {
+        "existed": true,
+        "snapshot": "0b89d35f8c26499b17669f9fa0c836528810c37e0da229facd4dc907a78b69c2.source"
+      },
+      "crates/clash-verge-draft/src/lib.rs": {
+        "existed": true,
+        "snapshot": "c8a38c2ed7455f6595dac7bd8fcf40ad8bb3481c8d5ccc3525f7e33d1e47ea58.source"
+      },
+      "crates/clash-verge-draft/bench/benche_me.rs": {
+        "existed": true,
+        "snapshot": "afed3120ab820aeec4f22bf375496c212ef2716b8e16d7af8223bfba8c76cf6c.source"
+      },
+      ".husky/_/husky.sh": {
+        "existed": true,
+        "snapshot": "97ecba3cd53f5c9307504cd46b88d985d03ec65abfdbd20eb83c16547f060d26.source"
+      },
+      ".github/workflows/ai-slop-gate.yml": {
+        "existed": true,
+        "snapshot": "91e52a2f10f7c6d21bd710c6a5c8f746d58843fc5e8f28e8e39935208ba645dc.source"
+      },
+      ".github/workflows/autobuild-check-test.yml": {
+        "existed": true,
+        "snapshot": "89427d25a409854f2c30b3ad53148ce536e00a342f89b7cb1fdbb1378d997895.source"
+      },
+      ".github/workflows/autobuild.yml": {
+        "existed": true,
+        "snapshot": "55d631a22c9e350832273ee0abf8a6013435fa6051789cbe311b981b2ec0f348.source"
+      },
+      ".github/workflows/backend-guardrails.yml": {
+        "existed": true,
+        "snapshot": "000b00925b1c5151724008174b8a7ad5b4723ecb533013ab57df62f69e44a014.source"
+      },
+      ".github/workflows/cargo-audit.yml": {
+        "existed": true,
+        "snapshot": "4f64021a57f7751f5c704d17bd650f134e471a9665d53e9899277c2d1e1cc341.source"
+      },
+      ".github/workflows/check-commit-needs-build.yml": {
+        "existed": true,
+        "snapshot": "2bf72a1541e87c1eb7baac15b27039a3ecb74e5ce72bc9e60702cb7157b127c9.source"
+      },
+      ".github/workflows/clean-old-assets.yml": {
+        "existed": true,
+        "snapshot": "721134593c50c29caf72d28fb57c8882d04e06e197e47c6bde5e1d37aafbe358.source"
+      },
+      ".github/workflows/contract-parity.yml": {
+        "existed": true,
+        "snapshot": "429bc9ccd25da1059ace22449f7da96d12382b31b3a314d85b127801ccf1a974.source"
+      },
+      ".github/workflows/copilot-setup-steps.yml": {
+        "existed": true,
+        "snapshot": "98dad98422cf59793a353f9b6bfe6a129977e92af3d5b4e38f98ae45bcb7560d.source"
+      },
+      ".github/workflows/cross_check.yaml": {
+        "existed": true,
+        "snapshot": "40b422c105ba87e186d1e0ce1dc2a653beb157d79c74b2f608c21b063f450bf7.source"
+      },
+      ".github/workflows/dev.yml": {
+        "existed": true,
+        "snapshot": "914da273e1d936250929f1160bdd8be46aa865099502b04b471fe734f6b644dd.source"
+      },
+      ".github/workflows/docs-consistency.yml": {
+        "existed": true,
+        "snapshot": "912e3499b3f6aa6d4e68b44e29a14fb44c19bb29f6c0c1c5a59ce35e7617b8d0.source"
+      },
+      ".github/workflows/frontend-check.yml": {
+        "existed": true,
+        "snapshot": "1e54c4e15e884b1396c02febf0ec7044a172c77c6054558d7e171facf33e92d5.source"
+      },
+      ".github/workflows/lint-clippy.yml": {
+        "existed": true,
+        "snapshot": "b5cbbb4065a1e7a2934ef0937a07b6daea19c1d437df4b75b622f768259523f5.source"
+      },
+      ".github/workflows/pr-ai-slop-review.lock.yml": {
+        "existed": true,
+        "snapshot": "d3f503b7378aa3f9b339d1606466621b23e5e46d19d7cbb679852764f03594c5.source"
+      },
+      ".github/workflows/prepare-release.yml": {
+        "existed": true,
+        "snapshot": "ddf2bab74923dcd43f9f8d05e50bb1adc9ee5366a394d151d1f04a54a6079486.source"
+      },
+      ".github/workflows/release.yml": {
+        "existed": true,
+        "snapshot": "87db21a973eed4fef5f32b267aa60fcee5cbdf03c67fafdc2a9b553bb0b15f34.source"
+      },
+      ".github/workflows/rustfmt.yml": {
+        "existed": true,
+        "snapshot": "565566854d7f61bf24fae33ce2fb81c9a408c01029252802fea1f9d53399134a.source"
+      },
+      ".github/workflows/signpath-test.yml": {
+        "existed": true,
+        "snapshot": "ae3aac8e539d00efcfb94de21b3cb2ae688192f32fd1403b44bd4d9c926bb494.source"
+      },
+      ".github/workflows/telegram-notify.yml": {
+        "existed": true,
+        "snapshot": "ea2a59c3aceae0e3725e5f440cec5ab231310e270ff920be6a3fed2758c1ef57.source"
+      },
+      ".github/workflows/updater.yml": {
+        "existed": true,
+        "snapshot": "3d0b1b4a8777563fd9dad3f53f896e64c5722f524a221f14d44ed6d071e468a3.source"
+      },
+      ".devcontainer/post-create.sh": {
+        "existed": true,
+        "snapshot": "bcf66a848607b49d2a45edfad434f6808017ee9d18f5a20dde6670745010d89a.source"
+      }
+    },
+    "complete": true,
+    "candidateLimit": 5000,
+    "discoveredFiles": 467,
+    "capturedFiles": 467,
+    "truncated": false,
+    "omittedAtLeast": 0,
+    "firstOmitted": "",
+    "errors": []
+  },
+  "stateErrors": [],
+  "omittedReportedFindings": 0,
+  "omittedFindingEvents": 0,
+  "processing": null,
+  "updatedAt": "2026-11-26T03:20:34.496Z"
+}

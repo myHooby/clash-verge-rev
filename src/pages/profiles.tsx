@@ -462,9 +462,12 @@ const ProfilePage = () => {
     [runProfileSwitchQueue],
   )
 
-  const onSelect = async (profile: string, force: boolean) => {
-    await activateProfile(profile, true, force)
-  }
+  const onSelect = useCallback(
+    async (profile: string, force: boolean) => {
+      await activateProfile(profile, true, force)
+    },
+    [activateProfile],
+  )
 
   useEffect(() => {
     let cancelled = false
@@ -521,9 +524,6 @@ const ProfilePage = () => {
       })
       mutateProfiles()
       mutateLogs()
-      if (current) {
-        await onEnhance(false)
-      }
     } catch (err: any) {
       showNotice.error(err)
     } finally {
@@ -597,7 +597,7 @@ const ProfilePage = () => {
     }
   }
 
-  const toggleProfileSelection = (uid: string) => {
+  const toggleProfileSelection = useCallback((uid: string) => {
     setSelectedProfiles((prev) => {
       const newSet = new Set(prev)
       if (newSet.has(uid)) {
@@ -607,7 +607,40 @@ const ProfilePage = () => {
       }
       return newSet
     })
-  }
+  }, [])
+
+  // Item-grid callbacks stay identity-stable so ProfileItem's memo holds
+  // across unrelated page state (URL input keystrokes, switch spinners).
+  // onEnhance/onDelete are useLockFn wrappers whose identity changes every
+  // render, so they are read through refs here.
+  const onEnhanceRef = useRef(onEnhance)
+  onEnhanceRef.current = onEnhance
+  const onDeleteRef = useRef(onDelete)
+  onDeleteRef.current = onDelete
+
+  const handleItemEdit = useCallback((item: IProfileItem) => {
+    viewerRef.current?.edit(item)
+  }, [])
+
+  const handleItemSave = useCallback(
+    async (uid: string, prev?: string, curr?: string) => {
+      if (prev !== curr && profiles.current === uid) {
+        await onEnhanceRef.current(false)
+      }
+    },
+    [profiles],
+  )
+
+  const handleItemDelete = useCallback(
+    (uid: string) => {
+      if (batchMode) {
+        toggleProfileSelection(uid)
+      } else {
+        onDeleteRef.current(uid)
+      }
+    },
+    [batchMode, toggleProfileSelection],
+  )
 
   const selectAllProfiles = () => {
     setSelectedProfiles(new Set(profileItems.map((item) => item.uid!)))
@@ -653,10 +686,6 @@ const ProfilePage = () => {
 
       await mutateProfiles()
       await mutateLogs()
-
-      if (currentActivating.length > 0) {
-        await onEnhance(false)
-      }
 
       setSelectedProfiles(new Set())
       setBatchMode(false)
@@ -915,23 +944,13 @@ const ProfilePage = () => {
                   completedUpdateRevisions.get(item.uid!) ?? 0
                 }
                 mutateProfiles={mutateProfiles}
-                onSelect={(f) => onSelect(item.uid!, f)}
-                onEdit={() => viewerRef.current?.edit(item)}
-                onSave={async (prev, curr) => {
-                  if (prev !== curr && profiles.current === item.uid) {
-                    await onEnhance(false)
-                  }
-                }}
-                onDelete={() => {
-                  if (batchMode) {
-                    toggleProfileSelection(item.uid!)
-                  } else {
-                    onDelete(item.uid!)
-                  }
-                }}
+                onSelect={onSelect}
+                onEdit={handleItemEdit}
+                onSave={handleItemSave}
+                onDelete={handleItemDelete}
                 batchMode={batchMode}
                 isSelected={selectedProfiles.has(item.uid!)}
-                onSelectionChange={() => toggleProfileSelection(item.uid!)}
+                onSelectionChange={toggleProfileSelection}
               />
             ))}
           </Box>

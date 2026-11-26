@@ -1,0 +1,535 @@
+use super::patch_opt_field;
+
+use crate::{
+    config::profiles,
+    utils::{
+        dirs, help,
+        network::{NetworkManager, ProxyType},
+        tmpl,
+    },
+};
+use anyhow::{Context as _, Result, bail};
+use serde::{Deserialize, Serialize};
+use serde_yaml_ng::Mapping;
+use smartstring::alias::String;
+use std::time::Duration;
+use tokio::fs;
+// TODO, use other re-export
+use reqwest_dav::re_exports::url::form_urlencoded;
+use tauri::Url;
+
+pub(super) fn normalize_profile_home_url(raw: &str) -> Option<String> {
+    let url = Url::parse(raw.trim()).ok()?;
+
+    if !matches!(url.scheme(), "http" | "https") {
+        return None;
+    }
+
+    url.host_str()?;
+    Some(url.to_string().into())
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default, specta::Type)]
+#[serde(default)]
+pub struct PrfItem {
+    #[specta(type = Option<std::string::String>)]
+    pub uid: Option<String>,
+
+    /// enum value: remote | local | script | merge
+    #[serde(rename = "type")]
+    #[specta(type = Option<std::string::String>)]
+    pub itype: Option<String>,
+    #[specta(type = Option<std::string::String>)]
+    pub name: Option<String>,
+    #[specta(type = Option<std::string::String>)]
+    pub file: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[specta(type = Option<std::string::String>)]
+    pub desc: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[specta(type = Option<std::string::String>)]
+    pub url: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub selected: Option<Vec<PrfSelected>>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub extra: Option<PrfExtra>,
+
+    pub updated: Option<usize>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub option: Option<PrfOption>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[specta(type = Option<std::string::String>)]
+    pub home: Option<String>,
+
+    #[serde(skip)]
+    #[specta(type = Option<std::string::String>)]
+    pub file_data: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq, specta::Type)]
+#[serde(default)]
+pub struct PrfSelected {
+    #[specta(type = Option<std::string::String>)]
+    pub name: Option<String>,
+    #[specta(type = Option<std::string::String>)]
+    pub now: Option<String>,
+}
+
+#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, specta::Type)]
+pub struct PrfExtra {
+    pub upload: u64,
+    pub download: u64,
+    pub total: u64,
+    pub expire: u64,
+}
+
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq, specta::Type)]
+#[serde(default)]
+pub struct PrfOption {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[specta(type = Option<std::string::String>)]
+    pub user_agent: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub with_proxy: Option<bool>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub self_proxy: Option<bool>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub update_interval: Option<u64>,
+
+    /// HTTP request timeout in seconds
+    /// default is 60 seconds
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub timeout_seconds: Option<u64>,
+
+    /// default is `false`
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub danger_accept_invalid_certs: Option<bool>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub allow_auto_update: Option<bool>,
+    #[specta(type = Option<std::string::String>)]
+    pub merge: Option<String>,
+    #[specta(type = Option<std::string::String>)]
+    pub script: Option<String>,
+    #[specta(type = Option<std::string::String>)]
+    pub rules: Option<String>,
+    #[specta(type = Option<std::string::String>)]
+    pub proxies: Option<String>,
+    #[specta(type = Option<std::string::String>)]
+    pub groups: Option<String>,
+}
+
+impl PrfOption {
+    pub(crate) fn merge(one: Option<&Self>, other: Option<&Self>) -> Option<Self> {
+        match (one, other) {
+            (Some(a_ref), Some(b_ref)) => {
+                let mut result = a_ref.clone();
+                patch_opt_field!(result, b_ref, user_agent);
+                patch_opt_field!(result, b_ref, with_proxy);
+                patch_opt_field!(result, b_ref, self_proxy);
+                patch_opt_field!(result, b_ref, danger_accept_invalid_certs);
+                patch_opt_field!(result, b_ref, allow_auto_update);
+                patch_opt_field!(result, b_ref, update_interval);
+                patch_opt_field!(result, b_ref, merge);
+                patch_opt_field!(result, b_ref, script);
+                patch_opt_field!(result, b_ref, rules);
+                patch_opt_field!(result, b_ref, proxies);
+                patch_opt_field!(result, b_ref, groups);
+                patch_opt_field!(result, b_ref, timeout_seconds);
+                Some(result)
+            }
+            (Some(a_ref), None) => Some(a_ref.clone()),
+            (None, Some(b_ref)) => Some(b_ref.clone()),
+            (None, None) => None,
+        }
+    }
+}
+
+impl PrfItem {
+    /// Builds an item from a partial value that must include `itype`.
+    pub(super) async fn from(item: &Self, file_data: Option<String>) -> Result<Self> {
+        let itype = item
+            .itype
+            .as_ref()
+            .ok_or_else(|| anyhow::anyhow!("type should not be null"))?;
+        match itype.as_str() {
+            "remote" => {
+                let url = item
+                    .url
+                    .as_ref()
+                    .ok_or_else(|| anyhow::anyhow!("url should not be null"))?;
+                let name = item.name.as_ref();
+                let desc = item.desc.as_ref();
+                let option = item.option.as_ref();
+                Self::from_url(url, name, desc, option).await
+            }
+            "local" => {
+                let name = item.name.clone().unwrap_or_else(|| "Local File".into());
+                let desc = item.desc.clone().unwrap_or_else(|| "".into());
+                let option = item.option.as_ref();
+                Self::from_local(name, desc, file_data, option).await
+            }
+            typ => bail!("invalid profile item type \"{typ}\""),
+        }
+    }
+
+    async fn append_companion_item(item: &mut Self) -> Result<String> {
+        profiles::profiles_append_item_safe(item).await?;
+        item.uid
+            .clone()
+            .ok_or_else(|| anyhow::anyhow!("appended companion item has no uid"))
+    }
+
+    async fn ensure_companion_items(
+        merge: &mut Option<String>,
+        script: &mut Option<String>,
+        rules: &mut Option<String>,
+        proxies: &mut Option<String>,
+        groups: &mut Option<String>,
+    ) -> Result<()> {
+        if merge.is_none() {
+            *merge = Some(Self::append_companion_item(&mut Self::from_merge(None)).await?);
+        }
+        if script.is_none() {
+            *script = Some(Self::append_companion_item(&mut Self::from_script(None)).await?);
+        }
+        if rules.is_none() {
+            *rules = Some(Self::append_companion_item(&mut Self::from_rules()).await?);
+        }
+        if proxies.is_none() {
+            *proxies = Some(Self::append_companion_item(&mut Self::from_proxies()).await?);
+        }
+        if groups.is_none() {
+            *groups = Some(Self::append_companion_item(&mut Self::from_groups()).await?);
+        }
+        Ok(())
+    }
+
+    async fn from_local(
+        name: String,
+        desc: String,
+        file_data: Option<String>,
+        option: Option<&PrfOption>,
+    ) -> Result<Self> {
+        let uid = help::get_uid("L").into();
+        let file = format!("{uid}.yaml").into();
+        let opt_ref = option.as_ref();
+        let update_interval = opt_ref.and_then(|o| o.update_interval);
+        let mut merge = opt_ref.and_then(|o| o.merge.clone());
+        let mut script = opt_ref.and_then(|o| o.script.clone());
+        let mut rules = opt_ref.and_then(|o| o.rules.clone());
+        let mut proxies = opt_ref.and_then(|o| o.proxies.clone());
+        let mut groups = opt_ref.and_then(|o| o.groups.clone());
+
+        Self::ensure_companion_items(&mut merge, &mut script, &mut rules, &mut proxies, &mut groups).await?;
+        Ok(Self {
+            uid: Some(uid),
+            itype: Some("local".into()),
+            name: Some(name),
+            desc: Some(desc),
+            file: Some(file),
+            url: None,
+            selected: None,
+            extra: None,
+            option: Some(PrfOption {
+                update_interval,
+                merge,
+                script,
+                rules,
+                proxies,
+                groups,
+                ..PrfOption::default()
+            }),
+            home: None,
+            updated: Some(chrono::Local::now().timestamp() as usize),
+            file_data: Some(file_data.unwrap_or_else(|| tmpl::ITEM_LOCAL.into())),
+        })
+    }
+
+    pub(crate) async fn from_url(
+        url: &str,
+        name: Option<&String>,
+        desc: Option<&String>,
+        option: Option<&PrfOption>,
+    ) -> Result<Self> {
+        let with_proxy = option.is_some_and(|o| o.with_proxy.unwrap_or(false));
+        let self_proxy = option.is_some_and(|o| o.self_proxy.unwrap_or(false));
+        let accept_invalid_certs = option.is_some_and(|o| o.danger_accept_invalid_certs.unwrap_or(false));
+        let allow_auto_update = Some(allow_auto_update_enabled(option));
+        let user_agent = option.and_then(|o| o.user_agent.clone());
+        let update_interval = option.and_then(|o| o.update_interval);
+        let timeout = option.and_then(|o| o.timeout_seconds).unwrap_or(20);
+        let mut merge = option.and_then(|o| o.merge.clone());
+        let mut script = option.and_then(|o| o.script.clone());
+        let mut rules = option.and_then(|o| o.rules.clone());
+        let mut proxies = option.and_then(|o| o.proxies.clone());
+        let mut groups = option.and_then(|o| o.groups.clone());
+
+        let proxy_type = if self_proxy {
+            ProxyType::Localhost
+        } else if with_proxy {
+            ProxyType::System
+        } else {
+            ProxyType::None
+        };
+
+        let url = fix_dirty_url(url)?;
+
+        let resp = match NetworkManager::new()
+            .get(
+                url.as_str(),
+                proxy_type,
+                Some(timeout),
+                user_agent.clone(),
+                accept_invalid_certs,
+            )
+            .await
+        {
+            Ok(r) => r,
+            Err(e) => {
+                tokio::time::sleep(Duration::from_millis(100)).await;
+                return Err(e).context("failed to fetch remote profile");
+            }
+        };
+
+        let status_code = resp.status();
+        if !status_code.is_success() {
+            bail!("failed to fetch remote profile with status {status_code}")
+        }
+
+        let header = resp.headers();
+
+        let extra;
+        'extra: {
+            for (k, v) in header.iter() {
+                let key_lower = k.as_str().to_ascii_lowercase();
+                // Accept standard custom-metadata prefixes (x-amz-meta-, x-obs-meta-, x-cos-meta-, etc.).
+                if key_lower
+                    .strip_suffix("subscription-userinfo")
+                    .is_some_and(|prefix| prefix.is_empty() || prefix.ends_with('-'))
+                {
+                    let sub_info = v.to_str().unwrap_or("");
+                    extra = Some(PrfExtra {
+                        upload: help::parse_str(sub_info, "upload").unwrap_or(0),
+                        download: help::parse_str(sub_info, "download").unwrap_or(0),
+                        total: help::parse_str(sub_info, "total").unwrap_or(0),
+                        expire: help::parse_str(sub_info, "expire").unwrap_or(0),
+                    });
+                    break 'extra;
+                }
+            }
+            extra = None;
+        }
+
+        let filename = match header.get("Content-Disposition") {
+            Some(value) => {
+                let filename = format!("{value:?}");
+                let filename = filename.trim_matches('"');
+                match help::parse_str::<String>(filename, "filename*") {
+                    Some(filename) => {
+                        let iter = percent_encoding::percent_decode(filename.as_bytes());
+                        let filename = iter.decode_utf8().unwrap_or_default();
+                        filename.split("''").last().map(|s| s.into())
+                    }
+                    None => match help::parse_str::<String>(filename, "filename") {
+                        Some(filename) => {
+                            let filename = filename.trim_matches('"');
+                            Some(filename.into())
+                        }
+                        None => None,
+                    },
+                }
+            }
+            None => {
+                Some(crate::utils::help::get_last_part_and_decode(url.as_str()).unwrap_or_else(|| "Remote File".into()))
+            }
+        };
+        let update_interval = match update_interval {
+            Some(val) => Some(val),
+            None => match header.get("profile-update-interval") {
+                Some(value) => match value.to_str().unwrap_or("").parse::<u64>() {
+                    Ok(val) => Some(val * 60), // hour -> min
+                    Err(_) => None,
+                },
+                None => None,
+            },
+        };
+
+        let home = header
+            .get("profile-web-page-url")
+            .and_then(|value| value.to_str().ok())
+            .and_then(normalize_profile_home_url);
+
+        let uid = help::get_uid("R").into();
+        let file = format!("{uid}.yaml").into();
+        let name = name
+            .map(|s| s.to_owned())
+            .unwrap_or_else(|| filename.map(|s| s.into()).unwrap_or_else(|| "Remote File".into()));
+        let data = resp.text();
+
+        let data = data.trim_start_matches('\u{feff}');
+
+        let yaml = serde_yaml_ng::from_str::<Mapping>(data).context("the remote profile data is invalid yaml")?;
+
+        if !yaml.contains_key("proxies") && !yaml.contains_key("proxy-providers") {
+            bail!("profile does not contain `proxies` or `proxy-providers`");
+        }
+
+        Self::ensure_companion_items(&mut merge, &mut script, &mut rules, &mut proxies, &mut groups).await?;
+
+        Ok(Self {
+            uid: Some(uid),
+            itype: Some("remote".into()),
+            name: Some(name),
+            desc: desc.cloned(),
+            file: Some(file),
+            url: Some(url.as_str().into()),
+            selected: None,
+            extra,
+            option: Some(PrfOption {
+                update_interval,
+                merge,
+                script,
+                rules,
+                proxies,
+                groups,
+                allow_auto_update,
+                ..PrfOption::default()
+            }),
+            home,
+            updated: Some(chrono::Local::now().timestamp() as usize),
+            file_data: Some(data.into()),
+        })
+    }
+
+    pub(super) fn from_merge(uid: Option<String>) -> Self {
+        let (id, template) = if let Some(uid) = uid {
+            (uid, tmpl::ITEM_MERGE.into())
+        } else {
+            (help::get_uid("m").into(), tmpl::ITEM_MERGE_EMPTY.into())
+        };
+        let file = format!("{id}.yaml").into();
+
+        Self {
+            uid: Some(id),
+            itype: Some("merge".into()),
+            file: Some(file),
+            updated: Some(chrono::Local::now().timestamp() as usize),
+            file_data: Some(template),
+            ..Default::default()
+        }
+    }
+
+    pub(super) fn from_script(uid: Option<String>) -> Self {
+        let id = if let Some(uid) = uid {
+            uid
+        } else {
+            help::get_uid("s").into()
+        };
+        let file = format!("{id}.js").into(); // js ext
+        Self {
+            uid: Some(id),
+            itype: Some("script".into()),
+            file: Some(file),
+            updated: Some(chrono::Local::now().timestamp() as usize),
+            file_data: Some(tmpl::ITEM_SCRIPT.into()),
+            ..Default::default()
+        }
+    }
+
+    fn new_seq_item(prefix: &str, itype: &str, template: &str) -> Self {
+        let uid = help::get_uid(prefix).into();
+        let file = format!("{uid}.yaml").into(); // yaml ext
+
+        Self {
+            uid: Some(uid),
+            itype: Some(itype.into()),
+            file: Some(file),
+            updated: Some(chrono::Local::now().timestamp() as usize),
+            file_data: Some(template.into()),
+            ..Default::default()
+        }
+    }
+
+    fn from_rules() -> Self {
+        Self::new_seq_item("r", "rules", tmpl::ITEM_RULES)
+    }
+
+    fn from_proxies() -> Self {
+        Self::new_seq_item("p", "proxies", tmpl::ITEM_PROXIES)
+    }
+
+    fn from_groups() -> Self {
+        Self::new_seq_item("g", "groups", tmpl::ITEM_GROUPS)
+    }
+
+    pub(crate) async fn read_file(&self) -> Result<String> {
+        let file = self
+            .file
+            .as_ref()
+            .ok_or_else(|| anyhow::anyhow!("could not find the file"))?;
+        let path = dirs::app_profiles_dir()?.join(file.as_str());
+        let content = fs::read_to_string(&path)
+            .await
+            .with_context(|| format!("failed to read the file \"{}\"", path.display()))?;
+        Ok(content.into())
+    }
+}
+
+macro_rules! current_field {
+    ($name:ident, $field:ident) => {
+        pub(crate) fn $name(&self) -> Option<&String> {
+            self.option.as_ref().and_then(|o| o.$field.as_ref())
+        }
+    };
+}
+
+impl PrfItem {
+    current_field!(current_merge, merge);
+    current_field!(current_script, script);
+    current_field!(current_rules, rules);
+    current_field!(current_proxies, proxies);
+    current_field!(current_groups, groups);
+}
+
+fn allow_auto_update_enabled(option: Option<&PrfOption>) -> bool {
+    option.and_then(|o| o.allow_auto_update).unwrap_or(true)
+}
+
+/// Fix URLs where query parameters are incorrectly appended to the path segment
+///
+/// Incorrect Example: https://example.com/path&param1=value1
+fn fix_dirty_url(input: &str) -> Result<Url> {
+    let mut url = match Url::parse(input) {
+        Ok(u) => u,
+        Err(e) => {
+            return Err(anyhow::anyhow!(
+                "failed to parse subscription URL: {:?}, input: {}",
+                e,
+                help::mask_url(input)
+            ));
+        }
+    };
+
+    if url.query().is_none() && url.path().contains('&') {
+        let path = url.path().to_string();
+
+        if let Some((clean_path, dirty_params)) = path.split_once('&') {
+            url.set_path(clean_path);
+
+            url.query_pairs_mut()
+                .extend_pairs(form_urlencoded::parse(dirty_params.as_bytes()));
+        }
+    }
+
+    Ok(url)
+}

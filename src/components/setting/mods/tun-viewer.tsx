@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { useLockFn } from 'ahooks'
 import type { Ref } from 'react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -54,12 +54,13 @@ export function TunViewer({ ref }: { ref?: Ref<DialogRef> }) {
     autoDetectInterface: true,
     dnsHijack: ['any:53'],
     strictRoute: false,
-    mtu: 1500,
+    mtu: 1500 as number | undefined,
     dnsMode: '',
   })
 
-  const routeExcludeAddressItems = splitRouteExcludeAddress(
-    values.routeExcludeAddress,
+  const routeExcludeAddressItems = useMemo(
+    () => splitRouteExcludeAddress(values.routeExcludeAddress),
+    [values.routeExcludeAddress],
   )
   const routeExcludeAddressError =
     values.autoRoute &&
@@ -374,14 +375,15 @@ export function TunViewer({ ref }: { ref?: Ref<DialogRef> }) {
             autoCapitalize="off"
             spellCheck="false"
             sx={{ width: 250 }}
-            value={values.mtu}
+            value={values.mtu ?? ''}
             placeholder="1500"
-            onChange={(e) =>
+            onChange={(e) => {
+              const next = Number.parseInt(e.target.value, 10)
               setValues((v) => ({
                 ...v,
-                mtu: parseInt(e.target.value),
+                mtu: Number.isNaN(next) ? undefined : next,
               }))
-            }
+            }}
           />
         </ListItem>
 

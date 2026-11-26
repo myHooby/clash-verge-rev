@@ -61,10 +61,10 @@ tracing-estuary = { git = "https://github.com/Tunglies/tracing-estuary.git", bra
 tauri-plugin-clash-verge-sysinfo = { path = "crates/tauri-plugin-clash-verge-sysinfo" }
 tracing = "0.1.44"
 
-tauri = { version = "2.12.5" }
+tauri = { version = "2.12.7" }
 tauri-plugin-clipboard-manager = "2.5.0"
 parking_lot = "0.13.0"
-anyhow = "1.0.104"
+anyhow = "1.0.105"
 chrono = "0.4.45"
 criterion = { version = "0.8.2", features = ["async_tokio"] }
 tokio = { version = "1.54.1", features = [
@@ -73,7 +73,7 @@ tokio = { version = "1.54.1", features = [
   "time",
   "sync",
 ] }
-flexi_logger = "0.31.10"
+flexi_logger = "0.32.0"
 log = "0.4.35"
 reqwest = { version = "0.13.5", features = [
   "json",
@@ -84,9 +84,8 @@ reqwest = { version = "0.13.5", features = [
 ] }
 rust_iso3166 = "0.2.0"
 
-smartstring = { version = "2.0.0" }
-
 serde = { version = "1.0.229" }
+tristr = { git = "https://github.com/Tunglies/tristr", rev = "d849e5cff47a570849c2e1bada0a2b6481cf3378", default-features = false, features = ["serde", "specta"] }
 serde_json = { version = "1.0.154" }
 serde_yaml_ng = { version = "0.10.0" }
 socket2 = "0.6.5"
@@ -132,6 +131,7 @@ large_const_arrays = "warn"
 large_futures = "deny"
 large_stack_arrays = "warn"
 large_types_passed_by_value = "deny"
+map_unwrap_or = "deny"
 missing_const_for_fn = "deny"
 mutex_atomic = "deny"
 mutex_integer = "deny"

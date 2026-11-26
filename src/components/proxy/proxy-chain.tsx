@@ -57,6 +57,8 @@ const chainPointerSensor = PointerSensor.configure({
   activationConstraints: () => undefined,
 })
 
+const CHAIN_SENSORS = [chainPointerSensor, KeyboardSensor]
+
 type RuntimeConfigWithProxySequence = IConfigData & { proxies?: unknown }
 
 interface ProxyChainProps {
@@ -463,15 +465,12 @@ export const ProxyChain = ({
 
         localStorage.removeItem('proxy-chain-group')
         localStorage.removeItem('proxy-chain-exit-node')
-        localStorage.removeItem('proxy-chain-items')
 
         await mutate(() => closeAllConnections(), {
           id: 'close-all-connections',
           errorNotice: false,
         })
         await refreshProxy()
-
-        onUpdateChain([])
       } catch (error) {
         console.error('Failed to disconnect from proxy chain:', error)
         alert(t('proxies.page.chain.disconnectFailed'))
@@ -550,7 +549,6 @@ export const ProxyChain = ({
     mode,
     proxyView,
     selectedGroup,
-    onUpdateChain,
     recordSelection,
   ])
 
@@ -669,10 +667,7 @@ export const ProxyChain = ({
             </Button>
           </Box>
         ) : (
-          <DragDropProvider
-            sensors={[chainPointerSensor, KeyboardSensor]}
-            onDragEnd={handleDragEnd}
-          >
+          <DragDropProvider sensors={CHAIN_SENSORS} onDragEnd={handleDragEnd}>
             <Box sx={{ borderRadius: 1, minHeight: 60, p: 1 }}>
               {currentProxyChain.map((proxy, index) => (
                 <SortableProxyChainItem

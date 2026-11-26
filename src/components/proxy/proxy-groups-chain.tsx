@@ -94,7 +94,7 @@ interface ProxyGroupsChainProps {
   onCheckAll: (groupName: string) => void
   onSpeedCheck?: (groupName: string) => void
   onHeadState: (groupName: string, patch: Partial<HeadState>) => void
-  onLocation: (group: any) => void
+  onLocation: (groupName: string) => void
   onGroupSelect: (groupName: string) => void
   onScrollToTop: () => void
 }
@@ -247,7 +247,7 @@ function ProxyVirtualList({
   activeStickyIndex: number | null
   isChainMode?: boolean
   measureElement: (node: Element | null) => void
-  onLocation: (group: any) => void
+  onLocation: (groupName: string) => void
   onCheckAll: (groupName: string) => void
   onSpeedCheck?: (groupName: string) => void
   onHeadState: (groupName: string, patch: Partial<HeadState>) => void
